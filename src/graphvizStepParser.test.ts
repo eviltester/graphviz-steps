@@ -81,6 +81,36 @@ digraph G {
 }
 `);
     });
+
+    it('can handle a malformed multi step dot file with missing END', () => {
+        const parser = new GraphvizStepParser();
+        parser.parse(simpleTwoStepGraphvizDiagram.replace("# END", "# STEP end step"));
+        expect(parser.steps.length).toBe(3);
+        expect(parser.steps[0]).toBe(`
+digraph G {
+    a -> b
+    b -> end
+}
+`);
+        expect(parser.steps[1]).toBe(`
+digraph G {
+    a -> b
+    a -> c
+    c -> b
+    b -> end
+}
+`);
+expect(parser.steps[2]).toBe(`
+digraph G {
+    a -> b
+    a -> c
+    c -> b
+    a -> d
+    d -> b
+    b -> end
+}
+`);
+    });
 });
 
 describe("Basic Parser Functions", () => {
