@@ -4,7 +4,7 @@
 /*
     Everything before the first STEP is included in all diagrams as the start
     Everything after the END directive is included as the end
-    Everything in between are STEP sections and INALL sections
+    Everything in between are STEP sections and DIRECTIVE sections
     By default all STEPs include every previous step unless a directive says not to
 
     All hash comments are processed, as if, they have a directive, if they don't they
@@ -19,7 +19,7 @@
 
     # END - marks the end of the diagram included in all steps
     # STEP logical_name (makes easy to refer to later)
-    # IGNORE_STEP logical_name - do not include the mentioned STEP in this STEPS output
+    # DISABLE_STEP logical_name - do not include the mentioned STEP in this STEPS output
 
     e.g.
 
@@ -31,6 +31,7 @@
 // output strings for all steps (without processing directives)
 // write strings to .dot files
 // process directives during output
+// DIRECTIVES: STEP, END, IGNORE_STEP x, UNCOMMENT_//
 // MILESTONE at this point we have a poc
 // generate a build script that runs graphviz for each of the step files
 // MILESTONE at this point we can create a series of diagrams or a blog post from each diagram
@@ -40,4 +41,5 @@
 // amend the skeleton app to allow advancing between steps using keys
 // FUTURE: add more directives and features as required
 // - run as a command line app with graphviz file as an input params
+// other directives? amend content of a step e.g. to avoid duplicate lines in the graphviz output like highlighting nodes etc.
 // - etc.
