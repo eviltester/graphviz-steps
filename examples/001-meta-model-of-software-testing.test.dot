@@ -4,7 +4,7 @@ digraph TestingBasics {
   # make graph compound because we want to link to clusters
   graph [compound=true];
 
-  # label text alignment: use \l to have left aligned new lines and \n for centered new lines
+  # label text alignment: use backslash l to have left aligned new lines and n for centered new lines
 
   rankdir=TB;
   newrank="true";
