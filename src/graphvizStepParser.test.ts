@@ -1,4 +1,5 @@
-import { dotLineSplit, getStartStepsEnd, GraphvizStepParser } from "./graphvizStepParser";
+import { dir } from "console";
+import { dotLineSplit, getDirectiveName, getStartStepsEnd, GraphvizStepParser } from "./graphvizStepParser";
 
 const simpleGraphvizDiagram =`
 digraph G {
@@ -131,6 +132,18 @@ digraph G {
 }
 `); 
     });
+
+    it("can match directives", ()=>{
+        expect(getDirectiveName("# STEP - this is step 1")).toBe("STEP");
+        expect(getDirectiveName("# STEP - ")).toBe("STEP");
+        expect(getDirectiveName("# STEP -")).toBe("STEP");
+        expect(getDirectiveName("# STEP   ")).toBe("STEP");
+        expect(getDirectiveName("# STEP")).toBe("STEP");
+        expect(getDirectiveName("# END - this is the end")).toBe("END");
+        expect(getDirectiveName("# END - ")).toBe("END");
+        expect(getDirectiveName("# END -")).toBe("END");
+        expect(getDirectiveName("# END")).toBe("END");
+    })
 
 });
 

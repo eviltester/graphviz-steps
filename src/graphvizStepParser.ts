@@ -1,41 +1,32 @@
+const stepMatcher = {name: "STEP", regex: /(\s)*STEP([\s-]*)([\w \d]*)?(\s)*$/};
+const endMatcher = {name: "END", regex: /(\s)*END([\s-]*)?([\w \d]*)?(\s)*$/};
+const directiveMatchers = [stepMatcher, endMatcher];
+
 
 export function dotLineSplit(dot: string): string[]{
     return dot.split("\n");
 }
 
 function isDirective(line: string) {
-    const lineToCheck = line.trim();
-
-    if(!lineToCheck.startsWith("#")){
-        return false;
-    }
-
-    // remove # and any spaces
-    const directiveText = lineToCheck.substring(1).trim();
-
-    if(directiveText.startsWith("STEP ") || directiveText.startsWith("END")){
-        return true;
-    }
-
-    return false;
+    return getDirectiveName(line)!="";
 }
 
-function getDirectiveName(line: string){
+export function getDirectiveName(line: string){
     const lineToCheck = line.trim();
 
     if(!lineToCheck.startsWith("#")){
         return "";
     }
 
-    // remove # and any spaces
+    // remove # and any trailing or leading spaces
     const directiveText = lineToCheck.substring(1).trim();
 
-    if(directiveText.startsWith("STEP ")){
-        return "STEP";
-    }
-    if(directiveText.startsWith("END")){
-        return "END";
-    }
+    for (const matcher of directiveMatchers){
+        const match = directiveText.match(matcher.regex);
+        if(match!=null){
+            return matcher.name;
+        }
+    };
 
     return "";
 }
