@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <body>
-<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.0/d3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@hpcc-js/wasm/dist/graphviz.umd.js" type="javascript/worker"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-graphviz/5.0.2/d3-graphviz.min.js"></script>
 <div id="graph" style="text-align: center;"></div>
@@ -13,13 +13,16 @@
 
 <script>
 
+var millisToDraw = 2000;
+var millisBetweenFrames = 2000;
+
 var dotIndex = 0;
 var graphviz = d3.select("#graph").graphviz()
     .transition(function () {
-        return d3.transition("main")
-            .ease(d3.easeLinear)
-            //.delay(500)
-            .duration(2000);
+        return d3.transition()//"main")
+            //.ease(d3.easeLinear)
+            //.delay(1000)
+            .duration(millisToDraw);
     })
     .logEvents(true)
     .on("initEnd", render);
@@ -27,10 +30,11 @@ var graphviz = d3.select("#graph").graphviz()
 function render() {
     var dot = dots[dotIndex];
     graphviz
-        .renderDot(dot)
+        .dot(dot)
+        .render()
         .on("end", function () {
-            dotIndex = (dotIndex + 1) % dots.length;            
-            render();
+            dotIndex = (dotIndex + 1) % dots.length;
+            setTimeout(render,millisBetweenFrames);
         });
 }
 

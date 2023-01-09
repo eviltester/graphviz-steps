@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <body>
-<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.0/d3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@hpcc-js/wasm/dist/graphviz.umd.js" type="javascript/worker"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-graphviz/5.0.2/d3-graphviz.min.js"></script>
 <div id="graph" style="text-align: center;"></div>
@@ -13,13 +13,16 @@
 
 <script>
 
+var millisToDraw = 2000;
+var millisBetweenFrames = 2000;
+
 var dotIndex = 0;
 var graphviz = d3.select("#graph").graphviz()
     .transition(function () {
-        return d3.transition("main")
-            .ease(d3.easeLinear)
-            //.delay(500)
-            .duration(2000);
+        return d3.transition()//"main")
+            //.ease(d3.easeLinear)
+            //.delay(1000)
+            .duration(millisToDraw);
     })
     .logEvents(true)
     .on("initEnd", render);
@@ -27,10 +30,11 @@ var graphviz = d3.select("#graph").graphviz()
 function render() {
     var dot = dots[dotIndex];
     graphviz
-        .renderDot(dot)
+        .dot(dot)
+        .render()
         .on("end", function () {
-            dotIndex = (dotIndex + 1) % dots.length;            
-            render();
+            dotIndex = (dotIndex + 1) % dots.length;
+            setTimeout(render,millisBetweenFrames);
         });
 }
 
@@ -39,27 +43,27 @@ var dots = [
 digraph TestingBasics {
 
 
-  # make graph compound because we want to \link to c\lusters
+  # make graph compound because we want to link to clusters
   graph [compound=true];
 
-  # \labe\l text a\lignment: use backs\lash \l to have \left a\ligned new \lines and n for centered new \lines
+  # label text alignment: use backslash l to have left aligned new lines and n for centered new lines
 
   rankdir=TB;
   newrank="true";
 
-  #bgco\lor=transparent;
+  #bgcolor=transparent;
   
-  c\lusterrank=\loca\l
+  clusterrank=local
 
   /*
 
-Testing is underpinned by mode\ls.
+Testing is underpinned by models.
 
 e.g. requirements, user stories, scenarios, etc.
   
   */
   
-  mode\l;
+  model;
   
 }
 
@@ -71,35 +75,35 @@ e.g. requirements, user stories, scenarios, etc.
 digraph TestingBasics {
 
 
-  # make graph compound because we want to \link to c\lusters
+  # make graph compound because we want to link to clusters
   graph [compound=true];
 
-  # \labe\l text a\lignment: use backs\lash \l to have \left a\ligned new \lines and n for centered new \lines
+  # label text alignment: use backslash l to have left aligned new lines and n for centered new lines
 
   rankdir=TB;
   newrank="true";
 
-  #bgco\lor=transparent;
+  #bgcolor=transparent;
   
-  c\lusterrank=\loca\l
+  clusterrank=local
 
   /*
 
-Testing is underpinned by mode\ls.
+Testing is underpinned by models.
 
 e.g. requirements, user stories, scenarios, etc.
   
   */
   
-  mode\l;
+  model;
   
   /*
   
-We have the 'thing we are comparing with'. Usua\l\ly a System Under Test.
+We have the 'thing we are comparing with'. Usually a System Under Test.
 
   */
 
-  comparison_thing [\labe\l="System\n Under\n Test"];
+  comparison_thing [label="System\n Under\n Test"];
 
 }
 
@@ -111,45 +115,45 @@ We have the 'thing we are comparing with'. Usua\l\ly a System Under Test.
 digraph TestingBasics {
 
 
-  # make graph compound because we want to \link to c\lusters
+  # make graph compound because we want to link to clusters
   graph [compound=true];
 
-  # \labe\l text a\lignment: use backs\lash \l to have \left a\ligned new \lines and n for centered new \lines
+  # label text alignment: use backslash l to have left aligned new lines and n for centered new lines
 
   rankdir=TB;
   newrank="true";
 
-  #bgco\lor=transparent;
+  #bgcolor=transparent;
   
-  c\lusterrank=\loca\l
+  clusterrank=local
 
   /*
 
-Testing is underpinned by mode\ls.
+Testing is underpinned by models.
 
 e.g. requirements, user stories, scenarios, etc.
   
   */
   
-  mode\l;
+  model;
   
   /*
   
-We have the 'thing we are comparing with'. Usua\l\ly a System Under Test.
+We have the 'thing we are comparing with'. Usually a System Under Test.
 
   */
 
-  comparison_thing [\labe\l="System\n Under\n Test"];
+  comparison_thing [label="System\n Under\n Test"];
 
   /*
 
-The mode\l and the SUT are inputs to our testing process.
+The model and the SUT are inputs to our testing process.
 
   */
-  subgraph c\luster_inputs {
-    \labe\l="Inputs to Testing";
+  subgraph cluster_inputs {
+    label="Inputs to Testing";
     rank=same;
-    mode\l;
+    model;
     comparison_thing;
   }
 
@@ -163,57 +167,57 @@ The mode\l and the SUT are inputs to our testing process.
 digraph TestingBasics {
 
 
-  # make graph compound because we want to \link to c\lusters
+  # make graph compound because we want to link to clusters
   graph [compound=true];
 
-  # \labe\l text a\lignment: use backs\lash \l to have \left a\ligned new \lines and n for centered new \lines
+  # label text alignment: use backslash l to have left aligned new lines and n for centered new lines
 
   rankdir=TB;
   newrank="true";
 
-  #bgco\lor=transparent;
+  #bgcolor=transparent;
   
-  c\lusterrank=\loca\l
+  clusterrank=local
 
   /*
 
-Testing is underpinned by mode\ls.
+Testing is underpinned by models.
 
 e.g. requirements, user stories, scenarios, etc.
   
   */
   
-  mode\l;
+  model;
   
   /*
   
-We have the 'thing we are comparing with'. Usua\l\ly a System Under Test.
+We have the 'thing we are comparing with'. Usually a System Under Test.
 
   */
 
-  comparison_thing [\labe\l="System\n Under\n Test"];
+  comparison_thing [label="System\n Under\n Test"];
 
   /*
 
-The mode\l and the SUT are inputs to our testing process.
+The model and the SUT are inputs to our testing process.
 
   */
-  subgraph c\luster_inputs {
-    \labe\l="Inputs to Testing";
+  subgraph cluster_inputs {
+    label="Inputs to Testing";
     rank=same;
-    mode\l;
+    model;
     comparison_thing;
   }
 
   /*
 
-The simp\lest way to use a mode\l for testing is to compare
-the mode\l with the System Under Test.
+The simplest way to use a model for testing is to compare
+the model with the System Under Test.
 
   */
 
   compare [shape=square];
-  subgraph c\luster_eva\luation {
+  subgraph cluster_evaluation {
       compare;
   }
 
@@ -227,63 +231,63 @@ the mode\l with the System Under Test.
 digraph TestingBasics {
 
 
-  # make graph compound because we want to \link to c\lusters
+  # make graph compound because we want to link to clusters
   graph [compound=true];
 
-  # \labe\l text a\lignment: use backs\lash \l to have \left a\ligned new \lines and n for centered new \lines
+  # label text alignment: use backslash l to have left aligned new lines and n for centered new lines
 
   rankdir=TB;
   newrank="true";
 
-  #bgco\lor=transparent;
+  #bgcolor=transparent;
   
-  c\lusterrank=\loca\l
+  clusterrank=local
 
   /*
 
-Testing is underpinned by mode\ls.
+Testing is underpinned by models.
 
 e.g. requirements, user stories, scenarios, etc.
   
   */
   
-  mode\l;
+  model;
   
   /*
   
-We have the 'thing we are comparing with'. Usua\l\ly a System Under Test.
+We have the 'thing we are comparing with'. Usually a System Under Test.
 
   */
 
-  comparison_thing [\labe\l="System\n Under\n Test"];
+  comparison_thing [label="System\n Under\n Test"];
 
   /*
 
-The mode\l and the SUT are inputs to our testing process.
+The model and the SUT are inputs to our testing process.
 
   */
-  subgraph c\luster_inputs {
-    \labe\l="Inputs to Testing";
+  subgraph cluster_inputs {
+    label="Inputs to Testing";
     rank=same;
-    mode\l;
+    model;
     comparison_thing;
   }
 
   /*
 
-The simp\lest way to use a mode\l for testing is to compare
-the mode\l with the System Under Test.
+The simplest way to use a model for testing is to compare
+the model with the System Under Test.
 
   */
 
   compare [shape=square];
-  subgraph c\luster_eva\luation {
+  subgraph cluster_evaluation {
       compare;
   }
 
-  # NOTE: this \line on\ly used in ear\ly versions of the diagram
-  # \later we \link to the c\luster, not the node 
- {mode\l comparison_thing} -> compare;
+  # NOTE: this line only used in early versions of the diagram
+  # later we link to the cluster, not the node 
+ {model comparison_thing} -> compare;
 
 
 }
@@ -296,80 +300,80 @@ the mode\l with the System Under Test.
 digraph TestingBasics {
 
 
-  # make graph compound because we want to \link to c\lusters
+  # make graph compound because we want to link to clusters
   graph [compound=true];
 
-  # \labe\l text a\lignment: use backs\lash \l to have \left a\ligned new \lines and n for centered new \lines
+  # label text alignment: use backslash l to have left aligned new lines and n for centered new lines
 
   rankdir=TB;
   newrank="true";
 
-  #bgco\lor=transparent;
+  #bgcolor=transparent;
   
-  c\lusterrank=\loca\l
+  clusterrank=local
 
   /*
 
-Testing is underpinned by mode\ls.
+Testing is underpinned by models.
 
 e.g. requirements, user stories, scenarios, etc.
   
   */
   
-  mode\l;
+  model;
   
   /*
   
-We have the 'thing we are comparing with'. Usua\l\ly a System Under Test.
+We have the 'thing we are comparing with'. Usually a System Under Test.
 
   */
 
-  comparison_thing [\labe\l="System\n Under\n Test"];
+  comparison_thing [label="System\n Under\n Test"];
 
   /*
 
-The mode\l and the SUT are inputs to our testing process.
+The model and the SUT are inputs to our testing process.
 
   */
-  subgraph c\luster_inputs {
-    \labe\l="Inputs to Testing";
+  subgraph cluster_inputs {
+    label="Inputs to Testing";
     rank=same;
-    mode\l;
+    model;
     comparison_thing;
   }
 
   /*
 
-The simp\lest way to use a mode\l for testing is to compare
-the mode\l with the System Under Test.
+The simplest way to use a model for testing is to compare
+the model with the System Under Test.
 
   */
 
   compare [shape=square];
-  subgraph c\luster_eva\luation {
+  subgraph cluster_evaluation {
       compare;
   }
 
-  # NOTE: this \line on\ly used in ear\ly versions of the diagram
-  # \later we \link to the c\luster, not the node 
- {mode\l comparison_thing} -> compare;
+  # NOTE: this line only used in early versions of the diagram
+  # later we link to the cluster, not the node 
+ {model comparison_thing} -> compare;
 
 
 
   /*
-This generates output resu\lts from the comparison.
+This generates output results from the comparison.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis ];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis ];
   }
 
-  compare [shape=square, \labe\l="Comparison"];
-  compare -> output [\labe\l="Comparisons" \lhead=c\luster_comparison_outputs];
+  compare [shape=square, label="Comparison"];
+  compare -> output [label="Comparisons" lhead=cluster_comparison_outputs];
 
 }
 
@@ -381,90 +385,90 @@ This generates output resu\lts from the comparison.
 digraph TestingBasics {
 
 
-  # make graph compound because we want to \link to c\lusters
+  # make graph compound because we want to link to clusters
   graph [compound=true];
 
-  # \labe\l text a\lignment: use backs\lash \l to have \left a\ligned new \lines and n for centered new \lines
+  # label text alignment: use backslash l to have left aligned new lines and n for centered new lines
 
   rankdir=TB;
   newrank="true";
 
-  #bgco\lor=transparent;
+  #bgcolor=transparent;
   
-  c\lusterrank=\loca\l
+  clusterrank=local
 
   /*
 
-Testing is underpinned by mode\ls.
+Testing is underpinned by models.
 
 e.g. requirements, user stories, scenarios, etc.
   
   */
   
-  mode\l;
+  model;
   
   /*
   
-We have the 'thing we are comparing with'. Usua\l\ly a System Under Test.
+We have the 'thing we are comparing with'. Usually a System Under Test.
 
   */
 
-  comparison_thing [\labe\l="System\n Under\n Test"];
+  comparison_thing [label="System\n Under\n Test"];
 
   /*
 
-The mode\l and the SUT are inputs to our testing process.
+The model and the SUT are inputs to our testing process.
 
   */
-  subgraph c\luster_inputs {
-    \labe\l="Inputs to Testing";
+  subgraph cluster_inputs {
+    label="Inputs to Testing";
     rank=same;
-    mode\l;
+    model;
     comparison_thing;
   }
 
   /*
 
-The simp\lest way to use a mode\l for testing is to compare
-the mode\l with the System Under Test.
+The simplest way to use a model for testing is to compare
+the model with the System Under Test.
 
   */
 
   compare [shape=square];
-  subgraph c\luster_eva\luation {
+  subgraph cluster_evaluation {
       compare;
   }
 
-  # NOTE: this \line on\ly used in ear\ly versions of the diagram
-  # \later we \link to the c\luster, not the node 
- {mode\l comparison_thing} -> compare;
+  # NOTE: this line only used in early versions of the diagram
+  # later we link to the cluster, not the node 
+ {model comparison_thing} -> compare;
 
 
 
   /*
-This generates output resu\lts from the comparison.
+This generates output results from the comparison.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis ];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis ];
   }
 
-  compare [shape=square, \labe\l="Comparison"];
-  compare -> output [\labe\l="Comparisons" \lhead=c\luster_comparison_outputs];
+  compare [shape=square, label="Comparison"];
+  compare -> output [label="Comparisons" lhead=cluster_comparison_outputs];
 
   /*
-Evidentia\l Observation Output can be used for
+Evidential Observation Output can be used for
 negative or positive confirmation.
   */
   
 
   /*
 Positive confirmation is often viewed as a 'Test Pass'.
-And basica\l\ly means that 'when we did something we observed
+And basically means that 'when we did something we observed
 that the system behaved the way that we expect'.
 
 NOTE: this does not mean that the system "works", it just means
@@ -472,12 +476,12 @@ that at some point in time, given a specific set of input and process
 we observed that the system behaaved as we expected.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=0 height=0];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=0 height=0];
     positive_confirmation;
   }
 
@@ -491,90 +495,90 @@ we observed that the system behaaved as we expected.
 digraph TestingBasics {
 
 
-  # make graph compound because we want to \link to c\lusters
+  # make graph compound because we want to link to clusters
   graph [compound=true];
 
-  # \labe\l text a\lignment: use backs\lash \l to have \left a\ligned new \lines and n for centered new \lines
+  # label text alignment: use backslash l to have left aligned new lines and n for centered new lines
 
   rankdir=TB;
   newrank="true";
 
-  #bgco\lor=transparent;
+  #bgcolor=transparent;
   
-  c\lusterrank=\loca\l
+  clusterrank=local
 
   /*
 
-Testing is underpinned by mode\ls.
+Testing is underpinned by models.
 
 e.g. requirements, user stories, scenarios, etc.
   
   */
   
-  mode\l;
+  model;
   
   /*
   
-We have the 'thing we are comparing with'. Usua\l\ly a System Under Test.
+We have the 'thing we are comparing with'. Usually a System Under Test.
 
   */
 
-  comparison_thing [\labe\l="System\n Under\n Test"];
+  comparison_thing [label="System\n Under\n Test"];
 
   /*
 
-The mode\l and the SUT are inputs to our testing process.
+The model and the SUT are inputs to our testing process.
 
   */
-  subgraph c\luster_inputs {
-    \labe\l="Inputs to Testing";
+  subgraph cluster_inputs {
+    label="Inputs to Testing";
     rank=same;
-    mode\l;
+    model;
     comparison_thing;
   }
 
   /*
 
-The simp\lest way to use a mode\l for testing is to compare
-the mode\l with the System Under Test.
+The simplest way to use a model for testing is to compare
+the model with the System Under Test.
 
   */
 
   compare [shape=square];
-  subgraph c\luster_eva\luation {
+  subgraph cluster_evaluation {
       compare;
   }
 
-  # NOTE: this \line on\ly used in ear\ly versions of the diagram
-  # \later we \link to the c\luster, not the node 
- {mode\l comparison_thing} -> compare;
+  # NOTE: this line only used in early versions of the diagram
+  # later we link to the cluster, not the node 
+ {model comparison_thing} -> compare;
 
 
 
   /*
-This generates output resu\lts from the comparison.
+This generates output results from the comparison.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis ];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis ];
   }
 
-  compare [shape=square, \labe\l="Comparison"];
-  compare -> output [\labe\l="Comparisons" \lhead=c\luster_comparison_outputs];
+  compare [shape=square, label="Comparison"];
+  compare -> output [label="Comparisons" lhead=cluster_comparison_outputs];
 
   /*
-Evidentia\l Observation Output can be used for
+Evidential Observation Output can be used for
 negative or positive confirmation.
   */
   
 
   /*
 Positive confirmation is often viewed as a 'Test Pass'.
-And basica\l\ly means that 'when we did something we observed
+And basically means that 'when we did something we observed
 that the system behaved the way that we expect'.
 
 NOTE: this does not mean that the system "works", it just means
@@ -582,19 +586,19 @@ that at some point in time, given a specific set of input and process
 we observed that the system behaaved as we expected.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=0 height=0];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=0 height=0];
     positive_confirmation;
   }
 
   positive_confirmation [
-    \labe\l="Positive\n Confirmation",
-    fi\l\lco\lor=green,
-    sty\le=fi\l\led
+    label="Positive\n Confirmation",
+    fillcolor=green,
+    style=filled
     ];
 
 }
@@ -607,90 +611,90 @@ we observed that the system behaaved as we expected.
 digraph TestingBasics {
 
 
-  # make graph compound because we want to \link to c\lusters
+  # make graph compound because we want to link to clusters
   graph [compound=true];
 
-  # \labe\l text a\lignment: use backs\lash \l to have \left a\ligned new \lines and n for centered new \lines
+  # label text alignment: use backslash l to have left aligned new lines and n for centered new lines
 
   rankdir=TB;
   newrank="true";
 
-  #bgco\lor=transparent;
+  #bgcolor=transparent;
   
-  c\lusterrank=\loca\l
+  clusterrank=local
 
   /*
 
-Testing is underpinned by mode\ls.
+Testing is underpinned by models.
 
 e.g. requirements, user stories, scenarios, etc.
   
   */
   
-  mode\l;
+  model;
   
   /*
   
-We have the 'thing we are comparing with'. Usua\l\ly a System Under Test.
+We have the 'thing we are comparing with'. Usually a System Under Test.
 
   */
 
-  comparison_thing [\labe\l="System\n Under\n Test"];
+  comparison_thing [label="System\n Under\n Test"];
 
   /*
 
-The mode\l and the SUT are inputs to our testing process.
+The model and the SUT are inputs to our testing process.
 
   */
-  subgraph c\luster_inputs {
-    \labe\l="Inputs to Testing";
+  subgraph cluster_inputs {
+    label="Inputs to Testing";
     rank=same;
-    mode\l;
+    model;
     comparison_thing;
   }
 
   /*
 
-The simp\lest way to use a mode\l for testing is to compare
-the mode\l with the System Under Test.
+The simplest way to use a model for testing is to compare
+the model with the System Under Test.
 
   */
 
   compare [shape=square];
-  subgraph c\luster_eva\luation {
+  subgraph cluster_evaluation {
       compare;
   }
 
-  # NOTE: this \line on\ly used in ear\ly versions of the diagram
-  # \later we \link to the c\luster, not the node 
- {mode\l comparison_thing} -> compare;
+  # NOTE: this line only used in early versions of the diagram
+  # later we link to the cluster, not the node 
+ {model comparison_thing} -> compare;
 
 
 
   /*
-This generates output resu\lts from the comparison.
+This generates output results from the comparison.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis ];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis ];
   }
 
-  compare [shape=square, \labe\l="Comparison"];
-  compare -> output [\labe\l="Comparisons" \lhead=c\luster_comparison_outputs];
+  compare [shape=square, label="Comparison"];
+  compare -> output [label="Comparisons" lhead=cluster_comparison_outputs];
 
   /*
-Evidentia\l Observation Output can be used for
+Evidential Observation Output can be used for
 negative or positive confirmation.
   */
   
 
   /*
 Positive confirmation is often viewed as a 'Test Pass'.
-And basica\l\ly means that 'when we did something we observed
+And basically means that 'when we did something we observed
 that the system behaved the way that we expect'.
 
 NOTE: this does not mean that the system "works", it just means
@@ -698,34 +702,34 @@ that at some point in time, given a specific set of input and process
 we observed that the system behaaved as we expected.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=0 height=0];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=0 height=0];
     positive_confirmation;
   }
 
   positive_confirmation [
-    \labe\l="Positive\n Confirmation",
-    fi\l\lco\lor=green,
-    sty\le=fi\l\led
+    label="Positive\n Confirmation",
+    fillcolor=green,
+    style=filled
     ];
 
   /*
-Negative Confirmation is often ca\l\led a 'Test Fai\l'.
+Negative Confirmation is often called a 'Test Fail'.
 
 This means we observed something we did not expect.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
     positive_confirmation;
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=1 height=0];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=1 height=0];
     negative_confirmation;
   }
 
@@ -739,90 +743,90 @@ This means we observed something we did not expect.
 digraph TestingBasics {
 
 
-  # make graph compound because we want to \link to c\lusters
+  # make graph compound because we want to link to clusters
   graph [compound=true];
 
-  # \labe\l text a\lignment: use backs\lash \l to have \left a\ligned new \lines and n for centered new \lines
+  # label text alignment: use backslash l to have left aligned new lines and n for centered new lines
 
   rankdir=TB;
   newrank="true";
 
-  #bgco\lor=transparent;
+  #bgcolor=transparent;
   
-  c\lusterrank=\loca\l
+  clusterrank=local
 
   /*
 
-Testing is underpinned by mode\ls.
+Testing is underpinned by models.
 
 e.g. requirements, user stories, scenarios, etc.
   
   */
   
-  mode\l;
+  model;
   
   /*
   
-We have the 'thing we are comparing with'. Usua\l\ly a System Under Test.
+We have the 'thing we are comparing with'. Usually a System Under Test.
 
   */
 
-  comparison_thing [\labe\l="System\n Under\n Test"];
+  comparison_thing [label="System\n Under\n Test"];
 
   /*
 
-The mode\l and the SUT are inputs to our testing process.
+The model and the SUT are inputs to our testing process.
 
   */
-  subgraph c\luster_inputs {
-    \labe\l="Inputs to Testing";
+  subgraph cluster_inputs {
+    label="Inputs to Testing";
     rank=same;
-    mode\l;
+    model;
     comparison_thing;
   }
 
   /*
 
-The simp\lest way to use a mode\l for testing is to compare
-the mode\l with the System Under Test.
+The simplest way to use a model for testing is to compare
+the model with the System Under Test.
 
   */
 
   compare [shape=square];
-  subgraph c\luster_eva\luation {
+  subgraph cluster_evaluation {
       compare;
   }
 
-  # NOTE: this \line on\ly used in ear\ly versions of the diagram
-  # \later we \link to the c\luster, not the node 
- {mode\l comparison_thing} -> compare;
+  # NOTE: this line only used in early versions of the diagram
+  # later we link to the cluster, not the node 
+ {model comparison_thing} -> compare;
 
 
 
   /*
-This generates output resu\lts from the comparison.
+This generates output results from the comparison.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis ];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis ];
   }
 
-  compare [shape=square, \labe\l="Comparison"];
-  compare -> output [\labe\l="Comparisons" \lhead=c\luster_comparison_outputs];
+  compare [shape=square, label="Comparison"];
+  compare -> output [label="Comparisons" lhead=cluster_comparison_outputs];
 
   /*
-Evidentia\l Observation Output can be used for
+Evidential Observation Output can be used for
 negative or positive confirmation.
   */
   
 
   /*
 Positive confirmation is often viewed as a 'Test Pass'.
-And basica\l\ly means that 'when we did something we observed
+And basically means that 'when we did something we observed
 that the system behaved the way that we expect'.
 
 NOTE: this does not mean that the system "works", it just means
@@ -830,41 +834,41 @@ that at some point in time, given a specific set of input and process
 we observed that the system behaaved as we expected.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=0 height=0];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=0 height=0];
     positive_confirmation;
   }
 
   positive_confirmation [
-    \labe\l="Positive\n Confirmation",
-    fi\l\lco\lor=green,
-    sty\le=fi\l\led
+    label="Positive\n Confirmation",
+    fillcolor=green,
+    style=filled
     ];
 
   /*
-Negative Confirmation is often ca\l\led a 'Test Fai\l'.
+Negative Confirmation is often called a 'Test Fail'.
 
 This means we observed something we did not expect.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
     positive_confirmation;
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=1 height=0];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=1 height=0];
     negative_confirmation;
   }
 
   negative_confirmation [
-    \labe\l ="Negative\n Confirmation",
-    fi\l\lco\lor=red,
-    sty\le=fi\l\led
+    label ="Negative\n Confirmation",
+    fillcolor=red,
+    style=filled
   ]
 
 }
@@ -877,90 +881,90 @@ This means we observed something we did not expect.
 digraph TestingBasics {
 
 
-  # make graph compound because we want to \link to c\lusters
+  # make graph compound because we want to link to clusters
   graph [compound=true];
 
-  # \labe\l text a\lignment: use backs\lash \l to have \left a\ligned new \lines and n for centered new \lines
+  # label text alignment: use backslash l to have left aligned new lines and n for centered new lines
 
   rankdir=TB;
   newrank="true";
 
-  #bgco\lor=transparent;
+  #bgcolor=transparent;
   
-  c\lusterrank=\loca\l
+  clusterrank=local
 
   /*
 
-Testing is underpinned by mode\ls.
+Testing is underpinned by models.
 
 e.g. requirements, user stories, scenarios, etc.
   
   */
   
-  mode\l;
+  model;
   
   /*
   
-We have the 'thing we are comparing with'. Usua\l\ly a System Under Test.
+We have the 'thing we are comparing with'. Usually a System Under Test.
 
   */
 
-  comparison_thing [\labe\l="System\n Under\n Test"];
+  comparison_thing [label="System\n Under\n Test"];
 
   /*
 
-The mode\l and the SUT are inputs to our testing process.
+The model and the SUT are inputs to our testing process.
 
   */
-  subgraph c\luster_inputs {
-    \labe\l="Inputs to Testing";
+  subgraph cluster_inputs {
+    label="Inputs to Testing";
     rank=same;
-    mode\l;
+    model;
     comparison_thing;
   }
 
   /*
 
-The simp\lest way to use a mode\l for testing is to compare
-the mode\l with the System Under Test.
+The simplest way to use a model for testing is to compare
+the model with the System Under Test.
 
   */
 
   compare [shape=square];
-  subgraph c\luster_eva\luation {
+  subgraph cluster_evaluation {
       compare;
   }
 
-  # NOTE: this \line on\ly used in ear\ly versions of the diagram
-  # \later we \link to the c\luster, not the node 
- {mode\l comparison_thing} -> compare;
+  # NOTE: this line only used in early versions of the diagram
+  # later we link to the cluster, not the node 
+ {model comparison_thing} -> compare;
 
 
 
   /*
-This generates output resu\lts from the comparison.
+This generates output results from the comparison.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis ];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis ];
   }
 
-  compare [shape=square, \labe\l="Comparison"];
-  compare -> output [\labe\l="Comparisons" \lhead=c\luster_comparison_outputs];
+  compare [shape=square, label="Comparison"];
+  compare -> output [label="Comparisons" lhead=cluster_comparison_outputs];
 
   /*
-Evidentia\l Observation Output can be used for
+Evidential Observation Output can be used for
 negative or positive confirmation.
   */
   
 
   /*
 Positive confirmation is often viewed as a 'Test Pass'.
-And basica\l\ly means that 'when we did something we observed
+And basically means that 'when we did something we observed
 that the system behaved the way that we expect'.
 
 NOTE: this does not mean that the system "works", it just means
@@ -968,66 +972,66 @@ that at some point in time, given a specific set of input and process
 we observed that the system behaaved as we expected.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=0 height=0];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=0 height=0];
     positive_confirmation;
   }
 
   positive_confirmation [
-    \labe\l="Positive\n Confirmation",
-    fi\l\lco\lor=green,
-    sty\le=fi\l\led
+    label="Positive\n Confirmation",
+    fillcolor=green,
+    style=filled
     ];
 
   /*
-Negative Confirmation is often ca\l\led a 'Test Fai\l'.
+Negative Confirmation is often called a 'Test Fail'.
 
 This means we observed something we did not expect.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
     positive_confirmation;
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=1 height=0];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=1 height=0];
     negative_confirmation;
   }
 
   negative_confirmation [
-    \labe\l ="Negative\n Confirmation",
-    fi\l\lco\lor=red,
-    sty\le=fi\l\led
+    label ="Negative\n Confirmation",
+    fillcolor=red,
+    style=filled
   ]
 
 
   /*
-These positive and negative reports are a visib\le output
+These positive and negative reports are a visible output
 from the Testing process.
   */
 
 
   /*
-So we have to investigate what fai\led during our comparison process.
+So we have to investigate what failed during our comparison process.
   */
 
   negative_confirmation -> investigation;
   investigation [
-    \labe\l="Investigate",
+    label="Investigate",
     shape=square
   ]
 
   /*
 This might mean:
 
-- a prob\lem with our mode\l
-- a prob\lem with the System Under Test
-- a prob\lem with our comparison process
+- a problem with our model
+- a problem with the System Under Test
+- a problem with our comparison process
 
 Either way it is something we have to investigate.
   */
@@ -1042,90 +1046,90 @@ Either way it is something we have to investigate.
 digraph TestingBasics {
 
 
-  # make graph compound because we want to \link to c\lusters
+  # make graph compound because we want to link to clusters
   graph [compound=true];
 
-  # \labe\l text a\lignment: use backs\lash \l to have \left a\ligned new \lines and n for centered new \lines
+  # label text alignment: use backslash l to have left aligned new lines and n for centered new lines
 
   rankdir=TB;
   newrank="true";
 
-  #bgco\lor=transparent;
+  #bgcolor=transparent;
   
-  c\lusterrank=\loca\l
+  clusterrank=local
 
   /*
 
-Testing is underpinned by mode\ls.
+Testing is underpinned by models.
 
 e.g. requirements, user stories, scenarios, etc.
   
   */
   
-  mode\l;
+  model;
   
   /*
   
-We have the 'thing we are comparing with'. Usua\l\ly a System Under Test.
+We have the 'thing we are comparing with'. Usually a System Under Test.
 
   */
 
-  comparison_thing [\labe\l="System\n Under\n Test"];
+  comparison_thing [label="System\n Under\n Test"];
 
   /*
 
-The mode\l and the SUT are inputs to our testing process.
+The model and the SUT are inputs to our testing process.
 
   */
-  subgraph c\luster_inputs {
-    \labe\l="Inputs to Testing";
+  subgraph cluster_inputs {
+    label="Inputs to Testing";
     rank=same;
-    mode\l;
+    model;
     comparison_thing;
   }
 
   /*
 
-The simp\lest way to use a mode\l for testing is to compare
-the mode\l with the System Under Test.
+The simplest way to use a model for testing is to compare
+the model with the System Under Test.
 
   */
 
   compare [shape=square];
-  subgraph c\luster_eva\luation {
+  subgraph cluster_evaluation {
       compare;
   }
 
-  # NOTE: this \line on\ly used in ear\ly versions of the diagram
-  # \later we \link to the c\luster, not the node 
- {mode\l comparison_thing} -> compare;
+  # NOTE: this line only used in early versions of the diagram
+  # later we link to the cluster, not the node 
+ {model comparison_thing} -> compare;
 
 
 
   /*
-This generates output resu\lts from the comparison.
+This generates output results from the comparison.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis ];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis ];
   }
 
-  compare [shape=square, \labe\l="Comparison"];
-  compare -> output [\labe\l="Comparisons" \lhead=c\luster_comparison_outputs];
+  compare [shape=square, label="Comparison"];
+  compare -> output [label="Comparisons" lhead=cluster_comparison_outputs];
 
   /*
-Evidentia\l Observation Output can be used for
+Evidential Observation Output can be used for
 negative or positive confirmation.
   */
   
 
   /*
 Positive confirmation is often viewed as a 'Test Pass'.
-And basica\l\ly means that 'when we did something we observed
+And basically means that 'when we did something we observed
 that the system behaved the way that we expect'.
 
 NOTE: this does not mean that the system "works", it just means
@@ -1133,72 +1137,72 @@ that at some point in time, given a specific set of input and process
 we observed that the system behaaved as we expected.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=0 height=0];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=0 height=0];
     positive_confirmation;
   }
 
   positive_confirmation [
-    \labe\l="Positive\n Confirmation",
-    fi\l\lco\lor=green,
-    sty\le=fi\l\led
+    label="Positive\n Confirmation",
+    fillcolor=green,
+    style=filled
     ];
 
   /*
-Negative Confirmation is often ca\l\led a 'Test Fai\l'.
+Negative Confirmation is often called a 'Test Fail'.
 
 This means we observed something we did not expect.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
     positive_confirmation;
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=1 height=0];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=1 height=0];
     negative_confirmation;
   }
 
   negative_confirmation [
-    \labe\l ="Negative\n Confirmation",
-    fi\l\lco\lor=red,
-    sty\le=fi\l\led
+    label ="Negative\n Confirmation",
+    fillcolor=red,
+    style=filled
   ]
 
 
   /*
-These positive and negative reports are a visib\le output
+These positive and negative reports are a visible output
 from the Testing process.
   */
 
 
   /*
-So we have to investigate what fai\led during our comparison process.
+So we have to investigate what failed during our comparison process.
   */
 
   negative_confirmation -> investigation;
   investigation [
-    \labe\l="Investigate",
+    label="Investigate",
     shape=square
   ]
 
   /*
 This might mean:
 
-- a prob\lem with our mode\l
-- a prob\lem with the System Under Test
-- a prob\lem with our comparison process
+- a problem with our model
+- a problem with the System Under Test
+- a problem with our comparison process
 
 Either way it is something we have to investigate.
   */
 
-  investigation -> mode\l [
-    \labe\l="- Mode\l does not \\l  match rea\lity \\l- Change the mode\l.\\l"
+  investigation -> model [
+    label="- Model does not \\l  match reality \\l- Change the model.\\l"
   ];
 
 }
@@ -1211,90 +1215,90 @@ Either way it is something we have to investigate.
 digraph TestingBasics {
 
 
-  # make graph compound because we want to \link to c\lusters
+  # make graph compound because we want to link to clusters
   graph [compound=true];
 
-  # \labe\l text a\lignment: use backs\lash \l to have \left a\ligned new \lines and n for centered new \lines
+  # label text alignment: use backslash l to have left aligned new lines and n for centered new lines
 
   rankdir=TB;
   newrank="true";
 
-  #bgco\lor=transparent;
+  #bgcolor=transparent;
   
-  c\lusterrank=\loca\l
+  clusterrank=local
 
   /*
 
-Testing is underpinned by mode\ls.
+Testing is underpinned by models.
 
 e.g. requirements, user stories, scenarios, etc.
   
   */
   
-  mode\l;
+  model;
   
   /*
   
-We have the 'thing we are comparing with'. Usua\l\ly a System Under Test.
+We have the 'thing we are comparing with'. Usually a System Under Test.
 
   */
 
-  comparison_thing [\labe\l="System\n Under\n Test"];
+  comparison_thing [label="System\n Under\n Test"];
 
   /*
 
-The mode\l and the SUT are inputs to our testing process.
+The model and the SUT are inputs to our testing process.
 
   */
-  subgraph c\luster_inputs {
-    \labe\l="Inputs to Testing";
+  subgraph cluster_inputs {
+    label="Inputs to Testing";
     rank=same;
-    mode\l;
+    model;
     comparison_thing;
   }
 
   /*
 
-The simp\lest way to use a mode\l for testing is to compare
-the mode\l with the System Under Test.
+The simplest way to use a model for testing is to compare
+the model with the System Under Test.
 
   */
 
   compare [shape=square];
-  subgraph c\luster_eva\luation {
+  subgraph cluster_evaluation {
       compare;
   }
 
-  # NOTE: this \line on\ly used in ear\ly versions of the diagram
-  # \later we \link to the c\luster, not the node 
- {mode\l comparison_thing} -> compare;
+  # NOTE: this line only used in early versions of the diagram
+  # later we link to the cluster, not the node 
+ {model comparison_thing} -> compare;
 
 
 
   /*
-This generates output resu\lts from the comparison.
+This generates output results from the comparison.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis ];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis ];
   }
 
-  compare [shape=square, \labe\l="Comparison"];
-  compare -> output [\labe\l="Comparisons" \lhead=c\luster_comparison_outputs];
+  compare [shape=square, label="Comparison"];
+  compare -> output [label="Comparisons" lhead=cluster_comparison_outputs];
 
   /*
-Evidentia\l Observation Output can be used for
+Evidential Observation Output can be used for
 negative or positive confirmation.
   */
   
 
   /*
 Positive confirmation is often viewed as a 'Test Pass'.
-And basica\l\ly means that 'when we did something we observed
+And basically means that 'when we did something we observed
 that the system behaved the way that we expect'.
 
 NOTE: this does not mean that the system "works", it just means
@@ -1302,255 +1306,255 @@ that at some point in time, given a specific set of input and process
 we observed that the system behaaved as we expected.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=0 height=0];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=0 height=0];
     positive_confirmation;
   }
 
   positive_confirmation [
-    \labe\l="Positive\n Confirmation",
-    fi\l\lco\lor=green,
-    sty\le=fi\l\led
+    label="Positive\n Confirmation",
+    fillcolor=green,
+    style=filled
     ];
 
   /*
-Negative Confirmation is often ca\l\led a 'Test Fai\l'.
+Negative Confirmation is often called a 'Test Fail'.
 
 This means we observed something we did not expect.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
     positive_confirmation;
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=1 height=0];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=1 height=0];
     negative_confirmation;
   }
 
   negative_confirmation [
-    \labe\l ="Negative\n Confirmation",
-    fi\l\lco\lor=red,
-    sty\le=fi\l\led
+    label ="Negative\n Confirmation",
+    fillcolor=red,
+    style=filled
   ]
 
 
   /*
-These positive and negative reports are a visib\le output
+These positive and negative reports are a visible output
 from the Testing process.
   */
 
 
   /*
-So we have to investigate what fai\led during our comparison process.
+So we have to investigate what failed during our comparison process.
   */
 
   negative_confirmation -> investigation;
   investigation [
-    \labe\l="Investigate",
+    label="Investigate",
     shape=square
   ]
 
   /*
 This might mean:
 
-- a prob\lem with our mode\l
-- a prob\lem with the System Under Test
-- a prob\lem with our comparison process
+- a problem with our model
+- a problem with the System Under Test
+- a problem with our comparison process
 
 Either way it is something we have to investigate.
   */
 
-  investigation -> mode\l [
-    \labe\l="- Mode\l does not \\l  match rea\lity \\l- Change the mode\l.\\l"
-  ];
-
-  investigation -> compare [
-    \labe\l="- Process Issue.\\l- We did not use\\l  the system proper\ly.\\l- Re-eva\luate.\\l"
-    \lhead=c\luster_eva\luation
-  ];
-
-}
-
-
-
-
-`,
-`
-digraph TestingBasics {
-
-
-  # make graph compound because we want to \link to c\lusters
-  graph [compound=true];
-
-  # \labe\l text a\lignment: use backs\lash \l to have \left a\ligned new \lines and n for centered new \lines
-
-  rankdir=TB;
-  newrank="true";
-
-  #bgco\lor=transparent;
-  
-  c\lusterrank=\loca\l
-
-  /*
-
-Testing is underpinned by mode\ls.
-
-e.g. requirements, user stories, scenarios, etc.
-  
-  */
-  
-  mode\l;
-  
-  /*
-  
-We have the 'thing we are comparing with'. Usua\l\ly a System Under Test.
-
-  */
-
-  comparison_thing [\labe\l="System\n Under\n Test"];
-
-  /*
-
-The mode\l and the SUT are inputs to our testing process.
-
-  */
-  subgraph c\luster_inputs {
-    \labe\l="Inputs to Testing";
-    rank=same;
-    mode\l;
-    comparison_thing;
-  }
-
-  /*
-
-The simp\lest way to use a mode\l for testing is to compare
-the mode\l with the System Under Test.
-
-  */
-
-  compare [shape=square];
-  subgraph c\luster_eva\luation {
-      compare;
-  }
-
-  # NOTE: this \line on\ly used in ear\ly versions of the diagram
-  # \later we \link to the c\luster, not the node 
- {mode\l comparison_thing} -> compare;
-
-
-
-  /*
-This generates output resu\lts from the comparison.
-  */
-
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
-    rank=same
-    node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis ];
-  }
-
-  compare [shape=square, \labe\l="Comparison"];
-  compare -> output [\labe\l="Comparisons" \lhead=c\luster_comparison_outputs];
-
-  /*
-Evidentia\l Observation Output can be used for
-negative or positive confirmation.
-  */
-  
-
-  /*
-Positive confirmation is often viewed as a 'Test Pass'.
-And basica\l\ly means that 'when we did something we observed
-that the system behaved the way that we expect'.
-
-NOTE: this does not mean that the system "works", it just means
-that at some point in time, given a specific set of input and process
-we observed that the system behaaved as we expected.
-  */
-
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
-    rank=same
-    node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=0 height=0];
-    positive_confirmation;
-  }
-
-  positive_confirmation [
-    \labe\l="Positive\n Confirmation",
-    fi\l\lco\lor=green,
-    sty\le=fi\l\led
-    ];
-
-  /*
-Negative Confirmation is often ca\l\led a 'Test Fai\l'.
-
-This means we observed something we did not expect.
-  */
-
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
-    rank=same
-    node [rankdir=LR]
-    positive_confirmation;
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=1 height=0];
-    negative_confirmation;
-  }
-
-  negative_confirmation [
-    \labe\l ="Negative\n Confirmation",
-    fi\l\lco\lor=red,
-    sty\le=fi\l\led
-  ]
-
-
-  /*
-These positive and negative reports are a visib\le output
-from the Testing process.
-  */
-
-
-  /*
-So we have to investigate what fai\led during our comparison process.
-  */
-
-  negative_confirmation -> investigation;
-  investigation [
-    \labe\l="Investigate",
-    shape=square
-  ]
-
-  /*
-This might mean:
-
-- a prob\lem with our mode\l
-- a prob\lem with the System Under Test
-- a prob\lem with our comparison process
-
-Either way it is something we have to investigate.
-  */
-
-  investigation -> mode\l [
-    \labe\l="- Mode\l does not \\l  match rea\lity \\l- Change the mode\l.\\l"
+  investigation -> model [
+    label="- Model does not \\l  match reality \\l- Change the model.\\l"
   ];
 
   investigation -> compare [
-    \labe\l="- Process Issue.\\l- We did not use\\l  the system proper\ly.\\l- Re-eva\luate.\\l"
-    \lhead=c\luster_eva\luation
+    label="- Process Issue.\\l- We did not use\\l  the system properly.\\l- Re-evaluate.\\l"
+    lhead=cluster_evaluation
+  ];
+
+}
+
+
+
+
+`,
+`
+digraph TestingBasics {
+
+
+  # make graph compound because we want to link to clusters
+  graph [compound=true];
+
+  # label text alignment: use backslash l to have left aligned new lines and n for centered new lines
+
+  rankdir=TB;
+  newrank="true";
+
+  #bgcolor=transparent;
+  
+  clusterrank=local
+
+  /*
+
+Testing is underpinned by models.
+
+e.g. requirements, user stories, scenarios, etc.
+  
+  */
+  
+  model;
+  
+  /*
+  
+We have the 'thing we are comparing with'. Usually a System Under Test.
+
+  */
+
+  comparison_thing [label="System\n Under\n Test"];
+
+  /*
+
+The model and the SUT are inputs to our testing process.
+
+  */
+  subgraph cluster_inputs {
+    label="Inputs to Testing";
+    rank=same;
+    model;
+    comparison_thing;
+  }
+
+  /*
+
+The simplest way to use a model for testing is to compare
+the model with the System Under Test.
+
+  */
+
+  compare [shape=square];
+  subgraph cluster_evaluation {
+      compare;
+  }
+
+  # NOTE: this line only used in early versions of the diagram
+  # later we link to the cluster, not the node 
+ {model comparison_thing} -> compare;
+
+
+
+  /*
+This generates output results from the comparison.
+  */
+
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
+    rank=same
+    node [rankdir=LR]
+    // allow it to render without any visible nodes
+    output [ label="" style = invis ];
+  }
+
+  compare [shape=square, label="Comparison"];
+  compare -> output [label="Comparisons" lhead=cluster_comparison_outputs];
+
+  /*
+Evidential Observation Output can be used for
+negative or positive confirmation.
+  */
+  
+
+  /*
+Positive confirmation is often viewed as a 'Test Pass'.
+And basically means that 'when we did something we observed
+that the system behaved the way that we expect'.
+
+NOTE: this does not mean that the system "works", it just means
+that at some point in time, given a specific set of input and process
+we observed that the system behaaved as we expected.
+  */
+
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
+    rank=same
+    node [rankdir=LR]
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=0 height=0];
+    positive_confirmation;
+  }
+
+  positive_confirmation [
+    label="Positive\n Confirmation",
+    fillcolor=green,
+    style=filled
+    ];
+
+  /*
+Negative Confirmation is often called a 'Test Fail'.
+
+This means we observed something we did not expect.
+  */
+
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
+    rank=same
+    node [rankdir=LR]
+    positive_confirmation;
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=1 height=0];
+    negative_confirmation;
+  }
+
+  negative_confirmation [
+    label ="Negative\n Confirmation",
+    fillcolor=red,
+    style=filled
+  ]
+
+
+  /*
+These positive and negative reports are a visible output
+from the Testing process.
+  */
+
+
+  /*
+So we have to investigate what failed during our comparison process.
+  */
+
+  negative_confirmation -> investigation;
+  investigation [
+    label="Investigate",
+    shape=square
+  ]
+
+  /*
+This might mean:
+
+- a problem with our model
+- a problem with the System Under Test
+- a problem with our comparison process
+
+Either way it is something we have to investigate.
+  */
+
+  investigation -> model [
+    label="- Model does not \\l  match reality \\l- Change the model.\\l"
+  ];
+
+  investigation -> compare [
+    label="- Process Issue.\\l- We did not use\\l  the system properly.\\l- Re-evaluate.\\l"
+    lhead=cluster_evaluation
   ];
 
    investigation -> comparison_thing [
-     \labe\l="System does not match\n what we require.\n Found a Bug.\n Fix the System."
+     label="System does not match\n what we require.\n Found a Bug.\n Fix the System."
    ];
 
 }
@@ -1563,90 +1567,90 @@ Either way it is something we have to investigate.
 digraph TestingBasics {
 
 
-  # make graph compound because we want to \link to c\lusters
+  # make graph compound because we want to link to clusters
   graph [compound=true];
 
-  # \labe\l text a\lignment: use backs\lash \l to have \left a\ligned new \lines and n for centered new \lines
+  # label text alignment: use backslash l to have left aligned new lines and n for centered new lines
 
   rankdir=TB;
   newrank="true";
 
-  #bgco\lor=transparent;
+  #bgcolor=transparent;
   
-  c\lusterrank=\loca\l
+  clusterrank=local
 
   /*
 
-Testing is underpinned by mode\ls.
+Testing is underpinned by models.
 
 e.g. requirements, user stories, scenarios, etc.
   
   */
   
-  mode\l;
+  model;
   
   /*
   
-We have the 'thing we are comparing with'. Usua\l\ly a System Under Test.
+We have the 'thing we are comparing with'. Usually a System Under Test.
 
   */
 
-  comparison_thing [\labe\l="System\n Under\n Test"];
+  comparison_thing [label="System\n Under\n Test"];
 
   /*
 
-The mode\l and the SUT are inputs to our testing process.
+The model and the SUT are inputs to our testing process.
 
   */
-  subgraph c\luster_inputs {
-    \labe\l="Inputs to Testing";
+  subgraph cluster_inputs {
+    label="Inputs to Testing";
     rank=same;
-    mode\l;
+    model;
     comparison_thing;
   }
 
   /*
 
-The simp\lest way to use a mode\l for testing is to compare
-the mode\l with the System Under Test.
+The simplest way to use a model for testing is to compare
+the model with the System Under Test.
 
   */
 
   compare [shape=square];
-  subgraph c\luster_eva\luation {
+  subgraph cluster_evaluation {
       compare;
   }
 
-  # NOTE: this \line on\ly used in ear\ly versions of the diagram
-  # \later we \link to the c\luster, not the node 
- {mode\l comparison_thing} -> compare;
+  # NOTE: this line only used in early versions of the diagram
+  # later we link to the cluster, not the node 
+ {model comparison_thing} -> compare;
 
 
 
   /*
-This generates output resu\lts from the comparison.
+This generates output results from the comparison.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis ];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis ];
   }
 
-  compare [shape=square, \labe\l="Comparison"];
-  compare -> output [\labe\l="Comparisons" \lhead=c\luster_comparison_outputs];
+  compare [shape=square, label="Comparison"];
+  compare -> output [label="Comparisons" lhead=cluster_comparison_outputs];
 
   /*
-Evidentia\l Observation Output can be used for
+Evidential Observation Output can be used for
 negative or positive confirmation.
   */
   
 
   /*
 Positive confirmation is often viewed as a 'Test Pass'.
-And basica\l\ly means that 'when we did something we observed
+And basically means that 'when we did something we observed
 that the system behaved the way that we expect'.
 
 NOTE: this does not mean that the system "works", it just means
@@ -1654,92 +1658,92 @@ that at some point in time, given a specific set of input and process
 we observed that the system behaaved as we expected.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=0 height=0];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=0 height=0];
     positive_confirmation;
   }
 
   positive_confirmation [
-    \labe\l="Positive\n Confirmation",
-    fi\l\lco\lor=green,
-    sty\le=fi\l\led
+    label="Positive\n Confirmation",
+    fillcolor=green,
+    style=filled
     ];
 
   /*
-Negative Confirmation is often ca\l\led a 'Test Fai\l'.
+Negative Confirmation is often called a 'Test Fail'.
 
 This means we observed something we did not expect.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
     positive_confirmation;
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=1 height=0];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=1 height=0];
     negative_confirmation;
   }
 
   negative_confirmation [
-    \labe\l ="Negative\n Confirmation",
-    fi\l\lco\lor=red,
-    sty\le=fi\l\led
+    label ="Negative\n Confirmation",
+    fillcolor=red,
+    style=filled
   ]
 
 
   /*
-These positive and negative reports are a visib\le output
+These positive and negative reports are a visible output
 from the Testing process.
   */
 
 
   /*
-So we have to investigate what fai\led during our comparison process.
+So we have to investigate what failed during our comparison process.
   */
 
   negative_confirmation -> investigation;
   investigation [
-    \labe\l="Investigate",
+    label="Investigate",
     shape=square
   ]
 
   /*
 This might mean:
 
-- a prob\lem with our mode\l
-- a prob\lem with the System Under Test
-- a prob\lem with our comparison process
+- a problem with our model
+- a problem with the System Under Test
+- a problem with our comparison process
 
 Either way it is something we have to investigate.
   */
 
-  investigation -> mode\l [
-    \labe\l="- Mode\l does not \\l  match rea\lity \\l- Change the mode\l.\\l"
+  investigation -> model [
+    label="- Model does not \\l  match reality \\l- Change the model.\\l"
   ];
 
   investigation -> compare [
-    \labe\l="- Process Issue.\\l- We did not use\\l  the system proper\ly.\\l- Re-eva\luate.\\l"
-    \lhead=c\luster_eva\luation
+    label="- Process Issue.\\l- We did not use\\l  the system properly.\\l- Re-evaluate.\\l"
+    lhead=cluster_evaluation
   ];
 
   investigation -> raise_bug [
-    \labe\l="- System does not match\n what we require."
+    label="- System does not match\n what we require."
   ];
-  raise_bug [\labe\l="Raise Bug"];
+  raise_bug [label="Raise Bug"];
   raise_bug -> fix_bug;
-  fix_bug [\labe\l="Fix Bug"];
-  fix_bug -> comparison_thing [\labe\l="- Fix the System"];
+  fix_bug [label="Fix Bug"];
+  fix_bug -> comparison_thing [label="- Fix the System"];
 
 
-  subgraph c\luster_investigate {
+  subgraph cluster_investigate {
     investigation;
 
-        subgraph c\luster_defect_process {
+        subgraph cluster_defect_process {
           rank=same
           node [rankdir=LR]
           raise_bug;
@@ -1757,90 +1761,90 @@ Either way it is something we have to investigate.
 digraph TestingBasics {
 
 
-  # make graph compound because we want to \link to c\lusters
+  # make graph compound because we want to link to clusters
   graph [compound=true];
 
-  # \labe\l text a\lignment: use backs\lash \l to have \left a\ligned new \lines and n for centered new \lines
+  # label text alignment: use backslash l to have left aligned new lines and n for centered new lines
 
   rankdir=TB;
   newrank="true";
 
-  #bgco\lor=transparent;
+  #bgcolor=transparent;
   
-  c\lusterrank=\loca\l
+  clusterrank=local
 
   /*
 
-Testing is underpinned by mode\ls.
+Testing is underpinned by models.
 
 e.g. requirements, user stories, scenarios, etc.
   
   */
   
-  mode\l;
+  model;
   
   /*
   
-We have the 'thing we are comparing with'. Usua\l\ly a System Under Test.
+We have the 'thing we are comparing with'. Usually a System Under Test.
 
   */
 
-  comparison_thing [\labe\l="System\n Under\n Test"];
+  comparison_thing [label="System\n Under\n Test"];
 
   /*
 
-The mode\l and the SUT are inputs to our testing process.
+The model and the SUT are inputs to our testing process.
 
   */
-  subgraph c\luster_inputs {
-    \labe\l="Inputs to Testing";
+  subgraph cluster_inputs {
+    label="Inputs to Testing";
     rank=same;
-    mode\l;
+    model;
     comparison_thing;
   }
 
   /*
 
-The simp\lest way to use a mode\l for testing is to compare
-the mode\l with the System Under Test.
+The simplest way to use a model for testing is to compare
+the model with the System Under Test.
 
   */
 
   compare [shape=square];
-  subgraph c\luster_eva\luation {
+  subgraph cluster_evaluation {
       compare;
   }
 
-  # NOTE: this \line on\ly used in ear\ly versions of the diagram
-  # \later we \link to the c\luster, not the node 
- {mode\l comparison_thing} -> compare;
+  # NOTE: this line only used in early versions of the diagram
+  # later we link to the cluster, not the node 
+ {model comparison_thing} -> compare;
 
 
 
   /*
-This generates output resu\lts from the comparison.
+This generates output results from the comparison.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis ];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis ];
   }
 
-  compare [shape=square, \labe\l="Comparison"];
-  compare -> output [\labe\l="Comparisons" \lhead=c\luster_comparison_outputs];
+  compare [shape=square, label="Comparison"];
+  compare -> output [label="Comparisons" lhead=cluster_comparison_outputs];
 
   /*
-Evidentia\l Observation Output can be used for
+Evidential Observation Output can be used for
 negative or positive confirmation.
   */
   
 
   /*
 Positive confirmation is often viewed as a 'Test Pass'.
-And basica\l\ly means that 'when we did something we observed
+And basically means that 'when we did something we observed
 that the system behaved the way that we expect'.
 
 NOTE: this does not mean that the system "works", it just means
@@ -1848,92 +1852,92 @@ that at some point in time, given a specific set of input and process
 we observed that the system behaaved as we expected.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=0 height=0];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=0 height=0];
     positive_confirmation;
   }
 
   positive_confirmation [
-    \labe\l="Positive\n Confirmation",
-    fi\l\lco\lor=green,
-    sty\le=fi\l\led
+    label="Positive\n Confirmation",
+    fillcolor=green,
+    style=filled
     ];
 
   /*
-Negative Confirmation is often ca\l\led a 'Test Fai\l'.
+Negative Confirmation is often called a 'Test Fail'.
 
 This means we observed something we did not expect.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
     positive_confirmation;
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=1 height=0];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=1 height=0];
     negative_confirmation;
   }
 
   negative_confirmation [
-    \labe\l ="Negative\n Confirmation",
-    fi\l\lco\lor=red,
-    sty\le=fi\l\led
+    label ="Negative\n Confirmation",
+    fillcolor=red,
+    style=filled
   ]
 
 
   /*
-These positive and negative reports are a visib\le output
+These positive and negative reports are a visible output
 from the Testing process.
   */
 
 
   /*
-So we have to investigate what fai\led during our comparison process.
+So we have to investigate what failed during our comparison process.
   */
 
   negative_confirmation -> investigation;
   investigation [
-    \labe\l="Investigate",
+    label="Investigate",
     shape=square
   ]
 
   /*
 This might mean:
 
-- a prob\lem with our mode\l
-- a prob\lem with the System Under Test
-- a prob\lem with our comparison process
+- a problem with our model
+- a problem with the System Under Test
+- a problem with our comparison process
 
 Either way it is something we have to investigate.
   */
 
-  investigation -> mode\l [
-    \labe\l="- Mode\l does not \\l  match rea\lity \\l- Change the mode\l.\\l"
+  investigation -> model [
+    label="- Model does not \\l  match reality \\l- Change the model.\\l"
   ];
 
   investigation -> compare [
-    \labe\l="- Process Issue.\\l- We did not use\\l  the system proper\ly.\\l- Re-eva\luate.\\l"
-    \lhead=c\luster_eva\luation
+    label="- Process Issue.\\l- We did not use\\l  the system properly.\\l- Re-evaluate.\\l"
+    lhead=cluster_evaluation
   ];
 
   investigation -> raise_bug [
-    \labe\l="- System does not match\n what we require."
+    label="- System does not match\n what we require."
   ];
-  raise_bug [\labe\l="Raise Bug"];
+  raise_bug [label="Raise Bug"];
   raise_bug -> fix_bug;
-  fix_bug [\labe\l="Fix Bug"];
-  fix_bug -> comparison_thing [\labe\l="- Fix the System"];
+  fix_bug [label="Fix Bug"];
+  fix_bug -> comparison_thing [label="- Fix the System"];
 
 
-  subgraph c\luster_investigate {
+  subgraph cluster_investigate {
     investigation;
 
-        subgraph c\luster_defect_process {
+        subgraph cluster_defect_process {
           rank=same
           node [rankdir=LR]
           raise_bug;
@@ -1942,16 +1946,16 @@ Either way it is something we have to investigate.
   }
 
   /*
-A comparison process from mode\l to 'thing' isn't the on\ly process that
-Software Testing invo\lves, it's just one of the most obvious ways we have
-of eva\luating the Software.
+A comparison process from model to 'thing' isn't the only process that
+Software Testing involves, it's just one of the most obvious ways we have
+of evaluating the Software.
 
-And Software Testing is a process of eva\luating the software.
+And Software Testing is a process of evaluating the software.
 
   */
-  compare [sty\le=fi\l\led, fi\l\lco\lor=ye\l\low];
-  subgraph c\luster_eva\luation {
-      \labe\l="Eva\luation";
+  compare [style=filled, fillcolor=yellow];
+  subgraph cluster_evaluation {
+      label="Evaluation";
       compare;
   }
 
@@ -1965,90 +1969,90 @@ And Software Testing is a process of eva\luating the software.
 digraph TestingBasics {
 
 
-  # make graph compound because we want to \link to c\lusters
+  # make graph compound because we want to link to clusters
   graph [compound=true];
 
-  # \labe\l text a\lignment: use backs\lash \l to have \left a\ligned new \lines and n for centered new \lines
+  # label text alignment: use backslash l to have left aligned new lines and n for centered new lines
 
   rankdir=TB;
   newrank="true";
 
-  #bgco\lor=transparent;
+  #bgcolor=transparent;
   
-  c\lusterrank=\loca\l
+  clusterrank=local
 
   /*
 
-Testing is underpinned by mode\ls.
+Testing is underpinned by models.
 
 e.g. requirements, user stories, scenarios, etc.
   
   */
   
-  mode\l;
+  model;
   
   /*
   
-We have the 'thing we are comparing with'. Usua\l\ly a System Under Test.
+We have the 'thing we are comparing with'. Usually a System Under Test.
 
   */
 
-  comparison_thing [\labe\l="System\n Under\n Test"];
+  comparison_thing [label="System\n Under\n Test"];
 
   /*
 
-The mode\l and the SUT are inputs to our testing process.
+The model and the SUT are inputs to our testing process.
 
   */
-  subgraph c\luster_inputs {
-    \labe\l="Inputs to Testing";
+  subgraph cluster_inputs {
+    label="Inputs to Testing";
     rank=same;
-    mode\l;
+    model;
     comparison_thing;
   }
 
   /*
 
-The simp\lest way to use a mode\l for testing is to compare
-the mode\l with the System Under Test.
+The simplest way to use a model for testing is to compare
+the model with the System Under Test.
 
   */
 
   compare [shape=square];
-  subgraph c\luster_eva\luation {
+  subgraph cluster_evaluation {
       compare;
   }
 
-  # NOTE: this \line on\ly used in ear\ly versions of the diagram
-  # \later we \link to the c\luster, not the node 
- {mode\l comparison_thing} -> compare;
+  # NOTE: this line only used in early versions of the diagram
+  # later we link to the cluster, not the node 
+ {model comparison_thing} -> compare;
 
 
 
   /*
-This generates output resu\lts from the comparison.
+This generates output results from the comparison.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis ];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis ];
   }
 
-  compare [shape=square, \labe\l="Comparison"];
-  compare -> output [\labe\l="Comparisons" \lhead=c\luster_comparison_outputs];
+  compare [shape=square, label="Comparison"];
+  compare -> output [label="Comparisons" lhead=cluster_comparison_outputs];
 
   /*
-Evidentia\l Observation Output can be used for
+Evidential Observation Output can be used for
 negative or positive confirmation.
   */
   
 
   /*
 Positive confirmation is often viewed as a 'Test Pass'.
-And basica\l\ly means that 'when we did something we observed
+And basically means that 'when we did something we observed
 that the system behaved the way that we expect'.
 
 NOTE: this does not mean that the system "works", it just means
@@ -2056,92 +2060,92 @@ that at some point in time, given a specific set of input and process
 we observed that the system behaaved as we expected.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=0 height=0];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=0 height=0];
     positive_confirmation;
   }
 
   positive_confirmation [
-    \labe\l="Positive\n Confirmation",
-    fi\l\lco\lor=green,
-    sty\le=fi\l\led
+    label="Positive\n Confirmation",
+    fillcolor=green,
+    style=filled
     ];
 
   /*
-Negative Confirmation is often ca\l\led a 'Test Fai\l'.
+Negative Confirmation is often called a 'Test Fail'.
 
 This means we observed something we did not expect.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
     positive_confirmation;
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=1 height=0];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=1 height=0];
     negative_confirmation;
   }
 
   negative_confirmation [
-    \labe\l ="Negative\n Confirmation",
-    fi\l\lco\lor=red,
-    sty\le=fi\l\led
+    label ="Negative\n Confirmation",
+    fillcolor=red,
+    style=filled
   ]
 
 
   /*
-These positive and negative reports are a visib\le output
+These positive and negative reports are a visible output
 from the Testing process.
   */
 
 
   /*
-So we have to investigate what fai\led during our comparison process.
+So we have to investigate what failed during our comparison process.
   */
 
   negative_confirmation -> investigation;
   investigation [
-    \labe\l="Investigate",
+    label="Investigate",
     shape=square
   ]
 
   /*
 This might mean:
 
-- a prob\lem with our mode\l
-- a prob\lem with the System Under Test
-- a prob\lem with our comparison process
+- a problem with our model
+- a problem with the System Under Test
+- a problem with our comparison process
 
 Either way it is something we have to investigate.
   */
 
-  investigation -> mode\l [
-    \labe\l="- Mode\l does not \\l  match rea\lity \\l- Change the mode\l.\\l"
+  investigation -> model [
+    label="- Model does not \\l  match reality \\l- Change the model.\\l"
   ];
 
   investigation -> compare [
-    \labe\l="- Process Issue.\\l- We did not use\\l  the system proper\ly.\\l- Re-eva\luate.\\l"
-    \lhead=c\luster_eva\luation
+    label="- Process Issue.\\l- We did not use\\l  the system properly.\\l- Re-evaluate.\\l"
+    lhead=cluster_evaluation
   ];
 
   investigation -> raise_bug [
-    \labe\l="- System does not match\n what we require."
+    label="- System does not match\n what we require."
   ];
-  raise_bug [\labe\l="Raise Bug"];
+  raise_bug [label="Raise Bug"];
   raise_bug -> fix_bug;
-  fix_bug [\labe\l="Fix Bug"];
-  fix_bug -> comparison_thing [\labe\l="- Fix the System"];
+  fix_bug [label="Fix Bug"];
+  fix_bug -> comparison_thing [label="- Fix the System"];
 
 
-  subgraph c\luster_investigate {
+  subgraph cluster_investigate {
     investigation;
 
-        subgraph c\luster_defect_process {
+        subgraph cluster_defect_process {
           rank=same
           node [rankdir=LR]
           raise_bug;
@@ -2150,44 +2154,44 @@ Either way it is something we have to investigate.
   }
 
   /*
-A comparison process from mode\l to 'thing' isn't the on\ly process that
-Software Testing invo\lves, it's just one of the most obvious ways we have
-of eva\luating the Software.
+A comparison process from model to 'thing' isn't the only process that
+Software Testing involves, it's just one of the most obvious ways we have
+of evaluating the Software.
 
-And Software Testing is a process of eva\luating the software.
+And Software Testing is a process of evaluating the software.
 
   */
-  compare [sty\le=fi\l\led, fi\l\lco\lor=ye\l\low];
-  subgraph c\luster_eva\luation {
-      \labe\l="Eva\luation";
+  compare [style=filled, fillcolor=yellow];
+  subgraph cluster_evaluation {
+      label="Evaluation";
       compare;
   }
 
   /*
 
-We can direct\ly compare Requirements with the Software for high \leve\l surface
-positive or negative confirmation that a requirement has been imp\lemented.
+We can directly compare Requirements with the Software for high level surface
+positive or negative confirmation that a requirement has been implemented.
 
-e.g. "A User must be ab\le to \login with their username and password." can be
-confirmed quite simp\ly by \logging in with an existing user and their correct
+e.g. "A User must be able to login with their username and password." can be
+confirmed quite simply by logging in with an existing user and their correct
 password.
 
-But during the Software Testing process we a\lso try to expand our mode\l beyond
+But during the Software Testing process we also try to expand our model beyond
 Requirements.
 
-We a\lso exp\lore our mode\l in conjunction with the system to \learn more about
-our mode\l and as a consequence, the system itse\lf.
+We also explore our model in conjunction with the system to learn more about
+our model and as a consequence, the system itself.
   
   */
 
-  compare [sty\le=fi\l\led, fi\l\lco\lor=white];
-  subgraph c\luster_eva\luation {
+  compare [style=filled, fillcolor=white];
+  subgraph cluster_evaluation {
       rank=same
       node [rankdir=LR]
-      \labe\l="Eva\luation";
+      label="Evaluation";
       compare;
-      mode\l\ling;
-      exp\loration;
+      modelling;
+      exploration;
   }
 
 }
@@ -2200,90 +2204,90 @@ our mode\l and as a consequence, the system itse\lf.
 digraph TestingBasics {
 
 
-  # make graph compound because we want to \link to c\lusters
+  # make graph compound because we want to link to clusters
   graph [compound=true];
 
-  # \labe\l text a\lignment: use backs\lash \l to have \left a\ligned new \lines and n for centered new \lines
+  # label text alignment: use backslash l to have left aligned new lines and n for centered new lines
 
   rankdir=TB;
   newrank="true";
 
-  #bgco\lor=transparent;
+  #bgcolor=transparent;
   
-  c\lusterrank=\loca\l
+  clusterrank=local
 
   /*
 
-Testing is underpinned by mode\ls.
+Testing is underpinned by models.
 
 e.g. requirements, user stories, scenarios, etc.
   
   */
   
-  mode\l;
+  model;
   
   /*
   
-We have the 'thing we are comparing with'. Usua\l\ly a System Under Test.
+We have the 'thing we are comparing with'. Usually a System Under Test.
 
   */
 
-  comparison_thing [\labe\l="System\n Under\n Test"];
+  comparison_thing [label="System\n Under\n Test"];
 
   /*
 
-The mode\l and the SUT are inputs to our testing process.
+The model and the SUT are inputs to our testing process.
 
   */
-  subgraph c\luster_inputs {
-    \labe\l="Inputs to Testing";
+  subgraph cluster_inputs {
+    label="Inputs to Testing";
     rank=same;
-    mode\l;
+    model;
     comparison_thing;
   }
 
   /*
 
-The simp\lest way to use a mode\l for testing is to compare
-the mode\l with the System Under Test.
+The simplest way to use a model for testing is to compare
+the model with the System Under Test.
 
   */
 
   compare [shape=square];
-  subgraph c\luster_eva\luation {
+  subgraph cluster_evaluation {
       compare;
   }
 
-  # NOTE: this \line on\ly used in ear\ly versions of the diagram
-  # \later we \link to the c\luster, not the node 
- {mode\l comparison_thing} -> compare;
+  # NOTE: this line only used in early versions of the diagram
+  # later we link to the cluster, not the node 
+ {model comparison_thing} -> compare;
 
 
 
   /*
-This generates output resu\lts from the comparison.
+This generates output results from the comparison.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis ];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis ];
   }
 
-  compare [shape=square, \labe\l="Comparison"];
-  compare -> output [\labe\l="Comparisons" \lhead=c\luster_comparison_outputs];
+  compare [shape=square, label="Comparison"];
+  compare -> output [label="Comparisons" lhead=cluster_comparison_outputs];
 
   /*
-Evidentia\l Observation Output can be used for
+Evidential Observation Output can be used for
 negative or positive confirmation.
   */
   
 
   /*
 Positive confirmation is often viewed as a 'Test Pass'.
-And basica\l\ly means that 'when we did something we observed
+And basically means that 'when we did something we observed
 that the system behaved the way that we expect'.
 
 NOTE: this does not mean that the system "works", it just means
@@ -2291,92 +2295,92 @@ that at some point in time, given a specific set of input and process
 we observed that the system behaaved as we expected.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=0 height=0];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=0 height=0];
     positive_confirmation;
   }
 
   positive_confirmation [
-    \labe\l="Positive\n Confirmation",
-    fi\l\lco\lor=green,
-    sty\le=fi\l\led
+    label="Positive\n Confirmation",
+    fillcolor=green,
+    style=filled
     ];
 
   /*
-Negative Confirmation is often ca\l\led a 'Test Fai\l'.
+Negative Confirmation is often called a 'Test Fail'.
 
 This means we observed something we did not expect.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
     positive_confirmation;
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=1 height=0];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=1 height=0];
     negative_confirmation;
   }
 
   negative_confirmation [
-    \labe\l ="Negative\n Confirmation",
-    fi\l\lco\lor=red,
-    sty\le=fi\l\led
+    label ="Negative\n Confirmation",
+    fillcolor=red,
+    style=filled
   ]
 
 
   /*
-These positive and negative reports are a visib\le output
+These positive and negative reports are a visible output
 from the Testing process.
   */
 
 
   /*
-So we have to investigate what fai\led during our comparison process.
+So we have to investigate what failed during our comparison process.
   */
 
   negative_confirmation -> investigation;
   investigation [
-    \labe\l="Investigate",
+    label="Investigate",
     shape=square
   ]
 
   /*
 This might mean:
 
-- a prob\lem with our mode\l
-- a prob\lem with the System Under Test
-- a prob\lem with our comparison process
+- a problem with our model
+- a problem with the System Under Test
+- a problem with our comparison process
 
 Either way it is something we have to investigate.
   */
 
-  investigation -> mode\l [
-    \labe\l="- Mode\l does not \\l  match rea\lity \\l- Change the mode\l.\\l"
+  investigation -> model [
+    label="- Model does not \\l  match reality \\l- Change the model.\\l"
   ];
 
   investigation -> compare [
-    \labe\l="- Process Issue.\\l- We did not use\\l  the system proper\ly.\\l- Re-eva\luate.\\l"
-    \lhead=c\luster_eva\luation
+    label="- Process Issue.\\l- We did not use\\l  the system properly.\\l- Re-evaluate.\\l"
+    lhead=cluster_evaluation
   ];
 
   investigation -> raise_bug [
-    \labe\l="- System does not match\n what we require."
+    label="- System does not match\n what we require."
   ];
-  raise_bug [\labe\l="Raise Bug"];
+  raise_bug [label="Raise Bug"];
   raise_bug -> fix_bug;
-  fix_bug [\labe\l="Fix Bug"];
-  fix_bug -> comparison_thing [\labe\l="- Fix the System"];
+  fix_bug [label="Fix Bug"];
+  fix_bug -> comparison_thing [label="- Fix the System"];
 
 
-  subgraph c\luster_investigate {
+  subgraph cluster_investigate {
     investigation;
 
-        subgraph c\luster_defect_process {
+        subgraph cluster_defect_process {
           rank=same
           node [rankdir=LR]
           raise_bug;
@@ -2385,67 +2389,67 @@ Either way it is something we have to investigate.
   }
 
   /*
-A comparison process from mode\l to 'thing' isn't the on\ly process that
-Software Testing invo\lves, it's just one of the most obvious ways we have
-of eva\luating the Software.
+A comparison process from model to 'thing' isn't the only process that
+Software Testing involves, it's just one of the most obvious ways we have
+of evaluating the Software.
 
-And Software Testing is a process of eva\luating the software.
+And Software Testing is a process of evaluating the software.
 
   */
-  compare [sty\le=fi\l\led, fi\l\lco\lor=ye\l\low];
-  subgraph c\luster_eva\luation {
-      \labe\l="Eva\luation";
+  compare [style=filled, fillcolor=yellow];
+  subgraph cluster_evaluation {
+      label="Evaluation";
       compare;
   }
 
   /*
 
-We can direct\ly compare Requirements with the Software for high \leve\l surface
-positive or negative confirmation that a requirement has been imp\lemented.
+We can directly compare Requirements with the Software for high level surface
+positive or negative confirmation that a requirement has been implemented.
 
-e.g. "A User must be ab\le to \login with their username and password." can be
-confirmed quite simp\ly by \logging in with an existing user and their correct
+e.g. "A User must be able to login with their username and password." can be
+confirmed quite simply by logging in with an existing user and their correct
 password.
 
-But during the Software Testing process we a\lso try to expand our mode\l beyond
+But during the Software Testing process we also try to expand our model beyond
 Requirements.
 
-We a\lso exp\lore our mode\l in conjunction with the system to \learn more about
-our mode\l and as a consequence, the system itse\lf.
+We also explore our model in conjunction with the system to learn more about
+our model and as a consequence, the system itself.
   
   */
 
-  compare [sty\le=fi\l\led, fi\l\lco\lor=white];
-  subgraph c\luster_eva\luation {
+  compare [style=filled, fillcolor=white];
+  subgraph cluster_evaluation {
       rank=same
       node [rankdir=LR]
-      \labe\l="Eva\luation";
+      label="Evaluation";
       compare;
-      mode\l\ling;
-      exp\loration;
+      modelling;
+      exploration;
   }
 
   /*
 
-Software Testing has to exp\lore our mode\l to identify:
+Software Testing has to explore our model to identify:
 
 - risks
 - ambiguity
-- gaps in the mode\ls and imp\lementation
+- gaps in the models and implementation
 - etc.
 
 This raises questions which we have to investigate and discuss.
 
-The ongoing process of mode\l\ling is how we generate our ideas
-for testing and how we find new ways to exp\lore the software.
+The ongoing process of modelling is how we generate our ideas
+for testing and how we find new ways to explore the software.
 
   */
 
 
-  mode\l\ling [\labe\l="Mode\ling", shape=square, sty\le=fi\l\led, fi\l\lco\lor=ye\l\low];
-  mode\l\ling -> mode\l [
-    \labe\l="Expand Mode\l:\\l\\l- risks\\l- ambiguity\\l- gaps\\l- questions\\l - etc.\\l"
-    \ltai\l=c\luster_eva\luation;
+  modelling [label="Modeling", shape=square, style=filled, fillcolor=yellow];
+  modelling -> model [
+    label="Expand Model:\\l\\l- risks\\l- ambiguity\\l- gaps\\l- questions\\l - etc.\\l"
+    ltail=cluster_evaluation;
   ];
 
 }
@@ -2458,90 +2462,90 @@ for testing and how we find new ways to exp\lore the software.
 digraph TestingBasics {
 
 
-  # make graph compound because we want to \link to c\lusters
+  # make graph compound because we want to link to clusters
   graph [compound=true];
 
-  # \labe\l text a\lignment: use backs\lash \l to have \left a\ligned new \lines and n for centered new \lines
+  # label text alignment: use backslash l to have left aligned new lines and n for centered new lines
 
   rankdir=TB;
   newrank="true";
 
-  #bgco\lor=transparent;
+  #bgcolor=transparent;
   
-  c\lusterrank=\loca\l
+  clusterrank=local
 
   /*
 
-Testing is underpinned by mode\ls.
+Testing is underpinned by models.
 
 e.g. requirements, user stories, scenarios, etc.
   
   */
   
-  mode\l;
+  model;
   
   /*
   
-We have the 'thing we are comparing with'. Usua\l\ly a System Under Test.
+We have the 'thing we are comparing with'. Usually a System Under Test.
 
   */
 
-  comparison_thing [\labe\l="System\n Under\n Test"];
+  comparison_thing [label="System\n Under\n Test"];
 
   /*
 
-The mode\l and the SUT are inputs to our testing process.
+The model and the SUT are inputs to our testing process.
 
   */
-  subgraph c\luster_inputs {
-    \labe\l="Inputs to Testing";
+  subgraph cluster_inputs {
+    label="Inputs to Testing";
     rank=same;
-    mode\l;
+    model;
     comparison_thing;
   }
 
   /*
 
-The simp\lest way to use a mode\l for testing is to compare
-the mode\l with the System Under Test.
+The simplest way to use a model for testing is to compare
+the model with the System Under Test.
 
   */
 
   compare [shape=square];
-  subgraph c\luster_eva\luation {
+  subgraph cluster_evaluation {
       compare;
   }
 
-  # NOTE: this \line on\ly used in ear\ly versions of the diagram
-  # \later we \link to the c\luster, not the node 
- {mode\l comparison_thing} -> compare;
+  # NOTE: this line only used in early versions of the diagram
+  # later we link to the cluster, not the node 
+ {model comparison_thing} -> compare;
 
 
 
   /*
-This generates output resu\lts from the comparison.
+This generates output results from the comparison.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis ];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis ];
   }
 
-  compare [shape=square, \labe\l="Comparison"];
-  compare -> output [\labe\l="Comparisons" \lhead=c\luster_comparison_outputs];
+  compare [shape=square, label="Comparison"];
+  compare -> output [label="Comparisons" lhead=cluster_comparison_outputs];
 
   /*
-Evidentia\l Observation Output can be used for
+Evidential Observation Output can be used for
 negative or positive confirmation.
   */
   
 
   /*
 Positive confirmation is often viewed as a 'Test Pass'.
-And basica\l\ly means that 'when we did something we observed
+And basically means that 'when we did something we observed
 that the system behaved the way that we expect'.
 
 NOTE: this does not mean that the system "works", it just means
@@ -2549,92 +2553,92 @@ that at some point in time, given a specific set of input and process
 we observed that the system behaaved as we expected.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=0 height=0];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=0 height=0];
     positive_confirmation;
   }
 
   positive_confirmation [
-    \labe\l="Positive\n Confirmation",
-    fi\l\lco\lor=green,
-    sty\le=fi\l\led
+    label="Positive\n Confirmation",
+    fillcolor=green,
+    style=filled
     ];
 
   /*
-Negative Confirmation is often ca\l\led a 'Test Fai\l'.
+Negative Confirmation is often called a 'Test Fail'.
 
 This means we observed something we did not expect.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
     positive_confirmation;
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=1 height=0];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=1 height=0];
     negative_confirmation;
   }
 
   negative_confirmation [
-    \labe\l ="Negative\n Confirmation",
-    fi\l\lco\lor=red,
-    sty\le=fi\l\led
+    label ="Negative\n Confirmation",
+    fillcolor=red,
+    style=filled
   ]
 
 
   /*
-These positive and negative reports are a visib\le output
+These positive and negative reports are a visible output
 from the Testing process.
   */
 
 
   /*
-So we have to investigate what fai\led during our comparison process.
+So we have to investigate what failed during our comparison process.
   */
 
   negative_confirmation -> investigation;
   investigation [
-    \labe\l="Investigate",
+    label="Investigate",
     shape=square
   ]
 
   /*
 This might mean:
 
-- a prob\lem with our mode\l
-- a prob\lem with the System Under Test
-- a prob\lem with our comparison process
+- a problem with our model
+- a problem with the System Under Test
+- a problem with our comparison process
 
 Either way it is something we have to investigate.
   */
 
-  investigation -> mode\l [
-    \labe\l="- Mode\l does not \\l  match rea\lity \\l- Change the mode\l.\\l"
+  investigation -> model [
+    label="- Model does not \\l  match reality \\l- Change the model.\\l"
   ];
 
   investigation -> compare [
-    \labe\l="- Process Issue.\\l- We did not use\\l  the system proper\ly.\\l- Re-eva\luate.\\l"
-    \lhead=c\luster_eva\luation
+    label="- Process Issue.\\l- We did not use\\l  the system properly.\\l- Re-evaluate.\\l"
+    lhead=cluster_evaluation
   ];
 
   investigation -> raise_bug [
-    \labe\l="- System does not match\n what we require."
+    label="- System does not match\n what we require."
   ];
-  raise_bug [\labe\l="Raise Bug"];
+  raise_bug [label="Raise Bug"];
   raise_bug -> fix_bug;
-  fix_bug [\labe\l="Fix Bug"];
-  fix_bug -> comparison_thing [\labe\l="- Fix the System"];
+  fix_bug [label="Fix Bug"];
+  fix_bug -> comparison_thing [label="- Fix the System"];
 
 
-  subgraph c\luster_investigate {
+  subgraph cluster_investigate {
     investigation;
 
-        subgraph c\luster_defect_process {
+        subgraph cluster_defect_process {
           rank=same
           node [rankdir=LR]
           raise_bug;
@@ -2643,78 +2647,78 @@ Either way it is something we have to investigate.
   }
 
   /*
-A comparison process from mode\l to 'thing' isn't the on\ly process that
-Software Testing invo\lves, it's just one of the most obvious ways we have
-of eva\luating the Software.
+A comparison process from model to 'thing' isn't the only process that
+Software Testing involves, it's just one of the most obvious ways we have
+of evaluating the Software.
 
-And Software Testing is a process of eva\luating the software.
+And Software Testing is a process of evaluating the software.
 
   */
-  compare [sty\le=fi\l\led, fi\l\lco\lor=ye\l\low];
-  subgraph c\luster_eva\luation {
-      \labe\l="Eva\luation";
+  compare [style=filled, fillcolor=yellow];
+  subgraph cluster_evaluation {
+      label="Evaluation";
       compare;
   }
 
   /*
 
-We can direct\ly compare Requirements with the Software for high \leve\l surface
-positive or negative confirmation that a requirement has been imp\lemented.
+We can directly compare Requirements with the Software for high level surface
+positive or negative confirmation that a requirement has been implemented.
 
-e.g. "A User must be ab\le to \login with their username and password." can be
-confirmed quite simp\ly by \logging in with an existing user and their correct
+e.g. "A User must be able to login with their username and password." can be
+confirmed quite simply by logging in with an existing user and their correct
 password.
 
-But during the Software Testing process we a\lso try to expand our mode\l beyond
+But during the Software Testing process we also try to expand our model beyond
 Requirements.
 
-We a\lso exp\lore our mode\l in conjunction with the system to \learn more about
-our mode\l and as a consequence, the system itse\lf.
+We also explore our model in conjunction with the system to learn more about
+our model and as a consequence, the system itself.
   
   */
 
-  compare [sty\le=fi\l\led, fi\l\lco\lor=white];
-  subgraph c\luster_eva\luation {
+  compare [style=filled, fillcolor=white];
+  subgraph cluster_evaluation {
       rank=same
       node [rankdir=LR]
-      \labe\l="Eva\luation";
+      label="Evaluation";
       compare;
-      mode\l\ling;
-      exp\loration;
+      modelling;
+      exploration;
   }
 
   /*
 
-Software Testing has to exp\lore our mode\l to identify:
+Software Testing has to explore our model to identify:
 
 - risks
 - ambiguity
-- gaps in the mode\ls and imp\lementation
+- gaps in the models and implementation
 - etc.
 
 This raises questions which we have to investigate and discuss.
 
-The ongoing process of mode\l\ling is how we generate our ideas
-for testing and how we find new ways to exp\lore the software.
+The ongoing process of modelling is how we generate our ideas
+for testing and how we find new ways to explore the software.
 
   */
 
 
-  mode\l\ling [\labe\l="Mode\ling", shape=square, sty\le=fi\l\led, fi\l\lco\lor=ye\l\low];
-  mode\l\ling -> mode\l [
-    \labe\l="Expand Mode\l:\\l\\l- risks\\l- ambiguity\\l- gaps\\l- questions\\l - etc.\\l"
-    \ltai\l=c\luster_eva\luation;
+  modelling [label="Modeling", shape=square, style=filled, fillcolor=yellow];
+  modelling -> model [
+    label="Expand Model:\\l\\l- risks\\l- ambiguity\\l- gaps\\l- questions\\l - etc.\\l"
+    ltail=cluster_evaluation;
   ];
 
   /*
-The mode\l is both an input to testing, and an output from Testing.
+The model is both an input to testing, and an output from Testing.
 
-Parts of the mode\l wi\l\l be stored in the Tester's head as a menta\l mode\l.
+Parts of the model will be stored in the Tester's head as a mental model.
 
-Other parts wi\l\l be visib\le in the form of diagrams, reports,
-\lists of test ideas, etc.
+Other parts will be visible in the form of diagrams, reports,
+lists of test ideas, etc.
   */
-  mode\l [\labe\l="Mode\l" sty\le=fi\l\led fi\l\lco\lor=ye\l\low];
+  model [label="Model" style=filled fillcolor=yellow];
 
 }
 
@@ -2726,90 +2730,90 @@ Other parts wi\l\l be visib\le in the form of diagrams, reports,
 digraph TestingBasics {
 
 
-  # make graph compound because we want to \link to c\lusters
+  # make graph compound because we want to link to clusters
   graph [compound=true];
 
-  # \labe\l text a\lignment: use backs\lash \l to have \left a\ligned new \lines and n for centered new \lines
+  # label text alignment: use backslash l to have left aligned new lines and n for centered new lines
 
   rankdir=TB;
   newrank="true";
 
-  #bgco\lor=transparent;
+  #bgcolor=transparent;
   
-  c\lusterrank=\loca\l
+  clusterrank=local
 
   /*
 
-Testing is underpinned by mode\ls.
+Testing is underpinned by models.
 
 e.g. requirements, user stories, scenarios, etc.
   
   */
   
-  mode\l;
+  model;
   
   /*
   
-We have the 'thing we are comparing with'. Usua\l\ly a System Under Test.
+We have the 'thing we are comparing with'. Usually a System Under Test.
 
   */
 
-  comparison_thing [\labe\l="System\n Under\n Test"];
+  comparison_thing [label="System\n Under\n Test"];
 
   /*
 
-The mode\l and the SUT are inputs to our testing process.
+The model and the SUT are inputs to our testing process.
 
   */
-  subgraph c\luster_inputs {
-    \labe\l="Inputs to Testing";
+  subgraph cluster_inputs {
+    label="Inputs to Testing";
     rank=same;
-    mode\l;
+    model;
     comparison_thing;
   }
 
   /*
 
-The simp\lest way to use a mode\l for testing is to compare
-the mode\l with the System Under Test.
+The simplest way to use a model for testing is to compare
+the model with the System Under Test.
 
   */
 
   compare [shape=square];
-  subgraph c\luster_eva\luation {
+  subgraph cluster_evaluation {
       compare;
   }
 
-  # NOTE: this \line on\ly used in ear\ly versions of the diagram
-  # \later we \link to the c\luster, not the node 
- {mode\l comparison_thing} -> compare;
+  # NOTE: this line only used in early versions of the diagram
+  # later we link to the cluster, not the node 
+ {model comparison_thing} -> compare;
 
 
 
   /*
-This generates output resu\lts from the comparison.
+This generates output results from the comparison.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis ];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis ];
   }
 
-  compare [shape=square, \labe\l="Comparison"];
-  compare -> output [\labe\l="Comparisons" \lhead=c\luster_comparison_outputs];
+  compare [shape=square, label="Comparison"];
+  compare -> output [label="Comparisons" lhead=cluster_comparison_outputs];
 
   /*
-Evidentia\l Observation Output can be used for
+Evidential Observation Output can be used for
 negative or positive confirmation.
   */
   
 
   /*
 Positive confirmation is often viewed as a 'Test Pass'.
-And basica\l\ly means that 'when we did something we observed
+And basically means that 'when we did something we observed
 that the system behaved the way that we expect'.
 
 NOTE: this does not mean that the system "works", it just means
@@ -2817,92 +2821,92 @@ that at some point in time, given a specific set of input and process
 we observed that the system behaaved as we expected.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=0 height=0];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=0 height=0];
     positive_confirmation;
   }
 
   positive_confirmation [
-    \labe\l="Positive\n Confirmation",
-    fi\l\lco\lor=green,
-    sty\le=fi\l\led
+    label="Positive\n Confirmation",
+    fillcolor=green,
+    style=filled
     ];
 
   /*
-Negative Confirmation is often ca\l\led a 'Test Fai\l'.
+Negative Confirmation is often called a 'Test Fail'.
 
 This means we observed something we did not expect.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
     positive_confirmation;
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=1 height=0];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=1 height=0];
     negative_confirmation;
   }
 
   negative_confirmation [
-    \labe\l ="Negative\n Confirmation",
-    fi\l\lco\lor=red,
-    sty\le=fi\l\led
+    label ="Negative\n Confirmation",
+    fillcolor=red,
+    style=filled
   ]
 
 
   /*
-These positive and negative reports are a visib\le output
+These positive and negative reports are a visible output
 from the Testing process.
   */
 
 
   /*
-So we have to investigate what fai\led during our comparison process.
+So we have to investigate what failed during our comparison process.
   */
 
   negative_confirmation -> investigation;
   investigation [
-    \labe\l="Investigate",
+    label="Investigate",
     shape=square
   ]
 
   /*
 This might mean:
 
-- a prob\lem with our mode\l
-- a prob\lem with the System Under Test
-- a prob\lem with our comparison process
+- a problem with our model
+- a problem with the System Under Test
+- a problem with our comparison process
 
 Either way it is something we have to investigate.
   */
 
-  investigation -> mode\l [
-    \labe\l="- Mode\l does not \\l  match rea\lity \\l- Change the mode\l.\\l"
+  investigation -> model [
+    label="- Model does not \\l  match reality \\l- Change the model.\\l"
   ];
 
   investigation -> compare [
-    \labe\l="- Process Issue.\\l- We did not use\\l  the system proper\ly.\\l- Re-eva\luate.\\l"
-    \lhead=c\luster_eva\luation
+    label="- Process Issue.\\l- We did not use\\l  the system properly.\\l- Re-evaluate.\\l"
+    lhead=cluster_evaluation
   ];
 
   investigation -> raise_bug [
-    \labe\l="- System does not match\n what we require."
+    label="- System does not match\n what we require."
   ];
-  raise_bug [\labe\l="Raise Bug"];
+  raise_bug [label="Raise Bug"];
   raise_bug -> fix_bug;
-  fix_bug [\labe\l="Fix Bug"];
-  fix_bug -> comparison_thing [\labe\l="- Fix the System"];
+  fix_bug [label="Fix Bug"];
+  fix_bug -> comparison_thing [label="- Fix the System"];
 
 
-  subgraph c\luster_investigate {
+  subgraph cluster_investigate {
     investigation;
 
-        subgraph c\luster_defect_process {
+        subgraph cluster_defect_process {
           rank=same
           node [rankdir=LR]
           raise_bug;
@@ -2911,89 +2915,89 @@ Either way it is something we have to investigate.
   }
 
   /*
-A comparison process from mode\l to 'thing' isn't the on\ly process that
-Software Testing invo\lves, it's just one of the most obvious ways we have
-of eva\luating the Software.
+A comparison process from model to 'thing' isn't the only process that
+Software Testing involves, it's just one of the most obvious ways we have
+of evaluating the Software.
 
-And Software Testing is a process of eva\luating the software.
+And Software Testing is a process of evaluating the software.
 
   */
-  compare [sty\le=fi\l\led, fi\l\lco\lor=ye\l\low];
-  subgraph c\luster_eva\luation {
-      \labe\l="Eva\luation";
+  compare [style=filled, fillcolor=yellow];
+  subgraph cluster_evaluation {
+      label="Evaluation";
       compare;
   }
 
   /*
 
-We can direct\ly compare Requirements with the Software for high \leve\l surface
-positive or negative confirmation that a requirement has been imp\lemented.
+We can directly compare Requirements with the Software for high level surface
+positive or negative confirmation that a requirement has been implemented.
 
-e.g. "A User must be ab\le to \login with their username and password." can be
-confirmed quite simp\ly by \logging in with an existing user and their correct
+e.g. "A User must be able to login with their username and password." can be
+confirmed quite simply by logging in with an existing user and their correct
 password.
 
-But during the Software Testing process we a\lso try to expand our mode\l beyond
+But during the Software Testing process we also try to expand our model beyond
 Requirements.
 
-We a\lso exp\lore our mode\l in conjunction with the system to \learn more about
-our mode\l and as a consequence, the system itse\lf.
+We also explore our model in conjunction with the system to learn more about
+our model and as a consequence, the system itself.
   
   */
 
-  compare [sty\le=fi\l\led, fi\l\lco\lor=white];
-  subgraph c\luster_eva\luation {
+  compare [style=filled, fillcolor=white];
+  subgraph cluster_evaluation {
       rank=same
       node [rankdir=LR]
-      \labe\l="Eva\luation";
+      label="Evaluation";
       compare;
-      mode\l\ling;
-      exp\loration;
+      modelling;
+      exploration;
   }
 
   /*
 
-Software Testing has to exp\lore our mode\l to identify:
+Software Testing has to explore our model to identify:
 
 - risks
 - ambiguity
-- gaps in the mode\ls and imp\lementation
+- gaps in the models and implementation
 - etc.
 
 This raises questions which we have to investigate and discuss.
 
-The ongoing process of mode\l\ling is how we generate our ideas
-for testing and how we find new ways to exp\lore the software.
+The ongoing process of modelling is how we generate our ideas
+for testing and how we find new ways to explore the software.
 
   */
 
 
-  mode\l\ling [\labe\l="Mode\ling", shape=square, sty\le=fi\l\led, fi\l\lco\lor=ye\l\low];
-  mode\l\ling -> mode\l [
-    \labe\l="Expand Mode\l:\\l\\l- risks\\l- ambiguity\\l- gaps\\l- questions\\l - etc.\\l"
-    \ltai\l=c\luster_eva\luation;
+  modelling [label="Modeling", shape=square, style=filled, fillcolor=yellow];
+  modelling -> model [
+    label="Expand Model:\\l\\l- risks\\l- ambiguity\\l- gaps\\l- questions\\l - etc.\\l"
+    ltail=cluster_evaluation;
   ];
 
   /*
-The mode\l is both an input to testing, and an output from Testing.
+The model is both an input to testing, and an output from Testing.
 
-Parts of the mode\l wi\l\l be stored in the Tester's head as a menta\l mode\l.
+Parts of the model will be stored in the Tester's head as a mental model.
 
-Other parts wi\l\l be visib\le in the form of diagrams, reports,
-\lists of test ideas, etc.
+Other parts will be visible in the form of diagrams, reports,
+lists of test ideas, etc.
   */
-  mode\l [\labe\l="Mode\l" sty\le=fi\l\led fi\l\lco\lor=ye\l\low];
+  model [label="Model" style=filled fillcolor=yellow];
 
   /*
 
-Software Testing then has to exp\lore the mode\l in conjunction
+Software Testing then has to explore the model in conjunction
 with the system to identify if any of these manifest as issues
-or potentia\l\ly require reworking the imp\lementation.
+or potentially require reworking the implementation.
 
   */
 
-  mode\l\ling [\labe\l="Mode\ling", shape=square, sty\le=fi\l\led, fi\l\lco\lor=white];
-  exp\loration [\labe\l="Exp\loring", shape=square, sty\le=fi\l\led, fi\l\lco\lor=ye\l\low];
+  modelling [label="Modeling", shape=square, style=filled, fillcolor=white];
+  exploration [label="Exploring", shape=square, style=filled, fillcolor=yellow];
 
 }
 
@@ -3005,85 +3009,85 @@ or potentia\l\ly require reworking the imp\lementation.
 digraph TestingBasics {
 
 
-  # make graph compound because we want to \link to c\lusters
+  # make graph compound because we want to link to clusters
   graph [compound=true];
 
-  # \labe\l text a\lignment: use backs\lash \l to have \left a\ligned new \lines and n for centered new \lines
+  # label text alignment: use backslash l to have left aligned new lines and n for centered new lines
 
   rankdir=TB;
   newrank="true";
 
-  #bgco\lor=transparent;
+  #bgcolor=transparent;
   
-  c\lusterrank=\loca\l
+  clusterrank=local
 
   /*
 
-Testing is underpinned by mode\ls.
+Testing is underpinned by models.
 
 e.g. requirements, user stories, scenarios, etc.
   
   */
   
-  mode\l;
+  model;
   
   /*
   
-We have the 'thing we are comparing with'. Usua\l\ly a System Under Test.
+We have the 'thing we are comparing with'. Usually a System Under Test.
 
   */
 
-  comparison_thing [\labe\l="System\n Under\n Test"];
+  comparison_thing [label="System\n Under\n Test"];
 
   /*
 
-The mode\l and the SUT are inputs to our testing process.
+The model and the SUT are inputs to our testing process.
 
   */
-  subgraph c\luster_inputs {
-    \labe\l="Inputs to Testing";
+  subgraph cluster_inputs {
+    label="Inputs to Testing";
     rank=same;
-    mode\l;
+    model;
     comparison_thing;
   }
 
   /*
 
-The simp\lest way to use a mode\l for testing is to compare
-the mode\l with the System Under Test.
+The simplest way to use a model for testing is to compare
+the model with the System Under Test.
 
   */
 
   compare [shape=square];
-  subgraph c\luster_eva\luation {
+  subgraph cluster_evaluation {
       compare;
   }
 
 
   /*
-This generates output resu\lts from the comparison.
+This generates output results from the comparison.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis ];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis ];
   }
 
-  compare [shape=square, \labe\l="Comparison"];
-  compare -> output [\labe\l="Comparisons" \lhead=c\luster_comparison_outputs];
+  compare [shape=square, label="Comparison"];
+  compare -> output [label="Comparisons" lhead=cluster_comparison_outputs];
 
   /*
-Evidentia\l Observation Output can be used for
+Evidential Observation Output can be used for
 negative or positive confirmation.
   */
   
 
   /*
 Positive confirmation is often viewed as a 'Test Pass'.
-And basica\l\ly means that 'when we did something we observed
+And basically means that 'when we did something we observed
 that the system behaved the way that we expect'.
 
 NOTE: this does not mean that the system "works", it just means
@@ -3091,92 +3095,92 @@ that at some point in time, given a specific set of input and process
 we observed that the system behaaved as we expected.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=0 height=0];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=0 height=0];
     positive_confirmation;
   }
 
   positive_confirmation [
-    \labe\l="Positive\n Confirmation",
-    fi\l\lco\lor=green,
-    sty\le=fi\l\led
+    label="Positive\n Confirmation",
+    fillcolor=green,
+    style=filled
     ];
 
   /*
-Negative Confirmation is often ca\l\led a 'Test Fai\l'.
+Negative Confirmation is often called a 'Test Fail'.
 
 This means we observed something we did not expect.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
     positive_confirmation;
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=1 height=0];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=1 height=0];
     negative_confirmation;
   }
 
   negative_confirmation [
-    \labe\l ="Negative\n Confirmation",
-    fi\l\lco\lor=red,
-    sty\le=fi\l\led
+    label ="Negative\n Confirmation",
+    fillcolor=red,
+    style=filled
   ]
 
 
   /*
-These positive and negative reports are a visib\le output
+These positive and negative reports are a visible output
 from the Testing process.
   */
 
 
   /*
-So we have to investigate what fai\led during our comparison process.
+So we have to investigate what failed during our comparison process.
   */
 
   negative_confirmation -> investigation;
   investigation [
-    \labe\l="Investigate",
+    label="Investigate",
     shape=square
   ]
 
   /*
 This might mean:
 
-- a prob\lem with our mode\l
-- a prob\lem with the System Under Test
-- a prob\lem with our comparison process
+- a problem with our model
+- a problem with the System Under Test
+- a problem with our comparison process
 
 Either way it is something we have to investigate.
   */
 
-  investigation -> mode\l [
-    \labe\l="- Mode\l does not \\l  match rea\lity \\l- Change the mode\l.\\l"
+  investigation -> model [
+    label="- Model does not \\l  match reality \\l- Change the model.\\l"
   ];
 
   investigation -> compare [
-    \labe\l="- Process Issue.\\l- We did not use\\l  the system proper\ly.\\l- Re-eva\luate.\\l"
-    \lhead=c\luster_eva\luation
+    label="- Process Issue.\\l- We did not use\\l  the system properly.\\l- Re-evaluate.\\l"
+    lhead=cluster_evaluation
   ];
 
   investigation -> raise_bug [
-    \labe\l="- System does not match\n what we require."
+    label="- System does not match\n what we require."
   ];
-  raise_bug [\labe\l="Raise Bug"];
+  raise_bug [label="Raise Bug"];
   raise_bug -> fix_bug;
-  fix_bug [\labe\l="Fix Bug"];
-  fix_bug -> comparison_thing [\labe\l="- Fix the System"];
+  fix_bug [label="Fix Bug"];
+  fix_bug -> comparison_thing [label="- Fix the System"];
 
 
-  subgraph c\luster_investigate {
+  subgraph cluster_investigate {
     investigation;
 
-        subgraph c\luster_defect_process {
+        subgraph cluster_defect_process {
           rank=same
           node [rankdir=LR]
           raise_bug;
@@ -3185,128 +3189,128 @@ Either way it is something we have to investigate.
   }
 
   /*
-A comparison process from mode\l to 'thing' isn't the on\ly process that
-Software Testing invo\lves, it's just one of the most obvious ways we have
-of eva\luating the Software.
+A comparison process from model to 'thing' isn't the only process that
+Software Testing involves, it's just one of the most obvious ways we have
+of evaluating the Software.
 
-And Software Testing is a process of eva\luating the software.
+And Software Testing is a process of evaluating the software.
 
   */
-  compare [sty\le=fi\l\led, fi\l\lco\lor=ye\l\low];
-  subgraph c\luster_eva\luation {
-      \labe\l="Eva\luation";
+  compare [style=filled, fillcolor=yellow];
+  subgraph cluster_evaluation {
+      label="Evaluation";
       compare;
   }
 
   /*
 
-We can direct\ly compare Requirements with the Software for high \leve\l surface
-positive or negative confirmation that a requirement has been imp\lemented.
+We can directly compare Requirements with the Software for high level surface
+positive or negative confirmation that a requirement has been implemented.
 
-e.g. "A User must be ab\le to \login with their username and password." can be
-confirmed quite simp\ly by \logging in with an existing user and their correct
+e.g. "A User must be able to login with their username and password." can be
+confirmed quite simply by logging in with an existing user and their correct
 password.
 
-But during the Software Testing process we a\lso try to expand our mode\l beyond
+But during the Software Testing process we also try to expand our model beyond
 Requirements.
 
-We a\lso exp\lore our mode\l in conjunction with the system to \learn more about
-our mode\l and as a consequence, the system itse\lf.
+We also explore our model in conjunction with the system to learn more about
+our model and as a consequence, the system itself.
   
   */
 
-  compare [sty\le=fi\l\led, fi\l\lco\lor=white];
-  subgraph c\luster_eva\luation {
+  compare [style=filled, fillcolor=white];
+  subgraph cluster_evaluation {
       rank=same
       node [rankdir=LR]
-      \labe\l="Eva\luation";
+      label="Evaluation";
       compare;
-      mode\l\ling;
-      exp\loration;
+      modelling;
+      exploration;
   }
 
   /*
 
-Software Testing has to exp\lore our mode\l to identify:
+Software Testing has to explore our model to identify:
 
 - risks
 - ambiguity
-- gaps in the mode\ls and imp\lementation
+- gaps in the models and implementation
 - etc.
 
 This raises questions which we have to investigate and discuss.
 
-The ongoing process of mode\l\ling is how we generate our ideas
-for testing and how we find new ways to exp\lore the software.
+The ongoing process of modelling is how we generate our ideas
+for testing and how we find new ways to explore the software.
 
   */
 
 
-  mode\l\ling [\labe\l="Mode\ling", shape=square, sty\le=fi\l\led, fi\l\lco\lor=ye\l\low];
-  mode\l\ling -> mode\l [
-    \labe\l="Expand Mode\l:\\l\\l- risks\\l- ambiguity\\l- gaps\\l- questions\\l - etc.\\l"
-    \ltai\l=c\luster_eva\luation;
+  modelling [label="Modeling", shape=square, style=filled, fillcolor=yellow];
+  modelling -> model [
+    label="Expand Model:\\l\\l- risks\\l- ambiguity\\l- gaps\\l- questions\\l - etc.\\l"
+    ltail=cluster_evaluation;
   ];
 
   /*
-The mode\l is both an input to testing, and an output from Testing.
+The model is both an input to testing, and an output from Testing.
 
-Parts of the mode\l wi\l\l be stored in the Tester's head as a menta\l mode\l.
+Parts of the model will be stored in the Tester's head as a mental model.
 
-Other parts wi\l\l be visib\le in the form of diagrams, reports,
-\lists of test ideas, etc.
+Other parts will be visible in the form of diagrams, reports,
+lists of test ideas, etc.
   */
-  mode\l [\labe\l="Mode\l" sty\le=fi\l\led fi\l\lco\lor=ye\l\low];
+  model [label="Model" style=filled fillcolor=yellow];
 
   /*
 
-Software Testing then has to exp\lore the mode\l in conjunction
+Software Testing then has to explore the model in conjunction
 with the system to identify if any of these manifest as issues
-or potentia\l\ly require reworking the imp\lementation.
+or potentially require reworking the implementation.
 
   */
 
-  mode\l\ling [\labe\l="Mode\ling", shape=square, sty\le=fi\l\led, fi\l\lco\lor=white];
-  exp\loration [\labe\l="Exp\loring", shape=square, sty\le=fi\l\led, fi\l\lco\lor=ye\l\low];
+  modelling [label="Modeling", shape=square, style=filled, fillcolor=white];
+  exploration [label="Exploring", shape=square, style=filled, fillcolor=yellow];
 
-  {mode\l comparison_thing} -> compare [\lhead=c\luster_eva\luation];
+  {model comparison_thing} -> compare [lhead=cluster_evaluation];
 
 
     /*
-One examp\le of ambiguity arises from requirements being natura\l\ly incomp\lete because
+One example of ambiguity arises from requirements being naturally incomplete because
 of assumptions in understanding.
 
-The requirement for \logging into the system does not describe:
+The requirement for logging into the system does not describe:
 
-- what happens if the user is a\lready \logged in?
-- what message is disp\layed if the user gets the password wrong?
-- what message shou\ld be disp\layed if the user does not exist?
+- what happens if the user is already logged in?
+- what message is displayed if the user gets the password wrong?
+- what message should be displayed if the user does not exist?
 
-Part of the Eva\luation process that we ca\l\l Software Testing is about
-expanding our mode\l so that we can exp\lore the System more thorough\ly
+Part of the Evaluation process that we call Software Testing is about
+expanding our model so that we can explore the System more thoroughly
 and provide more information.
 
-We a\lso have to go beyond our mode\l of the requirements and identify Risks
-associated with potentia\l imp\lementation, or the techno\logy used, or the
-a\lgorithms we have imp\lemented.
+We also have to go beyond our model of the requirements and identify Risks
+associated with potential implementation, or the technology used, or the
+algorithms we have implemented.
 
-For examp\le there might be a risk that the password has been stored in
-p\laintext in the database, and an additiona\l risk that the imp\lementation
-has coded with a '\like' comparison on the password rather than an 'equa\ls'
-so it might be possib\le to use wi\ldcards in the password and \login knowing
-on\ly a partia\l password.
+For example there might be a risk that the password has been stored in
+plaintext in the database, and an additional risk that the implementation
+has coded with a 'like' comparison on the password rather than an 'equals'
+so it might be possible to use wildcards in the password and login knowing
+only a partial password.
 
-This wou\ld a\lso \lead to risks about the security of the app\lication and SQL
+This would also lead to risks about the security of the application and SQL
 Injection.
 
-These might not be covered in the Requirement mode\l, and may not be present
-in every Tester's or Programmer's mode\l of the System because they may not
-have experience or know\ledge about Security Testing.
+These might not be covered in the Requirement model, and may not be present
+in every Tester's or Programmer's model of the System because they may not
+have experience or knowledge about Security Testing.
 
-At times there is end\less set of possib\le ways we cou\ld expand our mode\l
-and how we can exp\lore it in conjunction with the system. And one of the
-key ski\l\ls of a Tester is knowing when 'enough is enough' and stopping the
-identification and exp\loration of possibi\lities.
+At times there is endless set of possible ways we could expand our model
+and how we can explore it in conjunction with the system. And one of the
+key skills of a Tester is knowing when 'enough is enough' and stopping the
+identification and exploration of possibilities.
   */
   
 }
@@ -3319,85 +3323,85 @@ identification and exp\loration of possibi\lities.
 digraph TestingBasics {
 
 
-  # make graph compound because we want to \link to c\lusters
+  # make graph compound because we want to link to clusters
   graph [compound=true];
 
-  # \labe\l text a\lignment: use backs\lash \l to have \left a\ligned new \lines and n for centered new \lines
+  # label text alignment: use backslash l to have left aligned new lines and n for centered new lines
 
   rankdir=TB;
   newrank="true";
 
-  #bgco\lor=transparent;
+  #bgcolor=transparent;
   
-  c\lusterrank=\loca\l
+  clusterrank=local
 
   /*
 
-Testing is underpinned by mode\ls.
+Testing is underpinned by models.
 
 e.g. requirements, user stories, scenarios, etc.
   
   */
   
-  mode\l;
+  model;
   
   /*
   
-We have the 'thing we are comparing with'. Usua\l\ly a System Under Test.
+We have the 'thing we are comparing with'. Usually a System Under Test.
 
   */
 
-  comparison_thing [\labe\l="System\n Under\n Test"];
+  comparison_thing [label="System\n Under\n Test"];
 
   /*
 
-The mode\l and the SUT are inputs to our testing process.
+The model and the SUT are inputs to our testing process.
 
   */
-  subgraph c\luster_inputs {
-    \labe\l="Inputs to Testing";
+  subgraph cluster_inputs {
+    label="Inputs to Testing";
     rank=same;
-    mode\l;
+    model;
     comparison_thing;
   }
 
   /*
 
-The simp\lest way to use a mode\l for testing is to compare
-the mode\l with the System Under Test.
+The simplest way to use a model for testing is to compare
+the model with the System Under Test.
 
   */
 
   compare [shape=square];
-  subgraph c\luster_eva\luation {
+  subgraph cluster_evaluation {
       compare;
   }
 
 
   /*
-This generates output resu\lts from the comparison.
+This generates output results from the comparison.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis ];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis ];
   }
 
-  compare [shape=square, \labe\l="Comparison"];
-  compare -> output [\labe\l="Comparisons" \lhead=c\luster_comparison_outputs];
+  compare [shape=square, label="Comparison"];
+  compare -> output [label="Comparisons" lhead=cluster_comparison_outputs];
 
   /*
-Evidentia\l Observation Output can be used for
+Evidential Observation Output can be used for
 negative or positive confirmation.
   */
   
 
   /*
 Positive confirmation is often viewed as a 'Test Pass'.
-And basica\l\ly means that 'when we did something we observed
+And basically means that 'when we did something we observed
 that the system behaved the way that we expect'.
 
 NOTE: this does not mean that the system "works", it just means
@@ -3405,92 +3409,92 @@ that at some point in time, given a specific set of input and process
 we observed that the system behaaved as we expected.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=0 height=0];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=0 height=0];
     positive_confirmation;
   }
 
   positive_confirmation [
-    \labe\l="Positive\n Confirmation",
-    fi\l\lco\lor=green,
-    sty\le=fi\l\led
+    label="Positive\n Confirmation",
+    fillcolor=green,
+    style=filled
     ];
 
   /*
-Negative Confirmation is often ca\l\led a 'Test Fai\l'.
+Negative Confirmation is often called a 'Test Fail'.
 
 This means we observed something we did not expect.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
     positive_confirmation;
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=1 height=0];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=1 height=0];
     negative_confirmation;
   }
 
   negative_confirmation [
-    \labe\l ="Negative\n Confirmation",
-    fi\l\lco\lor=red,
-    sty\le=fi\l\led
+    label ="Negative\n Confirmation",
+    fillcolor=red,
+    style=filled
   ]
 
 
   /*
-These positive and negative reports are a visib\le output
+These positive and negative reports are a visible output
 from the Testing process.
   */
 
 
   /*
-So we have to investigate what fai\led during our comparison process.
+So we have to investigate what failed during our comparison process.
   */
 
   negative_confirmation -> investigation;
   investigation [
-    \labe\l="Investigate",
+    label="Investigate",
     shape=square
   ]
 
   /*
 This might mean:
 
-- a prob\lem with our mode\l
-- a prob\lem with the System Under Test
-- a prob\lem with our comparison process
+- a problem with our model
+- a problem with the System Under Test
+- a problem with our comparison process
 
 Either way it is something we have to investigate.
   */
 
-  investigation -> mode\l [
-    \labe\l="- Mode\l does not \\l  match rea\lity \\l- Change the mode\l.\\l"
+  investigation -> model [
+    label="- Model does not \\l  match reality \\l- Change the model.\\l"
   ];
 
   investigation -> compare [
-    \labe\l="- Process Issue.\\l- We did not use\\l  the system proper\ly.\\l- Re-eva\luate.\\l"
-    \lhead=c\luster_eva\luation
+    label="- Process Issue.\\l- We did not use\\l  the system properly.\\l- Re-evaluate.\\l"
+    lhead=cluster_evaluation
   ];
 
   investigation -> raise_bug [
-    \labe\l="- System does not match\n what we require."
+    label="- System does not match\n what we require."
   ];
-  raise_bug [\labe\l="Raise Bug"];
+  raise_bug [label="Raise Bug"];
   raise_bug -> fix_bug;
-  fix_bug [\labe\l="Fix Bug"];
-  fix_bug -> comparison_thing [\labe\l="- Fix the System"];
+  fix_bug [label="Fix Bug"];
+  fix_bug -> comparison_thing [label="- Fix the System"];
 
 
-  subgraph c\luster_investigate {
+  subgraph cluster_investigate {
     investigation;
 
-        subgraph c\luster_defect_process {
+        subgraph cluster_defect_process {
           rank=same
           node [rankdir=LR]
           raise_bug;
@@ -3499,162 +3503,162 @@ Either way it is something we have to investigate.
   }
 
   /*
-A comparison process from mode\l to 'thing' isn't the on\ly process that
-Software Testing invo\lves, it's just one of the most obvious ways we have
-of eva\luating the Software.
+A comparison process from model to 'thing' isn't the only process that
+Software Testing involves, it's just one of the most obvious ways we have
+of evaluating the Software.
 
-And Software Testing is a process of eva\luating the software.
+And Software Testing is a process of evaluating the software.
 
   */
-  compare [sty\le=fi\l\led, fi\l\lco\lor=ye\l\low];
-  subgraph c\luster_eva\luation {
-      \labe\l="Eva\luation";
+  compare [style=filled, fillcolor=yellow];
+  subgraph cluster_evaluation {
+      label="Evaluation";
       compare;
   }
 
   /*
 
-We can direct\ly compare Requirements with the Software for high \leve\l surface
-positive or negative confirmation that a requirement has been imp\lemented.
+We can directly compare Requirements with the Software for high level surface
+positive or negative confirmation that a requirement has been implemented.
 
-e.g. "A User must be ab\le to \login with their username and password." can be
-confirmed quite simp\ly by \logging in with an existing user and their correct
+e.g. "A User must be able to login with their username and password." can be
+confirmed quite simply by logging in with an existing user and their correct
 password.
 
-But during the Software Testing process we a\lso try to expand our mode\l beyond
+But during the Software Testing process we also try to expand our model beyond
 Requirements.
 
-We a\lso exp\lore our mode\l in conjunction with the system to \learn more about
-our mode\l and as a consequence, the system itse\lf.
+We also explore our model in conjunction with the system to learn more about
+our model and as a consequence, the system itself.
   
   */
 
-  compare [sty\le=fi\l\led, fi\l\lco\lor=white];
-  subgraph c\luster_eva\luation {
+  compare [style=filled, fillcolor=white];
+  subgraph cluster_evaluation {
       rank=same
       node [rankdir=LR]
-      \labe\l="Eva\luation";
+      label="Evaluation";
       compare;
-      mode\l\ling;
-      exp\loration;
+      modelling;
+      exploration;
   }
 
   /*
 
-Software Testing has to exp\lore our mode\l to identify:
+Software Testing has to explore our model to identify:
 
 - risks
 - ambiguity
-- gaps in the mode\ls and imp\lementation
+- gaps in the models and implementation
 - etc.
 
 This raises questions which we have to investigate and discuss.
 
-The ongoing process of mode\l\ling is how we generate our ideas
-for testing and how we find new ways to exp\lore the software.
+The ongoing process of modelling is how we generate our ideas
+for testing and how we find new ways to explore the software.
 
   */
 
 
-  mode\l\ling [\labe\l="Mode\ling", shape=square, sty\le=fi\l\led, fi\l\lco\lor=ye\l\low];
-  mode\l\ling -> mode\l [
-    \labe\l="Expand Mode\l:\\l\\l- risks\\l- ambiguity\\l- gaps\\l- questions\\l - etc.\\l"
-    \ltai\l=c\luster_eva\luation;
+  modelling [label="Modeling", shape=square, style=filled, fillcolor=yellow];
+  modelling -> model [
+    label="Expand Model:\\l\\l- risks\\l- ambiguity\\l- gaps\\l- questions\\l - etc.\\l"
+    ltail=cluster_evaluation;
   ];
 
   /*
-The mode\l is both an input to testing, and an output from Testing.
+The model is both an input to testing, and an output from Testing.
 
-Parts of the mode\l wi\l\l be stored in the Tester's head as a menta\l mode\l.
+Parts of the model will be stored in the Tester's head as a mental model.
 
-Other parts wi\l\l be visib\le in the form of diagrams, reports,
-\lists of test ideas, etc.
+Other parts will be visible in the form of diagrams, reports,
+lists of test ideas, etc.
   */
-  mode\l [\labe\l="Mode\l" sty\le=fi\l\led fi\l\lco\lor=ye\l\low];
+  model [label="Model" style=filled fillcolor=yellow];
 
   /*
 
-Software Testing then has to exp\lore the mode\l in conjunction
+Software Testing then has to explore the model in conjunction
 with the system to identify if any of these manifest as issues
-or potentia\l\ly require reworking the imp\lementation.
+or potentially require reworking the implementation.
 
   */
 
-  mode\l\ling [\labe\l="Mode\ling", shape=square, sty\le=fi\l\led, fi\l\lco\lor=white];
-  exp\loration [\labe\l="Exp\loring", shape=square, sty\le=fi\l\led, fi\l\lco\lor=ye\l\low];
+  modelling [label="Modeling", shape=square, style=filled, fillcolor=white];
+  exploration [label="Exploring", shape=square, style=filled, fillcolor=yellow];
 
-  {mode\l comparison_thing} -> compare [\lhead=c\luster_eva\luation];
+  {model comparison_thing} -> compare [lhead=cluster_evaluation];
 
 
     /*
-One examp\le of ambiguity arises from requirements being natura\l\ly incomp\lete because
+One example of ambiguity arises from requirements being naturally incomplete because
 of assumptions in understanding.
 
-The requirement for \logging into the system does not describe:
+The requirement for logging into the system does not describe:
 
-- what happens if the user is a\lready \logged in?
-- what message is disp\layed if the user gets the password wrong?
-- what message shou\ld be disp\layed if the user does not exist?
+- what happens if the user is already logged in?
+- what message is displayed if the user gets the password wrong?
+- what message should be displayed if the user does not exist?
 
-Part of the Eva\luation process that we ca\l\l Software Testing is about
-expanding our mode\l so that we can exp\lore the System more thorough\ly
+Part of the Evaluation process that we call Software Testing is about
+expanding our model so that we can explore the System more thoroughly
 and provide more information.
 
-We a\lso have to go beyond our mode\l of the requirements and identify Risks
-associated with potentia\l imp\lementation, or the techno\logy used, or the
-a\lgorithms we have imp\lemented.
+We also have to go beyond our model of the requirements and identify Risks
+associated with potential implementation, or the technology used, or the
+algorithms we have implemented.
 
-For examp\le there might be a risk that the password has been stored in
-p\laintext in the database, and an additiona\l risk that the imp\lementation
-has coded with a '\like' comparison on the password rather than an 'equa\ls'
-so it might be possib\le to use wi\ldcards in the password and \login knowing
-on\ly a partia\l password.
+For example there might be a risk that the password has been stored in
+plaintext in the database, and an additional risk that the implementation
+has coded with a 'like' comparison on the password rather than an 'equals'
+so it might be possible to use wildcards in the password and login knowing
+only a partial password.
 
-This wou\ld a\lso \lead to risks about the security of the app\lication and SQL
+This would also lead to risks about the security of the application and SQL
 Injection.
 
-These might not be covered in the Requirement mode\l, and may not be present
-in every Tester's or Programmer's mode\l of the System because they may not
-have experience or know\ledge about Security Testing.
+These might not be covered in the Requirement model, and may not be present
+in every Tester's or Programmer's model of the System because they may not
+have experience or knowledge about Security Testing.
 
-At times there is end\less set of possib\le ways we cou\ld expand our mode\l
-and how we can exp\lore it in conjunction with the system. And one of the
-key ski\l\ls of a Tester is knowing when 'enough is enough' and stopping the
-identification and exp\loration of possibi\lities.
+At times there is endless set of possible ways we could expand our model
+and how we can explore it in conjunction with the system. And one of the
+key skills of a Tester is knowing when 'enough is enough' and stopping the
+identification and exploration of possibilities.
   */
   
   /*
-## Exp\loring
+## Exploring
 
-The act of exp\loring a mode\l, or using the mode\l as a basis for exp\loring the
+The act of exploring a model, or using the model as a basis for exploring the
 system, is the main way that we test softare.
 
-Some of the outputs from this process are captured as part of the mode\l itse\lf.
+Some of the outputs from this process are captured as part of the model itself.
 
-Other outputs vary depending on the process used but inc\lude artifacts \like:
+Other outputs vary depending on the process used but include artifacts like:
 
-- execution or exp\loration \logs
+- execution or exploration logs
 - coverage reports
 - questions
 - decisions
-- ideas for new exp\loration approaches
+- ideas for new exploration approaches
 - issues
 - issue investigations
 
   */
 
 
-    subgraph c\luster_exp\loration_outputs {
-      \labe\l="Exp\loration Artifacts";
+    subgraph cluster_exploration_outputs {
+      label="Exploration Artifacts";
       rank=same
       node [rankdir=LR]
-      // a\l\low it to render without any visib\le nodes
-      exp\loration_artifacts [
-        \labe\l= "- execution or exp\loration \logs\\l
+      // allow it to render without any visible nodes
+      exploration_artifacts [
+        label= "- execution or exploration logs\\l
 - coverage reports\\l
 - questions\\l
 - decisions\\l
-- ideas for new exp\loration approaches\\l
+- ideas for new exploration approaches\\l
 - issues\\l
 - issue investigations\\l"
     shape=square
@@ -3671,85 +3675,85 @@ Other outputs vary depending on the process used but inc\lude artifacts \like:
 digraph TestingBasics {
 
 
-  # make graph compound because we want to \link to c\lusters
+  # make graph compound because we want to link to clusters
   graph [compound=true];
 
-  # \labe\l text a\lignment: use backs\lash \l to have \left a\ligned new \lines and n for centered new \lines
+  # label text alignment: use backslash l to have left aligned new lines and n for centered new lines
 
   rankdir=TB;
   newrank="true";
 
-  #bgco\lor=transparent;
+  #bgcolor=transparent;
   
-  c\lusterrank=\loca\l
+  clusterrank=local
 
   /*
 
-Testing is underpinned by mode\ls.
+Testing is underpinned by models.
 
 e.g. requirements, user stories, scenarios, etc.
   
   */
   
-  mode\l;
+  model;
   
   /*
   
-We have the 'thing we are comparing with'. Usua\l\ly a System Under Test.
+We have the 'thing we are comparing with'. Usually a System Under Test.
 
   */
 
-  comparison_thing [\labe\l="System\n Under\n Test"];
+  comparison_thing [label="System\n Under\n Test"];
 
   /*
 
-The mode\l and the SUT are inputs to our testing process.
+The model and the SUT are inputs to our testing process.
 
   */
-  subgraph c\luster_inputs {
-    \labe\l="Inputs to Testing";
+  subgraph cluster_inputs {
+    label="Inputs to Testing";
     rank=same;
-    mode\l;
+    model;
     comparison_thing;
   }
 
   /*
 
-The simp\lest way to use a mode\l for testing is to compare
-the mode\l with the System Under Test.
+The simplest way to use a model for testing is to compare
+the model with the System Under Test.
 
   */
 
   compare [shape=square];
-  subgraph c\luster_eva\luation {
+  subgraph cluster_evaluation {
       compare;
   }
 
 
   /*
-This generates output resu\lts from the comparison.
+This generates output results from the comparison.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis ];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis ];
   }
 
-  compare [shape=square, \labe\l="Comparison"];
-  compare -> output [\labe\l="Comparisons" \lhead=c\luster_comparison_outputs];
+  compare [shape=square, label="Comparison"];
+  compare -> output [label="Comparisons" lhead=cluster_comparison_outputs];
 
   /*
-Evidentia\l Observation Output can be used for
+Evidential Observation Output can be used for
 negative or positive confirmation.
   */
   
 
   /*
 Positive confirmation is often viewed as a 'Test Pass'.
-And basica\l\ly means that 'when we did something we observed
+And basically means that 'when we did something we observed
 that the system behaved the way that we expect'.
 
 NOTE: this does not mean that the system "works", it just means
@@ -3757,92 +3761,92 @@ that at some point in time, given a specific set of input and process
 we observed that the system behaaved as we expected.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=0 height=0];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=0 height=0];
     positive_confirmation;
   }
 
   positive_confirmation [
-    \labe\l="Positive\n Confirmation",
-    fi\l\lco\lor=green,
-    sty\le=fi\l\led
+    label="Positive\n Confirmation",
+    fillcolor=green,
+    style=filled
     ];
 
   /*
-Negative Confirmation is often ca\l\led a 'Test Fai\l'.
+Negative Confirmation is often called a 'Test Fail'.
 
 This means we observed something we did not expect.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
     positive_confirmation;
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=1 height=0];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=1 height=0];
     negative_confirmation;
   }
 
   negative_confirmation [
-    \labe\l ="Negative\n Confirmation",
-    fi\l\lco\lor=red,
-    sty\le=fi\l\led
+    label ="Negative\n Confirmation",
+    fillcolor=red,
+    style=filled
   ]
 
 
   /*
-These positive and negative reports are a visib\le output
+These positive and negative reports are a visible output
 from the Testing process.
   */
 
 
   /*
-So we have to investigate what fai\led during our comparison process.
+So we have to investigate what failed during our comparison process.
   */
 
   negative_confirmation -> investigation;
   investigation [
-    \labe\l="Investigate",
+    label="Investigate",
     shape=square
   ]
 
   /*
 This might mean:
 
-- a prob\lem with our mode\l
-- a prob\lem with the System Under Test
-- a prob\lem with our comparison process
+- a problem with our model
+- a problem with the System Under Test
+- a problem with our comparison process
 
 Either way it is something we have to investigate.
   */
 
-  investigation -> mode\l [
-    \labe\l="- Mode\l does not \\l  match rea\lity \\l- Change the mode\l.\\l"
+  investigation -> model [
+    label="- Model does not \\l  match reality \\l- Change the model.\\l"
   ];
 
   investigation -> compare [
-    \labe\l="- Process Issue.\\l- We did not use\\l  the system proper\ly.\\l- Re-eva\luate.\\l"
-    \lhead=c\luster_eva\luation
+    label="- Process Issue.\\l- We did not use\\l  the system properly.\\l- Re-evaluate.\\l"
+    lhead=cluster_evaluation
   ];
 
   investigation -> raise_bug [
-    \labe\l="- System does not match\n what we require."
+    label="- System does not match\n what we require."
   ];
-  raise_bug [\labe\l="Raise Bug"];
+  raise_bug [label="Raise Bug"];
   raise_bug -> fix_bug;
-  fix_bug [\labe\l="Fix Bug"];
-  fix_bug -> comparison_thing [\labe\l="- Fix the System"];
+  fix_bug [label="Fix Bug"];
+  fix_bug -> comparison_thing [label="- Fix the System"];
 
 
-  subgraph c\luster_investigate {
+  subgraph cluster_investigate {
     investigation;
 
-        subgraph c\luster_defect_process {
+        subgraph cluster_defect_process {
           rank=same
           node [rankdir=LR]
           raise_bug;
@@ -3851,169 +3855,169 @@ Either way it is something we have to investigate.
   }
 
   /*
-A comparison process from mode\l to 'thing' isn't the on\ly process that
-Software Testing invo\lves, it's just one of the most obvious ways we have
-of eva\luating the Software.
+A comparison process from model to 'thing' isn't the only process that
+Software Testing involves, it's just one of the most obvious ways we have
+of evaluating the Software.
 
-And Software Testing is a process of eva\luating the software.
+And Software Testing is a process of evaluating the software.
 
   */
-  compare [sty\le=fi\l\led, fi\l\lco\lor=ye\l\low];
-  subgraph c\luster_eva\luation {
-      \labe\l="Eva\luation";
+  compare [style=filled, fillcolor=yellow];
+  subgraph cluster_evaluation {
+      label="Evaluation";
       compare;
   }
 
   /*
 
-We can direct\ly compare Requirements with the Software for high \leve\l surface
-positive or negative confirmation that a requirement has been imp\lemented.
+We can directly compare Requirements with the Software for high level surface
+positive or negative confirmation that a requirement has been implemented.
 
-e.g. "A User must be ab\le to \login with their username and password." can be
-confirmed quite simp\ly by \logging in with an existing user and their correct
+e.g. "A User must be able to login with their username and password." can be
+confirmed quite simply by logging in with an existing user and their correct
 password.
 
-But during the Software Testing process we a\lso try to expand our mode\l beyond
+But during the Software Testing process we also try to expand our model beyond
 Requirements.
 
-We a\lso exp\lore our mode\l in conjunction with the system to \learn more about
-our mode\l and as a consequence, the system itse\lf.
+We also explore our model in conjunction with the system to learn more about
+our model and as a consequence, the system itself.
   
   */
 
-  compare [sty\le=fi\l\led, fi\l\lco\lor=white];
-  subgraph c\luster_eva\luation {
+  compare [style=filled, fillcolor=white];
+  subgraph cluster_evaluation {
       rank=same
       node [rankdir=LR]
-      \labe\l="Eva\luation";
+      label="Evaluation";
       compare;
-      mode\l\ling;
-      exp\loration;
+      modelling;
+      exploration;
   }
 
   /*
 
-Software Testing has to exp\lore our mode\l to identify:
+Software Testing has to explore our model to identify:
 
 - risks
 - ambiguity
-- gaps in the mode\ls and imp\lementation
+- gaps in the models and implementation
 - etc.
 
 This raises questions which we have to investigate and discuss.
 
-The ongoing process of mode\l\ling is how we generate our ideas
-for testing and how we find new ways to exp\lore the software.
+The ongoing process of modelling is how we generate our ideas
+for testing and how we find new ways to explore the software.
 
   */
 
 
-  mode\l\ling [\labe\l="Mode\ling", shape=square, sty\le=fi\l\led, fi\l\lco\lor=ye\l\low];
-  mode\l\ling -> mode\l [
-    \labe\l="Expand Mode\l:\\l\\l- risks\\l- ambiguity\\l- gaps\\l- questions\\l - etc.\\l"
-    \ltai\l=c\luster_eva\luation;
+  modelling [label="Modeling", shape=square, style=filled, fillcolor=yellow];
+  modelling -> model [
+    label="Expand Model:\\l\\l- risks\\l- ambiguity\\l- gaps\\l- questions\\l - etc.\\l"
+    ltail=cluster_evaluation;
   ];
 
   /*
-The mode\l is both an input to testing, and an output from Testing.
+The model is both an input to testing, and an output from Testing.
 
-Parts of the mode\l wi\l\l be stored in the Tester's head as a menta\l mode\l.
+Parts of the model will be stored in the Tester's head as a mental model.
 
-Other parts wi\l\l be visib\le in the form of diagrams, reports,
-\lists of test ideas, etc.
+Other parts will be visible in the form of diagrams, reports,
+lists of test ideas, etc.
   */
-  mode\l [\labe\l="Mode\l" sty\le=fi\l\led fi\l\lco\lor=ye\l\low];
+  model [label="Model" style=filled fillcolor=yellow];
 
   /*
 
-Software Testing then has to exp\lore the mode\l in conjunction
+Software Testing then has to explore the model in conjunction
 with the system to identify if any of these manifest as issues
-or potentia\l\ly require reworking the imp\lementation.
+or potentially require reworking the implementation.
 
   */
 
-  mode\l\ling [\labe\l="Mode\ling", shape=square, sty\le=fi\l\led, fi\l\lco\lor=white];
-  exp\loration [\labe\l="Exp\loring", shape=square, sty\le=fi\l\led, fi\l\lco\lor=ye\l\low];
+  modelling [label="Modeling", shape=square, style=filled, fillcolor=white];
+  exploration [label="Exploring", shape=square, style=filled, fillcolor=yellow];
 
-  {mode\l comparison_thing} -> compare [\lhead=c\luster_eva\luation];
+  {model comparison_thing} -> compare [lhead=cluster_evaluation];
 
 
     /*
-One examp\le of ambiguity arises from requirements being natura\l\ly incomp\lete because
+One example of ambiguity arises from requirements being naturally incomplete because
 of assumptions in understanding.
 
-The requirement for \logging into the system does not describe:
+The requirement for logging into the system does not describe:
 
-- what happens if the user is a\lready \logged in?
-- what message is disp\layed if the user gets the password wrong?
-- what message shou\ld be disp\layed if the user does not exist?
+- what happens if the user is already logged in?
+- what message is displayed if the user gets the password wrong?
+- what message should be displayed if the user does not exist?
 
-Part of the Eva\luation process that we ca\l\l Software Testing is about
-expanding our mode\l so that we can exp\lore the System more thorough\ly
+Part of the Evaluation process that we call Software Testing is about
+expanding our model so that we can explore the System more thoroughly
 and provide more information.
 
-We a\lso have to go beyond our mode\l of the requirements and identify Risks
-associated with potentia\l imp\lementation, or the techno\logy used, or the
-a\lgorithms we have imp\lemented.
+We also have to go beyond our model of the requirements and identify Risks
+associated with potential implementation, or the technology used, or the
+algorithms we have implemented.
 
-For examp\le there might be a risk that the password has been stored in
-p\laintext in the database, and an additiona\l risk that the imp\lementation
-has coded with a '\like' comparison on the password rather than an 'equa\ls'
-so it might be possib\le to use wi\ldcards in the password and \login knowing
-on\ly a partia\l password.
+For example there might be a risk that the password has been stored in
+plaintext in the database, and an additional risk that the implementation
+has coded with a 'like' comparison on the password rather than an 'equals'
+so it might be possible to use wildcards in the password and login knowing
+only a partial password.
 
-This wou\ld a\lso \lead to risks about the security of the app\lication and SQL
+This would also lead to risks about the security of the application and SQL
 Injection.
 
-These might not be covered in the Requirement mode\l, and may not be present
-in every Tester's or Programmer's mode\l of the System because they may not
-have experience or know\ledge about Security Testing.
+These might not be covered in the Requirement model, and may not be present
+in every Tester's or Programmer's model of the System because they may not
+have experience or knowledge about Security Testing.
 
-At times there is end\less set of possib\le ways we cou\ld expand our mode\l
-and how we can exp\lore it in conjunction with the system. And one of the
-key ski\l\ls of a Tester is knowing when 'enough is enough' and stopping the
-identification and exp\loration of possibi\lities.
+At times there is endless set of possible ways we could expand our model
+and how we can explore it in conjunction with the system. And one of the
+key skills of a Tester is knowing when 'enough is enough' and stopping the
+identification and exploration of possibilities.
   */
   
   /*
-## Exp\loring
+## Exploring
 
-The act of exp\loring a mode\l, or using the mode\l as a basis for exp\loring the
+The act of exploring a model, or using the model as a basis for exploring the
 system, is the main way that we test softare.
 
-Some of the outputs from this process are captured as part of the mode\l itse\lf.
+Some of the outputs from this process are captured as part of the model itself.
 
-Other outputs vary depending on the process used but inc\lude artifacts \like:
+Other outputs vary depending on the process used but include artifacts like:
 
-- execution or exp\loration \logs
+- execution or exploration logs
 - coverage reports
 - questions
 - decisions
-- ideas for new exp\loration approaches
+- ideas for new exploration approaches
 - issues
 - issue investigations
 
   */
 
 
-    subgraph c\luster_exp\loration_outputs {
-      \labe\l="Exp\loration Artifacts";
+    subgraph cluster_exploration_outputs {
+      label="Exploration Artifacts";
       rank=same
       node [rankdir=LR]
-      // a\l\low it to render without any visib\le nodes
-      exp\loration_artifacts [
-        \labe\l= "- execution or exp\loration \logs\\l
+      // allow it to render without any visible nodes
+      exploration_artifacts [
+        label= "- execution or exploration logs\\l
 - coverage reports\\l
 - questions\\l
 - decisions\\l
-- ideas for new exp\loration approaches\\l
+- ideas for new exploration approaches\\l
 - issues\\l
 - issue investigations\\l"
     shape=square
       ];
     }
 
-  exp\loration -> exp\loration_artifacts [\labe\l="Exp\loration" \lhead=c\luster_exp\loration_outputs];
+  exploration -> exploration_artifacts [label="Exploration" lhead=cluster_exploration_outputs];
 
 }
 
@@ -4025,85 +4029,85 @@ Other outputs vary depending on the process used but inc\lude artifacts \like:
 digraph TestingBasics {
 
 
-  # make graph compound because we want to \link to c\lusters
+  # make graph compound because we want to link to clusters
   graph [compound=true];
 
-  # \labe\l text a\lignment: use backs\lash \l to have \left a\ligned new \lines and n for centered new \lines
+  # label text alignment: use backslash l to have left aligned new lines and n for centered new lines
 
   rankdir=TB;
   newrank="true";
 
-  #bgco\lor=transparent;
+  #bgcolor=transparent;
   
-  c\lusterrank=\loca\l
+  clusterrank=local
 
   /*
 
-Testing is underpinned by mode\ls.
+Testing is underpinned by models.
 
 e.g. requirements, user stories, scenarios, etc.
   
   */
   
-  mode\l;
+  model;
   
   /*
   
-We have the 'thing we are comparing with'. Usua\l\ly a System Under Test.
+We have the 'thing we are comparing with'. Usually a System Under Test.
 
   */
 
-  comparison_thing [\labe\l="System\n Under\n Test"];
+  comparison_thing [label="System\n Under\n Test"];
 
   /*
 
-The mode\l and the SUT are inputs to our testing process.
+The model and the SUT are inputs to our testing process.
 
   */
-  subgraph c\luster_inputs {
-    \labe\l="Inputs to Testing";
+  subgraph cluster_inputs {
+    label="Inputs to Testing";
     rank=same;
-    mode\l;
+    model;
     comparison_thing;
   }
 
   /*
 
-The simp\lest way to use a mode\l for testing is to compare
-the mode\l with the System Under Test.
+The simplest way to use a model for testing is to compare
+the model with the System Under Test.
 
   */
 
   compare [shape=square];
-  subgraph c\luster_eva\luation {
+  subgraph cluster_evaluation {
       compare;
   }
 
 
   /*
-This generates output resu\lts from the comparison.
+This generates output results from the comparison.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis ];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis ];
   }
 
-  compare [shape=square, \labe\l="Comparison"];
-  compare -> output [\labe\l="Comparisons" \lhead=c\luster_comparison_outputs];
+  compare [shape=square, label="Comparison"];
+  compare -> output [label="Comparisons" lhead=cluster_comparison_outputs];
 
   /*
-Evidentia\l Observation Output can be used for
+Evidential Observation Output can be used for
 negative or positive confirmation.
   */
   
 
   /*
 Positive confirmation is often viewed as a 'Test Pass'.
-And basica\l\ly means that 'when we did something we observed
+And basically means that 'when we did something we observed
 that the system behaved the way that we expect'.
 
 NOTE: this does not mean that the system "works", it just means
@@ -4111,92 +4115,92 @@ that at some point in time, given a specific set of input and process
 we observed that the system behaaved as we expected.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=0 height=0];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=0 height=0];
     positive_confirmation;
   }
 
   positive_confirmation [
-    \labe\l="Positive\n Confirmation",
-    fi\l\lco\lor=green,
-    sty\le=fi\l\led
+    label="Positive\n Confirmation",
+    fillcolor=green,
+    style=filled
     ];
 
   /*
-Negative Confirmation is often ca\l\led a 'Test Fai\l'.
+Negative Confirmation is often called a 'Test Fail'.
 
 This means we observed something we did not expect.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
     positive_confirmation;
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=1 height=0];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=1 height=0];
     negative_confirmation;
   }
 
   negative_confirmation [
-    \labe\l ="Negative\n Confirmation",
-    fi\l\lco\lor=red,
-    sty\le=fi\l\led
+    label ="Negative\n Confirmation",
+    fillcolor=red,
+    style=filled
   ]
 
 
   /*
-These positive and negative reports are a visib\le output
+These positive and negative reports are a visible output
 from the Testing process.
   */
 
 
   /*
-So we have to investigate what fai\led during our comparison process.
+So we have to investigate what failed during our comparison process.
   */
 
   negative_confirmation -> investigation;
   investigation [
-    \labe\l="Investigate",
+    label="Investigate",
     shape=square
   ]
 
   /*
 This might mean:
 
-- a prob\lem with our mode\l
-- a prob\lem with the System Under Test
-- a prob\lem with our comparison process
+- a problem with our model
+- a problem with the System Under Test
+- a problem with our comparison process
 
 Either way it is something we have to investigate.
   */
 
-  investigation -> mode\l [
-    \labe\l="- Mode\l does not \\l  match rea\lity \\l- Change the mode\l.\\l"
+  investigation -> model [
+    label="- Model does not \\l  match reality \\l- Change the model.\\l"
   ];
 
   investigation -> compare [
-    \labe\l="- Process Issue.\\l- We did not use\\l  the system proper\ly.\\l- Re-eva\luate.\\l"
-    \lhead=c\luster_eva\luation
+    label="- Process Issue.\\l- We did not use\\l  the system properly.\\l- Re-evaluate.\\l"
+    lhead=cluster_evaluation
   ];
 
   investigation -> raise_bug [
-    \labe\l="- System does not match\n what we require."
+    label="- System does not match\n what we require."
   ];
-  raise_bug [\labe\l="Raise Bug"];
+  raise_bug [label="Raise Bug"];
   raise_bug -> fix_bug;
-  fix_bug [\labe\l="Fix Bug"];
-  fix_bug -> comparison_thing [\labe\l="- Fix the System"];
+  fix_bug [label="Fix Bug"];
+  fix_bug -> comparison_thing [label="- Fix the System"];
 
 
-  subgraph c\luster_investigate {
+  subgraph cluster_investigate {
     investigation;
 
-        subgraph c\luster_defect_process {
+        subgraph cluster_defect_process {
           rank=same
           node [rankdir=LR]
           raise_bug;
@@ -4205,176 +4209,176 @@ Either way it is something we have to investigate.
   }
 
   /*
-A comparison process from mode\l to 'thing' isn't the on\ly process that
-Software Testing invo\lves, it's just one of the most obvious ways we have
-of eva\luating the Software.
+A comparison process from model to 'thing' isn't the only process that
+Software Testing involves, it's just one of the most obvious ways we have
+of evaluating the Software.
 
-And Software Testing is a process of eva\luating the software.
+And Software Testing is a process of evaluating the software.
 
   */
-  compare [sty\le=fi\l\led, fi\l\lco\lor=ye\l\low];
-  subgraph c\luster_eva\luation {
-      \labe\l="Eva\luation";
+  compare [style=filled, fillcolor=yellow];
+  subgraph cluster_evaluation {
+      label="Evaluation";
       compare;
   }
 
   /*
 
-We can direct\ly compare Requirements with the Software for high \leve\l surface
-positive or negative confirmation that a requirement has been imp\lemented.
+We can directly compare Requirements with the Software for high level surface
+positive or negative confirmation that a requirement has been implemented.
 
-e.g. "A User must be ab\le to \login with their username and password." can be
-confirmed quite simp\ly by \logging in with an existing user and their correct
+e.g. "A User must be able to login with their username and password." can be
+confirmed quite simply by logging in with an existing user and their correct
 password.
 
-But during the Software Testing process we a\lso try to expand our mode\l beyond
+But during the Software Testing process we also try to expand our model beyond
 Requirements.
 
-We a\lso exp\lore our mode\l in conjunction with the system to \learn more about
-our mode\l and as a consequence, the system itse\lf.
+We also explore our model in conjunction with the system to learn more about
+our model and as a consequence, the system itself.
   
   */
 
-  compare [sty\le=fi\l\led, fi\l\lco\lor=white];
-  subgraph c\luster_eva\luation {
+  compare [style=filled, fillcolor=white];
+  subgraph cluster_evaluation {
       rank=same
       node [rankdir=LR]
-      \labe\l="Eva\luation";
+      label="Evaluation";
       compare;
-      mode\l\ling;
-      exp\loration;
+      modelling;
+      exploration;
   }
 
   /*
 
-Software Testing has to exp\lore our mode\l to identify:
+Software Testing has to explore our model to identify:
 
 - risks
 - ambiguity
-- gaps in the mode\ls and imp\lementation
+- gaps in the models and implementation
 - etc.
 
 This raises questions which we have to investigate and discuss.
 
-The ongoing process of mode\l\ling is how we generate our ideas
-for testing and how we find new ways to exp\lore the software.
+The ongoing process of modelling is how we generate our ideas
+for testing and how we find new ways to explore the software.
 
   */
 
 
-  mode\l\ling [\labe\l="Mode\ling", shape=square, sty\le=fi\l\led, fi\l\lco\lor=ye\l\low];
-  mode\l\ling -> mode\l [
-    \labe\l="Expand Mode\l:\\l\\l- risks\\l- ambiguity\\l- gaps\\l- questions\\l - etc.\\l"
-    \ltai\l=c\luster_eva\luation;
+  modelling [label="Modeling", shape=square, style=filled, fillcolor=yellow];
+  modelling -> model [
+    label="Expand Model:\\l\\l- risks\\l- ambiguity\\l- gaps\\l- questions\\l - etc.\\l"
+    ltail=cluster_evaluation;
   ];
 
   /*
-The mode\l is both an input to testing, and an output from Testing.
+The model is both an input to testing, and an output from Testing.
 
-Parts of the mode\l wi\l\l be stored in the Tester's head as a menta\l mode\l.
+Parts of the model will be stored in the Tester's head as a mental model.
 
-Other parts wi\l\l be visib\le in the form of diagrams, reports,
-\lists of test ideas, etc.
+Other parts will be visible in the form of diagrams, reports,
+lists of test ideas, etc.
   */
-  mode\l [\labe\l="Mode\l" sty\le=fi\l\led fi\l\lco\lor=ye\l\low];
+  model [label="Model" style=filled fillcolor=yellow];
 
   /*
 
-Software Testing then has to exp\lore the mode\l in conjunction
+Software Testing then has to explore the model in conjunction
 with the system to identify if any of these manifest as issues
-or potentia\l\ly require reworking the imp\lementation.
+or potentially require reworking the implementation.
 
   */
 
-  mode\l\ling [\labe\l="Mode\ling", shape=square, sty\le=fi\l\led, fi\l\lco\lor=white];
-  exp\loration [\labe\l="Exp\loring", shape=square, sty\le=fi\l\led, fi\l\lco\lor=ye\l\low];
+  modelling [label="Modeling", shape=square, style=filled, fillcolor=white];
+  exploration [label="Exploring", shape=square, style=filled, fillcolor=yellow];
 
-  {mode\l comparison_thing} -> compare [\lhead=c\luster_eva\luation];
+  {model comparison_thing} -> compare [lhead=cluster_evaluation];
 
 
     /*
-One examp\le of ambiguity arises from requirements being natura\l\ly incomp\lete because
+One example of ambiguity arises from requirements being naturally incomplete because
 of assumptions in understanding.
 
-The requirement for \logging into the system does not describe:
+The requirement for logging into the system does not describe:
 
-- what happens if the user is a\lready \logged in?
-- what message is disp\layed if the user gets the password wrong?
-- what message shou\ld be disp\layed if the user does not exist?
+- what happens if the user is already logged in?
+- what message is displayed if the user gets the password wrong?
+- what message should be displayed if the user does not exist?
 
-Part of the Eva\luation process that we ca\l\l Software Testing is about
-expanding our mode\l so that we can exp\lore the System more thorough\ly
+Part of the Evaluation process that we call Software Testing is about
+expanding our model so that we can explore the System more thoroughly
 and provide more information.
 
-We a\lso have to go beyond our mode\l of the requirements and identify Risks
-associated with potentia\l imp\lementation, or the techno\logy used, or the
-a\lgorithms we have imp\lemented.
+We also have to go beyond our model of the requirements and identify Risks
+associated with potential implementation, or the technology used, or the
+algorithms we have implemented.
 
-For examp\le there might be a risk that the password has been stored in
-p\laintext in the database, and an additiona\l risk that the imp\lementation
-has coded with a '\like' comparison on the password rather than an 'equa\ls'
-so it might be possib\le to use wi\ldcards in the password and \login knowing
-on\ly a partia\l password.
+For example there might be a risk that the password has been stored in
+plaintext in the database, and an additional risk that the implementation
+has coded with a 'like' comparison on the password rather than an 'equals'
+so it might be possible to use wildcards in the password and login knowing
+only a partial password.
 
-This wou\ld a\lso \lead to risks about the security of the app\lication and SQL
+This would also lead to risks about the security of the application and SQL
 Injection.
 
-These might not be covered in the Requirement mode\l, and may not be present
-in every Tester's or Programmer's mode\l of the System because they may not
-have experience or know\ledge about Security Testing.
+These might not be covered in the Requirement model, and may not be present
+in every Tester's or Programmer's model of the System because they may not
+have experience or knowledge about Security Testing.
 
-At times there is end\less set of possib\le ways we cou\ld expand our mode\l
-and how we can exp\lore it in conjunction with the system. And one of the
-key ski\l\ls of a Tester is knowing when 'enough is enough' and stopping the
-identification and exp\loration of possibi\lities.
+At times there is endless set of possible ways we could expand our model
+and how we can explore it in conjunction with the system. And one of the
+key skills of a Tester is knowing when 'enough is enough' and stopping the
+identification and exploration of possibilities.
   */
   
   /*
-## Exp\loring
+## Exploring
 
-The act of exp\loring a mode\l, or using the mode\l as a basis for exp\loring the
+The act of exploring a model, or using the model as a basis for exploring the
 system, is the main way that we test softare.
 
-Some of the outputs from this process are captured as part of the mode\l itse\lf.
+Some of the outputs from this process are captured as part of the model itself.
 
-Other outputs vary depending on the process used but inc\lude artifacts \like:
+Other outputs vary depending on the process used but include artifacts like:
 
-- execution or exp\loration \logs
+- execution or exploration logs
 - coverage reports
 - questions
 - decisions
-- ideas for new exp\loration approaches
+- ideas for new exploration approaches
 - issues
 - issue investigations
 
   */
 
 
-    subgraph c\luster_exp\loration_outputs {
-      \labe\l="Exp\loration Artifacts";
+    subgraph cluster_exploration_outputs {
+      label="Exploration Artifacts";
       rank=same
       node [rankdir=LR]
-      // a\l\low it to render without any visib\le nodes
-      exp\loration_artifacts [
-        \labe\l= "- execution or exp\loration \logs\\l
+      // allow it to render without any visible nodes
+      exploration_artifacts [
+        label= "- execution or exploration logs\\l
 - coverage reports\\l
 - questions\\l
 - decisions\\l
-- ideas for new exp\loration approaches\\l
+- ideas for new exploration approaches\\l
 - issues\\l
 - issue investigations\\l"
     shape=square
       ];
     }
 
-  exp\loration -> exp\loration_artifacts [\labe\l="Exp\loration" \lhead=c\luster_exp\loration_outputs];
+  exploration -> exploration_artifacts [label="Exploration" lhead=cluster_exploration_outputs];
 
   /*
-Exp\loration is usua\l\ly pursued in sma\l\l chunks of time to make it easier to document
-and respond to the information gained during the exp\loration to make decisions
+Exploration is usually pursued in small chunks of time to make it easier to document
+and respond to the information gained during the exploration to make decisions
 about what to test or investigate next.
   */
-  exp\loration -> investigation [\labe\l="Investigate\n Findings"];
+  exploration -> investigation [label="Investigate\n Findings"];
 
 }
 
@@ -4386,85 +4390,85 @@ about what to test or investigate next.
 digraph TestingBasics {
 
 
-  # make graph compound because we want to \link to c\lusters
+  # make graph compound because we want to link to clusters
   graph [compound=true];
 
-  # \labe\l text a\lignment: use backs\lash \l to have \left a\ligned new \lines and n for centered new \lines
+  # label text alignment: use backslash l to have left aligned new lines and n for centered new lines
 
   rankdir=TB;
   newrank="true";
 
-  #bgco\lor=transparent;
+  #bgcolor=transparent;
   
-  c\lusterrank=\loca\l
+  clusterrank=local
 
   /*
 
-Testing is underpinned by mode\ls.
+Testing is underpinned by models.
 
 e.g. requirements, user stories, scenarios, etc.
   
   */
   
-  mode\l;
+  model;
   
   /*
   
-We have the 'thing we are comparing with'. Usua\l\ly a System Under Test.
+We have the 'thing we are comparing with'. Usually a System Under Test.
 
   */
 
-  comparison_thing [\labe\l="System\n Under\n Test"];
+  comparison_thing [label="System\n Under\n Test"];
 
   /*
 
-The mode\l and the SUT are inputs to our testing process.
+The model and the SUT are inputs to our testing process.
 
   */
-  subgraph c\luster_inputs {
-    \labe\l="Inputs to Testing";
+  subgraph cluster_inputs {
+    label="Inputs to Testing";
     rank=same;
-    mode\l;
+    model;
     comparison_thing;
   }
 
   /*
 
-The simp\lest way to use a mode\l for testing is to compare
-the mode\l with the System Under Test.
+The simplest way to use a model for testing is to compare
+the model with the System Under Test.
 
   */
 
   compare [shape=square];
-  subgraph c\luster_eva\luation {
+  subgraph cluster_evaluation {
       compare;
   }
 
 
   /*
-This generates output resu\lts from the comparison.
+This generates output results from the comparison.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis ];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis ];
   }
 
-  compare [shape=square, \labe\l="Comparison"];
-  compare -> output [\labe\l="Comparisons" \lhead=c\luster_comparison_outputs];
+  compare [shape=square, label="Comparison"];
+  compare -> output [label="Comparisons" lhead=cluster_comparison_outputs];
 
   /*
-Evidentia\l Observation Output can be used for
+Evidential Observation Output can be used for
 negative or positive confirmation.
   */
   
 
   /*
 Positive confirmation is often viewed as a 'Test Pass'.
-And basica\l\ly means that 'when we did something we observed
+And basically means that 'when we did something we observed
 that the system behaved the way that we expect'.
 
 NOTE: this does not mean that the system "works", it just means
@@ -4472,92 +4476,92 @@ that at some point in time, given a specific set of input and process
 we observed that the system behaaved as we expected.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=0 height=0];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=0 height=0];
     positive_confirmation;
   }
 
   positive_confirmation [
-    \labe\l="Positive\n Confirmation",
-    fi\l\lco\lor=green,
-    sty\le=fi\l\led
+    label="Positive\n Confirmation",
+    fillcolor=green,
+    style=filled
     ];
 
   /*
-Negative Confirmation is often ca\l\led a 'Test Fai\l'.
+Negative Confirmation is often called a 'Test Fail'.
 
 This means we observed something we did not expect.
   */
 
-  subgraph c\luster_comparison_outputs {
-    \labe\l="Comparison Output";
+  subgraph cluster_comparison_outputs {
+    label="Comparison Output";
     rank=same
     node [rankdir=LR]
     positive_confirmation;
-    // a\l\low it to render without any visib\le nodes
-    output [ \labe\l="" sty\le = invis fixedsize=true width=1 height=0];
+    // allow it to render without any visible nodes
+    output [ label="" style = invis fixedsize=true width=1 height=0];
     negative_confirmation;
   }
 
   negative_confirmation [
-    \labe\l ="Negative\n Confirmation",
-    fi\l\lco\lor=red,
-    sty\le=fi\l\led
+    label ="Negative\n Confirmation",
+    fillcolor=red,
+    style=filled
   ]
 
 
   /*
-These positive and negative reports are a visib\le output
+These positive and negative reports are a visible output
 from the Testing process.
   */
 
 
   /*
-So we have to investigate what fai\led during our comparison process.
+So we have to investigate what failed during our comparison process.
   */
 
   negative_confirmation -> investigation;
   investigation [
-    \labe\l="Investigate",
+    label="Investigate",
     shape=square
   ]
 
   /*
 This might mean:
 
-- a prob\lem with our mode\l
-- a prob\lem with the System Under Test
-- a prob\lem with our comparison process
+- a problem with our model
+- a problem with the System Under Test
+- a problem with our comparison process
 
 Either way it is something we have to investigate.
   */
 
-  investigation -> mode\l [
-    \labe\l="- Mode\l does not \\l  match rea\lity \\l- Change the mode\l.\\l"
+  investigation -> model [
+    label="- Model does not \\l  match reality \\l- Change the model.\\l"
   ];
 
   investigation -> compare [
-    \labe\l="- Process Issue.\\l- We did not use\\l  the system proper\ly.\\l- Re-eva\luate.\\l"
-    \lhead=c\luster_eva\luation
+    label="- Process Issue.\\l- We did not use\\l  the system properly.\\l- Re-evaluate.\\l"
+    lhead=cluster_evaluation
   ];
 
   investigation -> raise_bug [
-    \labe\l="- System does not match\n what we require."
+    label="- System does not match\n what we require."
   ];
-  raise_bug [\labe\l="Raise Bug"];
+  raise_bug [label="Raise Bug"];
   raise_bug -> fix_bug;
-  fix_bug [\labe\l="Fix Bug"];
-  fix_bug -> comparison_thing [\labe\l="- Fix the System"];
+  fix_bug [label="Fix Bug"];
+  fix_bug -> comparison_thing [label="- Fix the System"];
 
 
-  subgraph c\luster_investigate {
+  subgraph cluster_investigate {
     investigation;
 
-        subgraph c\luster_defect_process {
+        subgraph cluster_defect_process {
           rank=same
           node [rankdir=LR]
           raise_bug;
@@ -4566,179 +4570,179 @@ Either way it is something we have to investigate.
   }
 
   /*
-A comparison process from mode\l to 'thing' isn't the on\ly process that
-Software Testing invo\lves, it's just one of the most obvious ways we have
-of eva\luating the Software.
+A comparison process from model to 'thing' isn't the only process that
+Software Testing involves, it's just one of the most obvious ways we have
+of evaluating the Software.
 
-And Software Testing is a process of eva\luating the software.
+And Software Testing is a process of evaluating the software.
 
   */
-  compare [sty\le=fi\l\led, fi\l\lco\lor=ye\l\low];
-  subgraph c\luster_eva\luation {
-      \labe\l="Eva\luation";
+  compare [style=filled, fillcolor=yellow];
+  subgraph cluster_evaluation {
+      label="Evaluation";
       compare;
   }
 
   /*
 
-We can direct\ly compare Requirements with the Software for high \leve\l surface
-positive or negative confirmation that a requirement has been imp\lemented.
+We can directly compare Requirements with the Software for high level surface
+positive or negative confirmation that a requirement has been implemented.
 
-e.g. "A User must be ab\le to \login with their username and password." can be
-confirmed quite simp\ly by \logging in with an existing user and their correct
+e.g. "A User must be able to login with their username and password." can be
+confirmed quite simply by logging in with an existing user and their correct
 password.
 
-But during the Software Testing process we a\lso try to expand our mode\l beyond
+But during the Software Testing process we also try to expand our model beyond
 Requirements.
 
-We a\lso exp\lore our mode\l in conjunction with the system to \learn more about
-our mode\l and as a consequence, the system itse\lf.
+We also explore our model in conjunction with the system to learn more about
+our model and as a consequence, the system itself.
   
   */
 
-  compare [sty\le=fi\l\led, fi\l\lco\lor=white];
-  subgraph c\luster_eva\luation {
+  compare [style=filled, fillcolor=white];
+  subgraph cluster_evaluation {
       rank=same
       node [rankdir=LR]
-      \labe\l="Eva\luation";
+      label="Evaluation";
       compare;
-      mode\l\ling;
-      exp\loration;
+      modelling;
+      exploration;
   }
 
   /*
 
-Software Testing has to exp\lore our mode\l to identify:
+Software Testing has to explore our model to identify:
 
 - risks
 - ambiguity
-- gaps in the mode\ls and imp\lementation
+- gaps in the models and implementation
 - etc.
 
 This raises questions which we have to investigate and discuss.
 
-The ongoing process of mode\l\ling is how we generate our ideas
-for testing and how we find new ways to exp\lore the software.
+The ongoing process of modelling is how we generate our ideas
+for testing and how we find new ways to explore the software.
 
   */
 
 
-  mode\l\ling [\labe\l="Mode\ling", shape=square, sty\le=fi\l\led, fi\l\lco\lor=ye\l\low];
-  mode\l\ling -> mode\l [
-    \labe\l="Expand Mode\l:\\l\\l- risks\\l- ambiguity\\l- gaps\\l- questions\\l - etc.\\l"
-    \ltai\l=c\luster_eva\luation;
+  modelling [label="Modeling", shape=square, style=filled, fillcolor=yellow];
+  modelling -> model [
+    label="Expand Model:\\l\\l- risks\\l- ambiguity\\l- gaps\\l- questions\\l - etc.\\l"
+    ltail=cluster_evaluation;
   ];
 
   /*
-The mode\l is both an input to testing, and an output from Testing.
+The model is both an input to testing, and an output from Testing.
 
-Parts of the mode\l wi\l\l be stored in the Tester's head as a menta\l mode\l.
+Parts of the model will be stored in the Tester's head as a mental model.
 
-Other parts wi\l\l be visib\le in the form of diagrams, reports,
-\lists of test ideas, etc.
+Other parts will be visible in the form of diagrams, reports,
+lists of test ideas, etc.
   */
-  mode\l [\labe\l="Mode\l" sty\le=fi\l\led fi\l\lco\lor=ye\l\low];
+  model [label="Model" style=filled fillcolor=yellow];
 
   /*
 
-Software Testing then has to exp\lore the mode\l in conjunction
+Software Testing then has to explore the model in conjunction
 with the system to identify if any of these manifest as issues
-or potentia\l\ly require reworking the imp\lementation.
+or potentially require reworking the implementation.
 
   */
 
-  mode\l\ling [\labe\l="Mode\ling", shape=square, sty\le=fi\l\led, fi\l\lco\lor=white];
-  exp\loration [\labe\l="Exp\loring", shape=square, sty\le=fi\l\led, fi\l\lco\lor=ye\l\low];
+  modelling [label="Modeling", shape=square, style=filled, fillcolor=white];
+  exploration [label="Exploring", shape=square, style=filled, fillcolor=yellow];
 
-  {mode\l comparison_thing} -> compare [\lhead=c\luster_eva\luation];
+  {model comparison_thing} -> compare [lhead=cluster_evaluation];
 
 
     /*
-One examp\le of ambiguity arises from requirements being natura\l\ly incomp\lete because
+One example of ambiguity arises from requirements being naturally incomplete because
 of assumptions in understanding.
 
-The requirement for \logging into the system does not describe:
+The requirement for logging into the system does not describe:
 
-- what happens if the user is a\lready \logged in?
-- what message is disp\layed if the user gets the password wrong?
-- what message shou\ld be disp\layed if the user does not exist?
+- what happens if the user is already logged in?
+- what message is displayed if the user gets the password wrong?
+- what message should be displayed if the user does not exist?
 
-Part of the Eva\luation process that we ca\l\l Software Testing is about
-expanding our mode\l so that we can exp\lore the System more thorough\ly
+Part of the Evaluation process that we call Software Testing is about
+expanding our model so that we can explore the System more thoroughly
 and provide more information.
 
-We a\lso have to go beyond our mode\l of the requirements and identify Risks
-associated with potentia\l imp\lementation, or the techno\logy used, or the
-a\lgorithms we have imp\lemented.
+We also have to go beyond our model of the requirements and identify Risks
+associated with potential implementation, or the technology used, or the
+algorithms we have implemented.
 
-For examp\le there might be a risk that the password has been stored in
-p\laintext in the database, and an additiona\l risk that the imp\lementation
-has coded with a '\like' comparison on the password rather than an 'equa\ls'
-so it might be possib\le to use wi\ldcards in the password and \login knowing
-on\ly a partia\l password.
+For example there might be a risk that the password has been stored in
+plaintext in the database, and an additional risk that the implementation
+has coded with a 'like' comparison on the password rather than an 'equals'
+so it might be possible to use wildcards in the password and login knowing
+only a partial password.
 
-This wou\ld a\lso \lead to risks about the security of the app\lication and SQL
+This would also lead to risks about the security of the application and SQL
 Injection.
 
-These might not be covered in the Requirement mode\l, and may not be present
-in every Tester's or Programmer's mode\l of the System because they may not
-have experience or know\ledge about Security Testing.
+These might not be covered in the Requirement model, and may not be present
+in every Tester's or Programmer's model of the System because they may not
+have experience or knowledge about Security Testing.
 
-At times there is end\less set of possib\le ways we cou\ld expand our mode\l
-and how we can exp\lore it in conjunction with the system. And one of the
-key ski\l\ls of a Tester is knowing when 'enough is enough' and stopping the
-identification and exp\loration of possibi\lities.
+At times there is endless set of possible ways we could expand our model
+and how we can explore it in conjunction with the system. And one of the
+key skills of a Tester is knowing when 'enough is enough' and stopping the
+identification and exploration of possibilities.
   */
   
   /*
-## Exp\loring
+## Exploring
 
-The act of exp\loring a mode\l, or using the mode\l as a basis for exp\loring the
+The act of exploring a model, or using the model as a basis for exploring the
 system, is the main way that we test softare.
 
-Some of the outputs from this process are captured as part of the mode\l itse\lf.
+Some of the outputs from this process are captured as part of the model itself.
 
-Other outputs vary depending on the process used but inc\lude artifacts \like:
+Other outputs vary depending on the process used but include artifacts like:
 
-- execution or exp\loration \logs
+- execution or exploration logs
 - coverage reports
 - questions
 - decisions
-- ideas for new exp\loration approaches
+- ideas for new exploration approaches
 - issues
 - issue investigations
 
   */
 
 
-    subgraph c\luster_exp\loration_outputs {
-      \labe\l="Exp\loration Artifacts";
+    subgraph cluster_exploration_outputs {
+      label="Exploration Artifacts";
       rank=same
       node [rankdir=LR]
-      // a\l\low it to render without any visib\le nodes
-      exp\loration_artifacts [
-        \labe\l= "- execution or exp\loration \logs\\l
+      // allow it to render without any visible nodes
+      exploration_artifacts [
+        label= "- execution or exploration logs\\l
 - coverage reports\\l
 - questions\\l
 - decisions\\l
-- ideas for new exp\loration approaches\\l
+- ideas for new exploration approaches\\l
 - issues\\l
 - issue investigations\\l"
     shape=square
       ];
     }
 
-  exp\loration -> exp\loration_artifacts [\labe\l="Exp\loration" \lhead=c\luster_exp\loration_outputs];
+  exploration -> exploration_artifacts [label="Exploration" lhead=cluster_exploration_outputs];
 
   /*
-Exp\loration is usua\l\ly pursued in sma\l\l chunks of time to make it easier to document
-and respond to the information gained during the exp\loration to make decisions
+Exploration is usually pursued in small chunks of time to make it easier to document
+and respond to the information gained during the exploration to make decisions
 about what to test or investigate next.
   */
-  exp\loration -> investigation [\labe\l="Investigate\n Findings"];
+  exploration -> investigation [label="Investigate\n Findings"];
 
-//   # Fin - reset any temporary high\lights
-  exp\loration [\labe\l="Exp\loring", shape=square, sty\le=fi\l\led, fi\l\lco\lor=white];
+//   # Fin - reset any temporary highlights
+  exploration [label="Exploring", shape=square, style=filled, fillcolor=white];
   
 }
 

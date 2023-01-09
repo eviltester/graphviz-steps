@@ -265,7 +265,7 @@ describe("prototype file reading and writing", () => {
         let dotForTemplate = "";
 
         for(const dotFileContent of parsed.dotVersions){
-            let writeDotFileContent = dotFileContent.replace(/\l/gm, "\\l");
+            let writeDotFileContent = dotFileContent.replace(/\\l/gm, "\\\\l");
             dotForTemplate = dotForTemplate + "`\n" + writeDotFileContent + "`,\n";
         }
 
