@@ -1,3 +1,3 @@
-import { GraphvizStepParser } from "./graphvizStepParser";
+import { GraphvizStepParser } from "./library/graphvizStepParser";
 
 export {GraphvizStepParser};

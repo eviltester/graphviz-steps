@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.0/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@hpcc-js/wasm/dist/graphviz.umd.js" type="javascript/worker"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-graphviz/5.0.2/d3-graphviz.min.js"></script>
+<script src="graphviz-step-parser.js"></script>
+<div id="graph" style="text-align: center;"></div>
+
+<!--
+    Template from the d3-graphviz examples:
+    https://github.com/magjac/d3-graphviz/blob/master/examples/demo.html
+-->
+
+<script>
+
+var millisToDraw = 2000;
+var millisBetweenFrames = 2000;
+
+var dotIndex = 0;
+
+var stepDot=`
+digraph G {
+    a -> b
+    # STEP add c
+    a -> c
+    c -> b
+    # STEP add d
+    a -> d
+    d -> b
+    # END
+    b -> end
+}`;
+
+var stepParser = new GraphvizSteps.GraphvizStepParser();
+stepParser.parse(stepDot);
+var dots = stepParser.dotVersions;
+
+
+
+var graphviz = startGraphviz().on("initEnd", render);
+
+function startGraphviz(){
+    return d3.select("#graph").graphviz()
+    .transition(function () {
+        return d3.transition()//"main")
+            //.ease(d3.easeLinear)
+            //.delay(1000)
+            .duration(millisToDraw);
+    })
+    .logEvents(true);
+}
+
+var lastTimeout;
+
+function render() {
+    var dot = dots[dotIndex];
+    graphviz
+        .renderDot(dot)
+        .on("end", function () {
+            dotIndex = (dotIndex + 1) % dots.length;
+            lastTimeout=setTimeout(render,millisBetweenFrames);
+        });
+}
+
+// editor hack
+window.onclick = ()=>{
+    var text = prompt("paste in your Graphviz dot here");
+    if(text!=null){
+        reset(text);
+    }
+}
+
+function reset(dot){
+    clearTimeout(lastTimeout);
+    graphviz.destroy();
+    document.getElementById('graph').innerHTML="";
+
+    stepParser = new GraphvizSteps.GraphvizStepParser();
+    stepParser.parse(dot);
+    dots = stepParser.dotVersions; 
+    dotIndex=0;
+
+    graphviz = startGraphviz().on("initEnd", render);
+    
+}
+
+</script>
