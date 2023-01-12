@@ -165,6 +165,8 @@ digraph G {
 }
 ```
 
+This project is still in its early stages so I've been using screen capture tools to record the graphs from the editor and example html pages.
+
 ## Examples
 
 There are examples in the test code:
