@@ -29,11 +29,11 @@ digraph G {
 
 This will still render as a normal Graphviz diagram:
 
-[](!docs/images/3-step-dot.png)
+[]!(docs/images/3-step-dot.png)
 
 If you use the same source with Graphviz Steps Parser to parse it into individual dot strings then you can render each of them using d3-graphviz then you can render it as an animated graph.
 
-[](!docs/images/anim-3-step.gif)
+[]!(docs/images/anim-3-step.gif)
 
 [online example](https://eviltester.github.io/graphviz-steps/generate.demo.html)
 
