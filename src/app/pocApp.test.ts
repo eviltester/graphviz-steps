@@ -1,4 +1,4 @@
-import { GraphvizStepParser } from "./library/graphvizStepParser";
+import { GraphvizStepParser } from "../library/graphvizStepParser";
 
 describe("prototype file reading and writing", () => {
 
@@ -25,9 +25,9 @@ describe("prototype file reading and writing", () => {
 
         const path = require('path');
 
-        const inputFolder = path.resolve( __dirname,  `../examples/`);
+        const inputFolder = path.resolve( __dirname,  `../../examples/`);
         const inputFileName = `001-meta-model-of-software-testing.test.dot`;
-        const outputFolder = path.resolve( __dirname,  `../examples/output/`);
+        const outputFolder = path.resolve( __dirname,  `../../examples/output/`);
 
         const parsed=readAndParseFile(path.resolve(inputFolder,inputFileName));
 
@@ -56,10 +56,10 @@ describe("prototype file reading and writing", () => {
 
         const path = require('path');
 
-        const inputFolder = path.resolve( __dirname,  `../examples/`);
+        const inputFolder = path.resolve( __dirname,  `../../examples/`);
         const inputFileName = `001-meta-model-of-software-testing.test.dot`;
         const templateName =`demo-template.html`;
-        const outputFolder = path.resolve( __dirname,  `../examples/output/`);
+        const outputFolder = path.resolve( __dirname,  `../../examples/output/`);
 
         const parsed=readAndParseFile(path.resolve(inputFolder,inputFileName));
 

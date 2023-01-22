@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  entry: './build/graphvizStepParserLibrary.js',
+  entry: './build/cjs/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'graphviz-step-parser.js',

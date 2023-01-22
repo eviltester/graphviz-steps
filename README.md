@@ -48,6 +48,53 @@ Until we create a proper editor, if you want to work from your own `dot` file yo
 - paste in your Graphviz graph at the input prompt
 - click [OK]
 
+> For web usage you can include the `graphviz-step-parser.js` from the `dist` folder:
+
+```
+<script src="graphviz-step-parser.js"></script>
+```
+
+You also need to add the `d3-graphviz` dependencies:
+
+```
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.0/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@hpcc-js/wasm/dist/graphviz.umd.js" type="javascript/worker"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-graphviz/5.0.2/d3-graphviz.min.js"></script>
+
+```
+
+## A simple `npm` usage example
+
+- `npm install`
+
+Then `require`:
+
+```
+var GraphvizSteps = require('multi-step-graphviz');
+
+var stepDot=`
+digraph G {
+    a -> b
+    # STEP add c
+    a -> c
+    c -> b
+    # STEP add d
+    a -> d
+    d -> b
+    # END
+    b -> end
+}`;
+
+var stepParser = new GraphvizSteps.GraphvizStepParser();
+stepParser.parse(stepDot);
+var dots = stepParser.dotVersions;
+
+console.log(dots.length);
+console.log(dots[0]);
+console.log(dots[1]);
+console.log(dots[2]);
+```
+
 ## Basic Example
 
 All directives to control the animation are added as "#" comments in the Graphviz.
