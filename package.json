@@ -1,22 +1,22 @@
 {
   "name": "multi-step-graphviz",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Create multiple Graphviz diagrams from a single Graphviz dot file",
   "types": "./lib/cjs/types/index.d.ts",
   "main": "./lib/cjs/index.js",
   "files": [
-    "build/**/*"
+    "build/**/*","dist/**/*"
  ],
   "scripts": {
     "clean": "rm -rf ./build",
-    "build": "npm run clean && npm run build:esm && npm run build:cjs",
+    "build": "npm run clean && npm run build:esm && npm run build:cjs && npm run package:library",
     "build:esm": "tsc -p ./tsconfig.esm.json && mv build/esm/index.js build/esm/index.mjs",
     "build:cjs": "tsc -p ./tsconfig.cjs.json",
     "prepack": "npm run build",
     "test": "jest",
     "package:library": "npx webpack --config webpack.config.js",
     "deploy:library:docs": "cp ./dist/graphviz-step-parser.js ./docs/",
-    "fullbuild" : "npm run build && npm run package:library && npm run deploy:library:docs"
+    "fullbuild" : "npm run build && npm run deploy:library:docs"
   },
   "repository": {
     "type": "git",

@@ -65,9 +65,11 @@ You also need to add the `d3-graphviz` dependencies:
 
 ## A simple `npm` usage example
 
-- `npm install`
+https://www.npmjs.com/package/multi-step-graphviz
 
-Then `require`:
+- `npm install multi-step-graphviz`
+
+Then using `require`:
 
 ```
 var GraphvizSteps = require('multi-step-graphviz');
