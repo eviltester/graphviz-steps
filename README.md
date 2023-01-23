@@ -39,7 +39,7 @@ If you use the same source with Graphviz Steps Parser to parse it into individua
 
 ## Using it yourself
 
-If you are familiar with Javascript then you should be able to get started by looking at the source code for the [generate.demo.html](https://github.com/eviltester/graphviz-steps/blob/main/docs/generate.demo.html) application.
+### Online - No Install Required
 
 Until we create a proper editor, if you want to work from your own `dot` file you can:
 
@@ -48,7 +48,11 @@ Until we create a proper editor, if you want to work from your own `dot` file yo
 - paste in your Graphviz graph at the input prompt
 - click [OK]
 
-> For web usage you can include the `graphviz-step-parser.js` from the `dist` folder:
+### HTML Usage
+
+If you are familiar with Javascript then you should be able to get started by looking at the source code for the [generate.demo.html](https://github.com/eviltester/graphviz-steps/blob/main/docs/generate.demo.html) application.
+
+> For web usage you can include the `graphviz-step-parser.js` from the `dist` folder in your project:
 
 ```
 <script src="graphviz-step-parser.js"></script>
@@ -63,7 +67,13 @@ You also need to add the `d3-graphviz` dependencies:
 
 ```
 
-## A simple `npm` usage example
+Or you can add the `graphviz-step-parser.js` from a CDN e.g.
+
+```
+<script src="https://unpkg.com/multi-step-graphviz@1.0.2/dist/graphviz-step-parser.js"></script>
+```
+
+### A simple `npm` usage example
 
 https://www.npmjs.com/package/multi-step-graphviz
 
@@ -225,3 +235,5 @@ There are examples in the test code:
 There is a longer example here:
 
 - [meta model of testing](https://github.com/eviltester/graphviz-steps/blob/main/examples/001-meta-model-of-software-testing.test.dot) this also demonstrates embedded comments to make a diagram self-explanatory.
+
+- [import and include examples](https://github.com/eviltester/test-npm-pack-multi-step-graphviz)
