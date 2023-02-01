@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.0/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@hpcc-js/wasm/dist/graphviz.umd.js" type="javascript/worker"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-graphviz/5.0.2/d3-graphviz.min.js"></script>
+<script src="graphviz-step-parser.js"></script>
+<div id="graph" style="text-align: center;"></div>
+
+<!--
+    Template from the d3-graphviz examples:
+    https://github.com/magjac/d3-graphviz/blob/master/examples/demo.html
+
+    An Example Dot:
+
+digraph G {
+    start -> b
+    # STEP add c
+    b -> c
+    # STEP add back
+    c -> b
+    # STEP add d
+    start -> d
+    # STEP loop in
+    d -> b
+    # END
+    b -> end
+}
+-->
+
+<script>
+
+
+if("getDisplayMedia" in navigator.mediaDevices){
+        console.log("screen capture supported");
+}else{
+        console.log("WARNING screen capture NOT supported");
+}
+
+var millisToDraw = 2000;
+var millisBetweenFrames = 1000;
+
+var dotIndex = 0;
+
+var stepDot= //prompt("paste in your Graphviz dot here", `
+`digraph G {
+    a -> b
+    # STEP add c
+    a -> c
+    c -> b
+    # STEP add d
+    a -> d
+    d -> b
+    # END
+    b -> end
+}`; //);
+
+var stepParser = new GraphvizSteps.GraphvizStepParser();
+stepParser.parse(stepDot);
+var dots = stepParser.dotVersions;
+
+
+var graphviz = startGraphviz().on("initEnd", render);
+
+function startGraphviz(){
+    return d3.select("#graph").graphviz()
+    .transition(function () {
+        return d3.transition()//"main")
+            //.ease(d3.easeLinear)
+            //.delay(1000)
+            .duration(millisToDraw);
+    })
+    .logEvents(true);
+}
+
+var lastTimeout = [];
+var stopping=false;
+
+//const frames = setInterval(()=>{window.requestAnimationFrame(()=>{});},1000);
+
+function stopItAll(){
+    if(stopping){
+        // trigger animation frames to allow debug protocol to pick up end
+        console.log("trigger anim");
+        document.body.style.background = document.body.style.background;
+        window.requestAnimationFrame(stopItAll);
+        return;
+    }
+}
+
+function render() {
+    var dot = dots[dotIndex];
+    console.log(dotIndex);
+    console.log(dots[dotIndex]);
+
+    if(stopping){
+        return stopItAll();
+    }
+
+    graphviz
+        .renderDot(dot)
+        .on("end", function () {
+            dotIndex = dotIndex + 1;
+            clearTimeouts();
+            if(dotIndex>=dots.length){
+                stopping=true;
+                graphviz.destroy();
+                stopItAll();                
+            }else{
+                lastTimeout.push(setTimeout(render,millisBetweenFrames));
+            }            
+        });
+}
+
+function clearTimeouts(){
+    while(lastTimeout.length>0){
+        console.log("clearing " +lastTimeout[0]);
+        clearTimeout(lastTimeout.shift());
+    }
+}
+
+// https://api.video/blog/tutorials/building-record-a-video-the-screencapture-api
+//https://api.video/blog/tutorials/building-record-a-video-the-mediarecorder-api
+// https://www.geeksforgeeks.org/how-to-take-screenshot-of-a-div-using-javascript/
+// https://roadtolarissa.com/d3-mp4/
+
+// To create video could try the dev tools protocol Page.startScreencast
+// https://chromedevtools.github.io/devtools-protocol/tot/Page/#method-startScreencast
+// e.g. https://onelinerhub.com/chrome-headless/how-to-capture-video
+// handle prompt dialog with Page.handleJavaScriptDialog
+// https://chromedevtools.github.io/devtools-protocol/tot/Page/#method-handleJavaScriptDialog
+</script>
