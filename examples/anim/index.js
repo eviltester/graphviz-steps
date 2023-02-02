@@ -9,8 +9,8 @@ const chromeFlags = [ '--window-size=1280,721'];
 // const chromeFlags = [];
 
 // TODO: allow configuring of launch url from command line -url
-let launchChromeUrl = 'http://localhost:8000/create-anim-file.html';
-
+//let launchChromeUrl = 'http://localhost:8000/create-anim-file.html';
+let launchChromeUrl = 'https://google.com';
 let frameTimoutMillis = 5000;
 
 // capture the meta data for all the animation frames
@@ -90,7 +90,7 @@ chromeLauncher.launch({
             const {data, metadata, sessionId} = result;
 
             await Page.screencastFrameAck({sessionId: sessionId});
-            //todo - get x,y,width, height of svg at each frame
+            //TODO: get x,y,width, height of svg at each frame
   
             // I seem get slightly more frames if I write them to memory
             // TODO: make memory or writing to file an option
@@ -99,8 +99,7 @@ chromeLauncher.launch({
           //                      '.png', Buffer.from(data, 'base64'));
           // frames.push({counter: counter, previousFrameDuration: timeIndex})
             frames.push({counter: counter, previousFrameDuration: timeIndex, base64:Buffer.from(data, 'base64') });
-
-  
+            
             finishedAnim = await Runtime.evaluate({expression: 'window.stopping'});
 
             console.log(metadata?.timestamp);
@@ -125,6 +124,8 @@ chromeLauncher.launch({
         await client.close();
         chrome.kill();
 
+        completeOutput(frames);
+        
     });
 
   });
