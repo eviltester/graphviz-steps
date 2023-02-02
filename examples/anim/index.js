@@ -2,12 +2,31 @@ const chromeLauncher = require('chrome-launcher');
 const CDP = require('chrome-remote-interface');
 const fs = require('fs');
 
+// TODO: allow a config.json file to be used for configuring params
+// TODO: make chromeFlags configurable from command line
 //const chromeFlags = [ '--window-size=1280,720', '--headless' ];
 const chromeFlags = [ '--window-size=1280,721'];
 // const chromeFlags = [];
 
+// TODO: allow configuring of launch url from command line -url
+let launchChromeUrl = 'http://localhost:8000/create-anim-file.html';
+
+// capture the meta data for all the animation frames
+let frames = [];
+
+// folder where we are storing the frames
+let uniqueFolderName="";
+
+// if we end early then
+process.on('SIGINT', () => {
+    // complete the animation processing for the downloaded frames
+    completeOutput(frames);
+});
+
+
+
 chromeLauncher.launch({
-    startingUrl: 'http://localhost:8000/create-anim-file.html',
+    startingUrl: launchChromeUrl,
     chromeFlags: chromeFlags
   }).then(chrome => {
     console.log(`Chrome debugging port running on ${chrome.port}`);
@@ -22,7 +41,7 @@ chromeLauncher.launch({
         console.log("waiting for load");
         await Page.loadEventFired();
     
-        // TODO: inject the dot file here
+        // TODO: inject the dot file here and pass to the anim url
         //console.log("sleeping");
         //const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
         //await sleep(3000);
@@ -31,7 +50,7 @@ chromeLauncher.launch({
 
         await Page.startScreencast({format: 'png', everyNthFrame: 1});
         
-        const uniqueFolderName = Date.now().toString();
+        uniqueFolderName = Date.now().toString();
         if (!fs.existsSync(uniqueFolderName)){
             fs.mkdirSync(uniqueFolderName);
         }
@@ -41,8 +60,10 @@ chromeLauncher.launch({
         let counter=0;
         let MAX_FRAME_COUNT = 1000;
         let lastTime= Date.now();
-        let frames = [];
+ 
         while(!finished){
+
+          //TODO: have a timeout here so that if there is no frame in TIMEOUT seconds then treat it as finished
           const {data, metadata, sessionId} = await Page.screencastFrame();
           await Page.screencastFrameAck({sessionId: sessionId});
 
@@ -75,29 +96,34 @@ chromeLauncher.launch({
         await client.close();
         chrome.kill();
 
-        // write or rename files for metadata
-        for(frame of frames){
-            let frameDuration = 0;
-            if(frame.counter+1 < frames.length){
-                frameDuration = frames[frame.counter+1].previousFrameDuration;
-            }
-            frame.frameDuration=frameDuration;
+    });
 
-            if(frame.base64===undefined){
-                // rename the file to include the duration
-            }else{  
-                // ignore the final frame that was used to stop the recording     
-                if(frame.frameDuration>0){
-                    fs.writeFileSync("./" + uniqueFolderName + "/" + 'screen-' + 
-                                frame.counter.toString().padStart(10,"0") +
-                                "-" + frame.frameDuration.toString() +
-                               '.png', frame.base64);
-                }   
-            }
-        }
-
-      });
   });
+
+function completeOutput(framesToProcess){
+
+    // write or rename files for metadata
+    for(frame of framesToProcess){
+        let frameDuration = 0;
+        if(frame.counter+1 < framesToProcess.length){
+            frameDuration = framesToProcess[frame.counter+1].previousFrameDuration;
+        }
+        frame.frameDuration=frameDuration;
+
+        if(frame.base64===undefined){
+            // TODO: rename the file to include the duration in the filename
+        }else{  
+            // ignore the final frame that was used to stop the recording     
+            if(frame.frameDuration>0){
+                fs.writeFileSync("./" + uniqueFolderName + "/" + 'screen-' + 
+                            frame.counter.toString().padStart(10,"0") +
+                            "-" + frame.frameDuration.toString() +
+                            '.png', frame.base64);
+            }   
+        }
+    }
+    
+};
 
 //const chromeFlags = [ '--window-size=1280,720', '--headless' ];
 //const chromeFlags = [ '--window-size=1280,720'];
