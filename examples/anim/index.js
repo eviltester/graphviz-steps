@@ -9,8 +9,8 @@ const chromeFlags = [ '--window-size=1280,721'];
 // const chromeFlags = [];
 
 // TODO: allow configuring of launch url from command line -url
-//let launchChromeUrl = 'http://localhost:8000/create-anim-file.html';
-let launchChromeUrl = 'https://google.com';
+let launchChromeUrl = 'http://localhost:8000/create-anim-file.html';
+//let launchChromeUrl = 'https://google.com';
 let frameTimoutMillis = 5000;
 
 // capture the meta data for all the animation frames
@@ -79,6 +79,7 @@ chromeLauncher.launch({
 
           const result = await timeout(Page.screencastFrame(),frameTimoutMillis);
 
+        // TODO calculate an average frames per second  
         // calculate how long the previous frame was shown for
         let currentTime = Date.now();
         let timeIndex = currentTime - lastTime;
@@ -125,7 +126,7 @@ chromeLauncher.launch({
         chrome.kill();
 
         completeOutput(frames);
-        
+
     });
 
   });
@@ -133,6 +134,7 @@ chromeLauncher.launch({
 function completeOutput(framesToProcess){
 
     // write or rename files for metadata
+    console.log("Generating image files");
     for(frame of framesToProcess){
         let frameDuration = 0;
         if(frame.counter+1 < framesToProcess.length){
@@ -141,55 +143,85 @@ function completeOutput(framesToProcess){
         frame.frameDuration=frameDuration;
 
         if(frame.base64===undefined){
-            // TODO: rename the file to include the duration in the filename
+            // TODO: rename any files written file to include the duration in the filename
         }else{  
             // ignore the final frame that was used to stop the recording
             // TODO: unless sigterm was involved    
             if(frame.frameDuration>0){
-                fs.writeFileSync("./" + uniqueFolderName + "/" + 'screen-' + 
-                            frame.counter.toString().padStart(10,"0") +
-                            "-" + frame.frameDuration.toString() +
-                            '.png', frame.base64);
+                const filename = 'screen-' + 
+                frame.counter.toString().padStart(10,"0") +
+                "-" + frame.frameDuration.toString() +
+                '.png';
+
+                console.log(filename);
+                fs.writeFileSync("./" + uniqueFolderName + "/" + filename, frame.base64);
+                frame.filename = filename;
             }   
         }
     }
+    console.log("Generated image files");
+
+    // now generate the mp4
+    console.log("Generating mp4 file");
+
+    var input = "-pattern_type glob -i './" + uniqueFolderName + "/" + "*.png'";
+    var videocodec = "-vcodec libx264";
+    var outputFormat = "-f mp4";
+    var picFormat = '-pix_fmt yuv420p';
+
+    // tried fluent-ffmpeg but could never get the output file correct
+    // TODO: try with -l 1 -t duration instead of filter to see if get more accurate timing
+    let filterOptions = `-vf "zoompan=d=1`
+
+    for(frame of framesToProcess){
+        if(frame.frameDuration>0){
+             if(millisToFrames(frame.frameDuration,30)>1){
+                filterOptions=filterOptions + "+'" + millisToFrames(frame.frameDuration,30) + "*eq(in," + (frame.counter) + ")'"
+            }
+        }       
+    }
+    filterOptions = filterOptions + `"`;
+    var outFps = "-r 30";
+    var outputFile = "./" + uniqueFolderName + "/" + 'outputanim.mp4';
     
+    var ffmpegArgs = [input, videocodec, picFormat, outputFormat, outFps, filterOptions, outputFile];
+
+    spawnArgs = [];
+    for(arg of ffmpegArgs){
+        spawnArgs = spawnArgs.concat(arg.split(" "));
+    }
+
+    const { spawn } = require( 'child_process' );
+const runCommand = spawn( 'ffmpeg', spawnArgs, {shell:true} );
+
+console.log("ffmpeg " + spawnArgs.join(" "));
+
+runCommand.stdout.on( 'data', ( data ) => {
+    console.log( `stdout: ${ data }` );
+} );
+
+runCommand.stderr.on( 'data', ( data ) => {
+    console.log( `stderr: ${ data }` );
+} );
+
+runCommand.on( 'close', ( code ) => {
+    console.log( `child process exited with code ${ code }` );
+} );
 };
 
-//const chromeFlags = [ '--window-size=1280,720', '--headless' ];
-//const chromeFlags = [ '--window-size=1280,720'];
-// const chromeFlags = [];
-// chromeLauncher.launch({ port: 9222, startingUrl: 'http://localhost:8000/create-anim-file.html', chromeFlags:  chromeFlags }).then(function(chrome) {
-//   CDP(async (client) => {
-//     const {Page} = client;
+function millisToFrames(millis,fps){
+    const millisPerFrame = 1000/fps;
+    // slightly overcalculate the frames
+    //return Math.ceil(millis/millisPerFrame);
 
-//     await Page.enable();
-//     await Page.bringToFront();
-//     console.log("opening page");
-//     await Page.navigate({url: 'http://localhost:8000/create-anim-file.html'});
-//     console.log("waiting for load");
-//     //await Page.loadEventFired();
+    // slightly undercalculate the frames
+    const frames = Math.floor(millis/millisPerFrame);
+    // but at a minimum make it 1 frame
+    //console.log(frames==0 ? 1 : frames);
+    return frames==0 ? 1 : frames;
+}
 
-//     console.log("sleeping");
-//     const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
-//     await sleep(3000);
-//     console.log("starting");
-
-//     await Page.handleJavaScriptDialog({accept: true});
-//     await Page.startScreencast({format: 'png', everyNthFrame: 1});
-    
-//     let counter = 0;
-//     while(counter < 25){
-//       const {data, metadata, sessionId} = await Page.screencastFrame();
-//       await Page.screencastFrameAck({sessionId: sessionId});
-      
-//       fs.writeFileSync('screen-' + counter + '.png', Buffer.from(data, 'base64'));
-//       counter += 1;
-
-//       console.log(metadata.timestamp);
-//     }
-    
-//     await client.close();
-//     chrome.kill();
-//   });
-// });
+function millisToDuration(millis){
+    //'[[hh:]mm:]ss[.xxx]'
+    return (millis/1000).toFixed(3).toString();
+}
