@@ -11,6 +11,8 @@ const chromeFlags = [ '--window-size=1280,721'];
 // TODO: allow configuring of launch url from command line -url
 let launchChromeUrl = 'http://localhost:8000/create-anim-file.html';
 
+let frameTimoutMillis = 5000;
+
 // capture the meta data for all the animation frames
 let frames = [];
 
@@ -20,6 +22,8 @@ let uniqueFolderName="";
 // if we end early then
 process.on('SIGINT', () => {
     // complete the animation processing for the downloaded frames
+    // TODO: mark the last frame in frames as the last frame
+    // TODO: introduce a lastFrame property in the frame objects, if true then it is the last frame
     completeOutput(frames);
 });
 
@@ -63,35 +67,60 @@ chromeLauncher.launch({
  
         while(!finished){
 
-          //TODO: have a timeout here so that if there is no frame in TIMEOUT seconds then treat it as finished
-          const {data, metadata, sessionId} = await Page.screencastFrame();
-          await Page.screencastFrameAck({sessionId: sessionId});
+          // have a timeout here so that if there is no frame in frameTimoutMillis then treat it as finished
+          // https://advancedweb.hu/how-to-add-timeout-to-a-promise-in-javascript/
+          const timeout = (prom, time) => {
+            let timer;
+            return Promise.race([
+                prom,
+                new Promise((_r, rej) => timer = setTimeout(rej, time))
+            ]).catch(()=>{/* ignore timeout */}).finally(() => clearTimeout(timer));
+            }
 
-          // calculate how long the previous frame was shown for
-          let currentTime = Date.now();
-          let timeIndex = currentTime - lastTime;
-          lastTime= currentTime;
+          const result = await timeout(Page.screencastFrame(),frameTimoutMillis);
 
-          //todo - get x,y,width, height of svg at each frame
+        // calculate how long the previous frame was shown for
+        let currentTime = Date.now();
+        let timeIndex = currentTime - lastTime;
+        lastTime= currentTime;
 
-          // I seem get slightly more frames if I write them to memory
-          // TODO: make memory or writing to file an option
-        //   fs.writeFileSync("./" + uniqueFolderName + "/" + 'screen-' + 
-        //                     counter.toString().padStart(10,"0") +
-        //                      '.png', Buffer.from(data, 'base64'));
-        // frames.push({counter: counter, previousFrameDuration: timeIndex})
-          frames.push({counter: counter, previousFrameDuration: timeIndex, base64:Buffer.from(data, 'base64') })
+        let finishedAnim=false;
+
+          if(result!=undefined){
+            const {data, metadata, sessionId} = result;
+
+            await Page.screencastFrameAck({sessionId: sessionId});
+            //todo - get x,y,width, height of svg at each frame
+  
+            // I seem get slightly more frames if I write them to memory
+            // TODO: make memory or writing to file an option
+          //   fs.writeFileSync("./" + uniqueFolderName + "/" + 'screen-' + 
+          //                     counter.toString().padStart(10,"0") +
+          //                      '.png', Buffer.from(data, 'base64'));
+          // frames.push({counter: counter, previousFrameDuration: timeIndex})
+            frames.push({counter: counter, previousFrameDuration: timeIndex, base64:Buffer.from(data, 'base64') });
+
+  
+            finishedAnim = await Runtime.evaluate({expression: 'window.stopping'});
+
+            console.log(metadata?.timestamp);
+  
+          }else{
+            console.log("exceeded time to wait for frame, ending animation");
+            frames.push({counter: counter, previousFrameDuration: timeIndex, base64:""});
+            finishedAnim={result:{value: true}};
+          }
+
+
           counter += 1;
-
-          const finishedAnim = await Runtime.evaluate({expression: 'window.stopping'});
           console.log(finishedAnim);
 
-          console.log(metadata.timestamp);
           if( counter > MAX_FRAME_COUNT || finishedAnim.result.value==true){
             finished=true;
           }
         }
         
+        // TODO: consider adding this into the sigterm closing process otherwise we have dangling browsers
         console.log(frames.length);
         await client.close();
         chrome.kill();
@@ -113,7 +142,8 @@ function completeOutput(framesToProcess){
         if(frame.base64===undefined){
             // TODO: rename the file to include the duration in the filename
         }else{  
-            // ignore the final frame that was used to stop the recording     
+            // ignore the final frame that was used to stop the recording
+            // TODO: unless sigterm was involved    
             if(frame.frameDuration>0){
                 fs.writeFileSync("./" + uniqueFolderName + "/" + 'screen-' + 
                             frame.counter.toString().padStart(10,"0") +
